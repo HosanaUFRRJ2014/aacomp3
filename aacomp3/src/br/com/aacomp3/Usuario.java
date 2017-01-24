@@ -1,6 +1,7 @@
 package br.com.aacomp3;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Usuario 
 {
@@ -11,8 +12,8 @@ public class Usuario
 	//não funciona, pois usuario deve estar ativo ou inativo
 	//em cada grupo que ele participa. Ver Map ou hash
 //	private boolean ativo;
-	
-	private ArrayList <Grupo> gruposParticipados;
+	HashMap<Grupo, boolean> grupos;
+	//private ArrayList <Grupo> gruposParticipados;
 	
 	public Usuario(String n, String e, String t)
 	{
@@ -20,8 +21,16 @@ public class Usuario
 		email = e;
 		telefone = t;
 		
-		gruposParticipados = new ArrayList<Grupo>();
+		grupos = new HashMap<Grupo, boolean>();
+	//	grupos.put(grupo,true);
+		
+///		gruposParticipados = new ArrayList<Grupo>();
 	//	ativo = true;
+	}
+	
+	public boolean participar(Grupo grupo)
+	{
+		grupos.put(grupo,true);
 	}
 	
 	public void convidar(String email)
@@ -57,15 +66,16 @@ public class Usuario
 	public void serTornadoInativo() {
 		this.ativo = ativo;
 	}*/
+	
 
-	public ArrayList<Grupo> getGruposParticipados() {
+/*	public ArrayList<Grupo> getGruposParticipados() {
 		return gruposParticipados;
 	}
 
 	public void setGruposParticipados(ArrayList<Grupo> gruposParticipados) {
 		this.gruposParticipados = gruposParticipados;
 	}
-
+*/
 	public String getEmail() {
 		return email;
 	}

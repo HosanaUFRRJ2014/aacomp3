@@ -1,6 +1,7 @@
 package br.com.aacomp3;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Grupo 
 {
@@ -14,6 +15,7 @@ public class Grupo
 	
 	private ArrayList <Usuario> usuarios;
 	
+	
 	public Grupo(Usuario donoGrupo, String n, String d, String r, long lim)
 	{
 		nome = n;
@@ -22,6 +24,7 @@ public class Grupo
 		limMinAvaliacoesRuins = lim;
 		usuarios = new ArrayList<Usuario>();
 		usuarios.add(donoGrupo);
+	
 		
 	}
 
@@ -75,6 +78,15 @@ public class Grupo
 
 	public String getRegras() {
 		return regras;
+	}
+	
+	public boolean desativar(Usuario usuario)
+	{
+		
+		
+		
+		return false;
+		
 	}
 	
 //	public boolean todosUsuariosInativos(ArrayList<Usuario> us)
