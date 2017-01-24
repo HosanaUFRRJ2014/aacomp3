@@ -6,7 +6,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Caronae - Página Inicial</title>
 <style>
-td{padding: 20px 0px 20px 20px; background:lightblue; border:black}; <!-- margem sentido horario acima direita abaixo esquerda -->
+body {
+  background: url(carona6.png) no-repeat white;
+  background-size: cover;
+}
+table
+{
+	opacity: 0.75; 
+	filter: alpha(opacity=75);
+	border-radius: 8px;
+}
+
+td{padding: 20px 0px 20px 20px; background:linear-gradient(white, black);
+border-radius: 8px;} border:black}; <!-- margem sentido horario acima direita abaixo esquerda -->
 
 </style>
 </head>
@@ -14,7 +26,7 @@ td{padding: 20px 0px 20px 20px; background:lightblue; border:black}; <!-- margem
 
 	<h1 align = center><b>		TITULO		</b></h1>
 
-	<table  align=center width =600 border=1 bgcolor="lightblue" bordercolor= "black" borderstyle="solid"> 
+	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
 	<form>
 	<tr>
 		<td width=50 >
