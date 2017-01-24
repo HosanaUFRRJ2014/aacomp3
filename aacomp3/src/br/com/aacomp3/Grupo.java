@@ -27,36 +27,49 @@ public class Grupo
 	
 		
 	}
+	
+	public boolean adicionarUsuario(Usuario u)
+	{
+		return usuarios.add(u);
+	}
 
-	public String getNome() {
+	public String getNome() 
+	{
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(String nome) 
+	{
 		this.nome = nome;
 	}
 
-	public String getDescricao() {
+	public String getDescricao() 
+	{
 		return descricao;
 	}
 
-	public void setDescricao(String descricao) {
+	public void setDescricao(String descricao) 
+	{
 		this.descricao = descricao;
 	}
 
-	public long getLimMinAvaliacoesRuins() {
+	public long getLimMinAvaliacoesRuins() 
+	{
 		return limMinAvaliacoesRuins;
 	}
 
-	public void setLimMinAvaliacoesRuins(long limMinAvaliacoesRuins) {
+	public void setLimMinAvaliacoesRuins(long limMinAvaliacoesRuins)
+	{
 		this.limMinAvaliacoesRuins = limMinAvaliacoesRuins;
 	}
 
-	public boolean isAtivo() {
+	public boolean isAtivo() 
+	{
 		return ativo;
 	}
 
-//	public boolean desativarGrupo(boolean ativo) {
+//	public boolean desativarGrupo(boolean ativo) 
+//	{
 //		if(todosUsuariosInativos(this.usuarios) == true)
 //		{
 //			this.ativo = false;
@@ -68,15 +81,18 @@ public class Grupo
 //	    return false;
 //	}
 
-	public ArrayList<Usuario> getUsuarios() {
+	public ArrayList<Usuario> getUsuarios() 
+	{
 		return usuarios;
 	}
 
-	public void setUsuarios(ArrayList<Usuario> usuarios) {
+	public void setUsuarios(ArrayList<Usuario> usuarios)
+	{
 		this.usuarios = usuarios;
 	}
 
-	public String getRegras() {
+	public String getRegras() 
+	{
 		return regras;
 	}
 	

@@ -12,7 +12,7 @@ public class Usuario
 	//não funciona, pois usuario deve estar ativo ou inativo
 	//em cada grupo que ele participa. Ver Map ou hash
 //	private boolean ativo;
-	HashMap<Grupo, boolean> grupos;
+	HashMap<Grupo, Boolean> grupos;
 	//private ArrayList <Grupo> gruposParticipados;
 	
 	public Usuario(String n, String e, String t)
@@ -21,7 +21,7 @@ public class Usuario
 		email = e;
 		telefone = t;
 		
-		grupos = new HashMap<Grupo, boolean>();
+		grupos = new HashMap<Grupo, Boolean>();
 	//	grupos.put(grupo,true);
 		
 ///		gruposParticipados = new ArrayList<Grupo>();
@@ -30,7 +30,7 @@ public class Usuario
 	
 	public boolean participar(Grupo grupo)
 	{
-		grupos.put(grupo,true);
+		return grupos.put(grupo,true);
 	}
 	
 	public void convidar(String email)
