@@ -1,0 +1,13 @@
+-Usuário
+  -convidar
+  - definição se usuário está ativo ou não pra cada grupo
+
+- Grupo
+  -mecanismo de desaticar grupo, relacionado com o Usuário
+-VEiculo
+   -verificar  anecessidade de colocar uma instancia de motorista dentro dessa classe. Se sim, chamará no construtor ou não?
+
+- Logradouro
+   - fazer a verificação do CEP
+
+Todo o mescanis de carona, envolvendo logradouro, parada, etc
