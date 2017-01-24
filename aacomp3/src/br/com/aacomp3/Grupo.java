@@ -15,18 +15,28 @@ public class Grupo
 	
 	private ArrayList <Usuario> usuarios;
 	
-	
-	public Grupo(Usuario donoGrupo, String n, String d, String r, long lim)
+	//Default de min de avaliações ruins é 3, caso o dono não queira definir
+	public Grupo(Usuario donoGrupo, String n, String d, String r)
 	{
 		nome = n;
 		descricao = d;
 		regras = r;
-		limMinAvaliacoesRuins = lim;
+		limMinAvaliacoesRuins = 3;
 		usuarios = new ArrayList<Usuario>();
 		usuarios.add(donoGrupo);
 	
 		
 	}
+	
+	//construtor para caso o usuário queira padronizar o limMinAvaliacoesRuins
+	public Grupo(Usuario donoGrupo, String n, String d, String r, long lim)
+	{
+		this(donoGrupo, n, d,  r);
+		limMinAvaliacoesRuins = lim;
+		
+	}
+	
+
 	
 	public boolean adicionarUsuario(Usuario u)
 	{
