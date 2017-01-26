@@ -1,4 +1,4 @@
-package br.com.aacomp3;
+package dominio;
 
 import java.util.ArrayList;
 

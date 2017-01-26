@@ -1,4 +1,4 @@
-package br.com.aacomp3;
+package dominio;
 
 public class Carona {
 
