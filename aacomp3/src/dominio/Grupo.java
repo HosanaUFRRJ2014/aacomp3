@@ -7,7 +7,7 @@ public class Grupo
 {
 	private String nome;
 	private String descricao;
-	private String regras; //ou um array de regras?
+	private String regras; 
 	
 	private long limMinAvaliacoesRuins;
 	
@@ -16,11 +16,11 @@ public class Grupo
 	private ArrayList <Usuario> usuarios;
 	
 	//Default de min de avaliações ruins é 3, caso o dono não queira definir
-	public Grupo(Usuario donoGrupo, String n, String d, String r)
+	public Grupo(Usuario donoGrupo, String nomeGrupo, String descricao, String regras)
 	{
-		nome = n;
-		descricao = d;
-		regras = r;
+		this.nome = nomeGrupo;
+		this.descricao = descricao;
+		this.regras = regras;
 		limMinAvaliacoesRuins = 3;
 		usuarios = new ArrayList<Usuario>();
 		usuarios.add(donoGrupo);
@@ -29,9 +29,9 @@ public class Grupo
 	}
 	
 	//construtor para caso o usuário queira padronizar o limMinAvaliacoesRuins
-	public Grupo(Usuario donoGrupo, String n, String d, String r, long lim)
+	public Grupo(Usuario donoGrupo, String nomeGrupo, String descricao, String regras, long lim)
 	{
-		this(donoGrupo, n, d,  r);
+		this(donoGrupo, nomeGrupo, descricao,  regras);
 		limMinAvaliacoesRuins = lim;
 		
 	}
