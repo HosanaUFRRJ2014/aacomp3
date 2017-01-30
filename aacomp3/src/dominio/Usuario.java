@@ -9,10 +9,14 @@ public class Usuario
 	private String email;
 	private String telefone;
 	
+	//cada usuário pode ser avaliado no aplicativo.
+	//se recebido mais de 3 avaliações ruins, ele é expulso do grupo.
+	private HashMap<Grupo, ArrayList<Avaliacao>> avaliacoesPorGrupo;
+	
 	//não funciona, pois usuario deve estar ativo ou inativo
 	//em cada grupo que ele participa. Ver Map ou hash
 //	private boolean ativo;
-	HashMap<Grupo, Boolean> grupos;
+	private HashMap<Grupo, Boolean> grupos;
 	//private ArrayList <Grupo> gruposParticipados;
 	
 	public Usuario(String n, String e, String t)
@@ -21,11 +25,27 @@ public class Usuario
 		email = e;
 		telefone = t;
 		
+		ArrayList avaliacao = new ArrayList<Avaliacao>();
+		avaliacoesPorGrupo = new HashMap<Grupo, ArrayList<Avaliacao>>();
+		//continuar a instanciação de avaliacoesPorGrupo
+		
+		
 		grupos = new HashMap<Grupo, Boolean>();
 	//	grupos.put(grupo,true);
 		
 ///		gruposParticipados = new ArrayList<Grupo>();
 	//	ativo = true;
+	}
+	
+	public void avaliar(/*Grupo grupo,*/Usuario usuarioAvaliado, int estrelas)
+	{
+		Avaliacao avaliacao = new Avaliacao(estrelas);
+		
+		//varrer o hashmap avaliacoesPorGrupo de modo a , dado
+		//o grupo do usuario que está avaliado (this), colocar
+		// o número de estrelas referentes.
+		
+		
 	}
 	
 	public boolean participar(Grupo grupo)
@@ -79,6 +99,26 @@ public class Usuario
 	public String getEmail() {
 		return email;
 	}
+	
+	public void armazenar()
+	{
+		//manipulações do banco de dados usando a classe UsuarioTDG do
+		//do pacote dados
+	}
+	
+	public void alterar(String nome, String telefone)
+	{
+		//manipulações do banco de dados usando a classe UsuarioTDG do
+		//do pacote dados
+		
+	}
+	
+	//pensando em colocar os métodos convidar e participar tb, pois
+	//se tratam de regras de negócio. Nesse caso, esses métodos acessariam
+	//a camada de dados tb. Penso isso baseada no livro de Padrões Arquiteturais
+	//do Martin Fowler e nos exemplos da disciplina.
+	
+	//Como fazer isso sem service layer?
 	
 	
 	
