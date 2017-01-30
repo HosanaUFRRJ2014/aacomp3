@@ -4,9 +4,9 @@ public class Avaliacao
 {
 	private int estrelas;
 	
-	public Avaliacao(int e)
+	public Avaliacao(int estrelas)
 	{
-		estrelas = e;
+		this.estrelas = estrelas;
 	}
 
 	public int getEstrelas() {

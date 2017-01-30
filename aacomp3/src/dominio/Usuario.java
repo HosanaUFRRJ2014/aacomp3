@@ -19,11 +19,11 @@ public class Usuario
 	private HashMap<Grupo, Boolean> grupos;
 	//private ArrayList <Grupo> gruposParticipados;
 	
-	public Usuario(String n, String e, String t)
+	public Usuario(String nome, String email, String telefone)
 	{
-		nome = n;
-		email = e;
-		telefone = t;
+		this.nome = nome;
+		this.email = email;
+		this.telefone = telefone;
 		
 		ArrayList avaliacao = new ArrayList<Avaliacao>();
 		avaliacoesPorGrupo = new HashMap<Grupo, ArrayList<Avaliacao>>();
@@ -31,21 +31,36 @@ public class Usuario
 		
 		
 		grupos = new HashMap<Grupo, Boolean>();
-	//	grupos.put(grupo,true);
-		
-///		gruposParticipados = new ArrayList<Grupo>();
-	//	ativo = true;
+
 	}
 	
-	public void avaliar(/*Grupo grupo,*/Usuario usuarioAvaliado, int estrelas)
+	public void avaliar(Grupo grupo,Usuario usuarioAvaliado, int estrelas)
 	{
 		Avaliacao avaliacao = new Avaliacao(estrelas);
 		
-		//varrer o hashmap avaliacoesPorGrupo de modo a , dado
-		//o grupo do usuario que está avaliado (this), colocar
+		//pegar do hashmap avaliacoesPorGrupo, dado
+		//o grupo do usuario que está avaliado, colocar
 		// o número de estrelas referentes.
 		
+		ArrayList<Avaliacao> avaliacoes = usuarioAvaliado.getAvaliacoesPorGrupo().get(grupo);
+		avaliacoes.add(avaliacao);
 		
+		usuarioAvaliado.getAvaliacoesPorGrupo().put(grupo, avaliacoes);
+	
+		
+		
+	}
+	
+	public void criarGrupo(String nome, String descricao, String regras)
+	{
+		Grupo grupo = new Grupo(this, nome, descricao, regras);
+		this.participar(grupo);
+	}
+	
+	public void criarGrupo(String nome, String descricao, String regras, int limMaxAvaliacoesRuins)
+	{
+		Grupo grupo = new Grupo(this, nome, descricao, regras, limMaxAvaliacoesRuins);
+		this.participar(grupo);
 	}
 	
 	public boolean participar(Grupo grupo)
@@ -53,10 +68,15 @@ public class Usuario
 		return grupos.put(grupo,true);
 	}
 	
-	public void convidar(String email)
+	public void convidar(Grupo grupo, String email)
 	{
 		//Não sei o que por aqui dentro. 
 		//Me veio na mente várias coisas de web service que fogem ao escopo do trabalho.
+		
+		//Pensando em exibir uma mensagem de convite para o usuário que vai enviar e ele só 
+		//apertará um botão enviar ou um botão cancelar
+		
+		//só para testes
 		System.out.println("Contato " + email + " convidado");
 		
 	}
@@ -76,26 +96,21 @@ public class Usuario
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-
-	/*
-	public boolean isAtivo() {
-		return ativo;
-	} */
-
-	/*
-	public void serTornadoInativo() {
-		this.ativo = ativo;
-	}*/
+	
 	
 
-/*	public ArrayList<Grupo> getGruposParticipados() {
-		return gruposParticipados;
+
+
+	public HashMap<Grupo, ArrayList<Avaliacao>> getAvaliacoesPorGrupo() 
+	{
+		return avaliacoesPorGrupo;
 	}
 
-	public void setGruposParticipados(ArrayList<Grupo> gruposParticipados) {
-		this.gruposParticipados = gruposParticipados;
+	public void setAvaliacoesPorGrupo(HashMap<Grupo, ArrayList<Avaliacao>> avaliacoesPorGrupo) 
+	{
+		this.avaliacoesPorGrupo = avaliacoesPorGrupo;
 	}
-*/
+
 	public String getEmail() {
 		return email;
 	}
