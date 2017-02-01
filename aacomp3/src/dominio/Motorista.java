@@ -24,7 +24,7 @@ public class Motorista extends Usuario {
 		Carona carona = new Carona(veiculo, dia, horarioSaida, logrOrigem, logrDestino);
 		veiculo.addCarona(carona);
 	    
-		//comunicao como banco de dados. Ou chamar esse método na service layer? 
+		//comunicao como banco de dados.  
 		carona.armazenar();
 	
 	}
@@ -35,7 +35,7 @@ public class Motorista extends Usuario {
          
 		if(alterado == true)
 		{
-			//comunicao como banco de dados. Ou chamar esse método na service layer? 
+			//comunicao como banco de dados. 
 			carona.alterar();
 		}
 		

@@ -19,6 +19,11 @@ public class Carona
 	 *  carona  no  mesmo  dia  e  horário  (em 
      * TODOS os grupos que o 
      * usuário participa).
+     * 
+     * 
+     * É necessário salvar quais usuários estão na carona ou só preciso
+     * saber o numero de vagas? Se preciso salvar, salvo em Caronas. (esxiste a posssibilidade de
+     * salvar em veículos)
 	 * *******/
 	public Carona(Veiculo veiculo, Date dia, Date horarioSaida, Logradouro logrOrigem, Logradouro logrDestino) 
 	{

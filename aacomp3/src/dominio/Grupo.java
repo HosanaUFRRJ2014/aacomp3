@@ -40,6 +40,7 @@ public class Grupo
 	
 	public boolean adicionarUsuario(Usuario u)
 	{
+		//u.participarDoGrupo(this); Eu dúvida se faço isso aqui ou faço externamente.
 		return usuarios.add(u);
 	}
 

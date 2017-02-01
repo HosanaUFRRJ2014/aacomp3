@@ -54,18 +54,27 @@ public class Usuario
 	public void criarGrupo(String nome, String descricao, String regras)
 	{
 		Grupo grupo = new Grupo(this, nome, descricao, regras);
-		this.participar(grupo);
+		this.participarDoGrupo(grupo);
 	}
 	
 	public void criarGrupo(String nome, String descricao, String regras, int limMaxAvaliacoesRuins)
 	{
 		Grupo grupo = new Grupo(this, nome, descricao, regras, limMaxAvaliacoesRuins);
-		this.participar(grupo);
+		this.participarDoGrupo(grupo);
 	}
 	
-	public boolean participar(Grupo grupo)
+	public boolean participarDoGrupo(Grupo grupo)
 	{
+		//ver método adicionarUsuario em Grupo.java
 		return grupos.put(grupo,true);
+	}
+	
+	
+	/** Está removendo o usuário do array de usuários do grupo, 
+	 * não está apenas inativando-o **/
+	public void sairDoGrupo(Grupo grupo)
+	{
+		grupo.getUsuarios().remove(this);
 	}
 	
 	public void convidar(Grupo grupo, String email)
@@ -79,6 +88,12 @@ public class Usuario
 		//só para testes
 		System.out.println("Contato " + email + " convidado");
 		
+	}
+	
+	public Motorista virarMotorista(Veiculo veiculo)
+	{
+		Motorista motorista = new Motorista(this.getNome(), this.getEmail(), this.getTelefone(), veiculo);
+		return motorista;
 	}
 
 	public String getNome() {
@@ -97,10 +112,6 @@ public class Usuario
 		this.telefone = telefone;
 	}
 	
-	
-
-
-
 	public HashMap<Grupo, ArrayList<Avaliacao>> getAvaliacoesPorGrupo() 
 	{
 		return avaliacoesPorGrupo;
@@ -133,7 +144,6 @@ public class Usuario
 	//a camada de dados tb. Penso isso baseada no livro de Padrões Arquiteturais
 	//do Martin Fowler e nos exemplos da disciplina.
 	
-	//Como fazer isso sem service layer?
 	
 	
 	
