@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dominio.Usuario;
-import execoes.CampoInvalidoException;
+import excecoes.CampoInvalidoException;
 
 /**
  * Servlet implementation class CtrCriarUsu

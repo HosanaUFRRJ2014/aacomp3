@@ -1,4 +1,4 @@
-package execoes;
+package excecoes;
 
 public class CampoInvalidoException extends Exception {
 	
