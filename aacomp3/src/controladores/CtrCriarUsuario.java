@@ -50,7 +50,7 @@ public class CtrCriarUsuario extends HttpServlet {
 				throw new CampoInvalidoException();
 				}
 			}catch(CampoInvalidoException e){	
-				RequestDispatcher rdErro = request.getRequestDispatcher("campoInvalido.jsp");
+				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
 				rdErro.forward(request, response);
 			}
 		

@@ -220,6 +220,33 @@ public void adicionaUsuario(String nome, String email,String telefone){
 			throw new RuntimeException(e);
 		}
 	}
+
+	public Usuario buscarPorEmail(String email) 
+	{
+        
+		String sql = "select * from usuarios where email=" + email;
+		
+		try{
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			Usuario usuario = null;
+			
+			while(rs.next()){
+				
+				usuario = new Usuario(rs.getString(2),rs.getString(3),rs.getString(4));
+				
+				
+			}
+			rs.close();
+			stmt.close();
+			return usuario;
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+		
+	}
 	
 	
 
