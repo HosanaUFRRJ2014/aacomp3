@@ -3,6 +3,8 @@ package dominio;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import projetoDAO.UsuarioDAO;
+
 public class Usuario 
 {
 	private String nome;
@@ -126,10 +128,11 @@ public class Usuario
 		return email;
 	}
 	
-	public void armazenar()
+	public void armazenar() throws ClassNotFoundException
 	{
-		//manipulações do banco de dados usando a classe UsuarioTDG do
-		//do pacote dados
+		UsuarioDAO usuariodao = new UsuarioDAO();
+		
+		usuariodao.adicionaUsuario(this.nome, this.email, this.telefone);
 	}
 	
 	public void alterar(String nome, String telefone)

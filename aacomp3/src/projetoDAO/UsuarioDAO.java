@@ -153,6 +153,23 @@ public void adicionaUsuario(String nome, String email,String telefone){
 		}
 	}
 	
+	public void mudaMotorista(int ID){
+		
+		String sql = "update usuarios set motorista=true where idusuario=?";
+		
+		try{
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);
+			stmt.setInt(1,ID);
+			
+			stmt.execute();
+			stmt.close();
+			
+			
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public Set<Usuario> buscaEhMotorista(){
 		
 		String sql = "select * from usuario where motorista=true";

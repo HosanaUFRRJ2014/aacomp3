@@ -37,7 +37,7 @@ td
 	</h1>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form>
+	<form method="post" action="./CtrCriarUsuario">
 	<tr>
 		<td width=50 >
 			
@@ -48,13 +48,14 @@ td
 				<label> Email *:</label>
 				<input type= "text" name = "emailUsuario"></p>
 				<label> Telefone *:</label>
-				<input type= "text" name = "telefoneGrupo"></p>
+				<input type= "text" name = "telefoneUsuario"></p>
 				
-				<br>
-				<p><label> Selecione como você pretende interagir com os outros usuários</label></p>
-				<input type= "radio" name = "rd" value= "caroneiro"> Caroneiro
-				<input type= "radio" name = "rd" value= "motorista"> Motorista e caroneiro
-		        <br><br>
+<!-- 				<br> -->
+<!-- criar uma nova jsp com tela de Sucesso e opção de cadastrar um veiculo -->
+<!-- 				<p><label> Selecione como você pretende interagir com os outros usuários</label></p> -->
+<!-- 				<input type= "radio" name = "rd" value= "caroneiro"> Caroneiro -->
+<!-- 				<input type= "radio" name = "rd" value= "motorista"> Motorista e caroneiro -->
+<!-- 		        <br><br> -->
 				
 					
 <!-- 				<p><label> botoes </label></p> -->
