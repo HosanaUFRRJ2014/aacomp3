@@ -248,6 +248,36 @@ public void adicionaUsuario(String nome, String email,String telefone){
 		
 	}
 	
+	public boolean verificaEmail(String email){
+		
+		String sql = "select email from usuarios where email like ?";
+		
+		try{
+			
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);
+			stmt.setString(1, email);
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()==false){
+				return false;
+			}
+			String aux = rs.getString(1);
+			if(aux.equals(email)){
+				return true;
+			}
+			rs.close();
+			stmt.close();
+			
+			return false;
+			
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+				
+		
+	}
+	
 	
 
 }

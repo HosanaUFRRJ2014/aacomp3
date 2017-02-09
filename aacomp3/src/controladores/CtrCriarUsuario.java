@@ -44,28 +44,33 @@ public class CtrCriarUsuario extends HttpServlet {
 		String telefone = request.getParameter("telefoneUsuario");
 		String email = request.getParameter("emailUsuario");
 		
+		Usuario novoUsuario = new Usuario(nome, email, telefone);
+		
 		try{
-			
+				
 			if(nome.equals("") || telefone.equals("") || email.equals("")){
 				throw new CampoInvalidoException();
+				}			
+			else{
+				
+				try {
+					novoUsuario.armazenar();
+				} catch (ClassNotFoundException e) {
+					// eclipse me OBRIGOU a criar esse Try/Catch
+					e.printStackTrace();
 				}
+			}
 			}catch(CampoInvalidoException e){	
 				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
 				rdErro.forward(request, response);
 			}
 		
-			Usuario novoUsuario = new Usuario(nome, email, telefone);		
 			
-			try {
-				novoUsuario.armazenar();
-			} catch (ClassNotFoundException e) {
-				// eclipse me OBRIGOU a criar esse Try/Catch
-				e.printStackTrace();
-			}
 			
 // Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou não um veiculo
-//			RequestDispatcher rdSucesso = request.getRequestDispatcher("/PermAdicionarCozinha");
-//			rdSucesso.forward(request,response);
+			request.setAttribute("novoUsuario", novoUsuario);
+			RequestDispatcher rdSucesso = request.getRequestDispatcher("/sucessoCadastro");
+			rdSucesso.forward(request,response);
 			
 			
 		}
