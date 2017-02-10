@@ -33,13 +33,13 @@ td
 <body>
 
 	<h1 align = center>	Seu cadastro foi realizado com sucesso!	</h1>
-	<h2 align = center> Para usufruir dos beneficios do aplicativo utilize o email cadastrado.</h2>
+	<h2 align = center> Para usufruir dos beneficios do aplicativo, utilize o email cadastrado.</h2>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
 	
 	
 	<tr>
-	<td width=50 >							
+	<td align=center width=50  >							
 				<br>
 		<label>Deseja cadastrar um veiculo e se tornar um motorista do aplicativo?</label>
 		<form action="criarVeiculo.jsp">

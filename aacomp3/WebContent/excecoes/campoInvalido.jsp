@@ -28,7 +28,7 @@ td {
 </head>
 <body>
 	<h1 align = center>Ah não!!
-	<br> Você informou pelo menos um dos campos incorretamente.</h1>
+	<br> Você esqueceu de preencher pelo menos um dos campos obrigatórios</h1>
 	<table align=center width=600 border=1 bgcolor="white"
 		bordercolor="black" borderstyle="solid">
 		
