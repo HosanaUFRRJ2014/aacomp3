@@ -1,7 +1,6 @@
 package controladores;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,19 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dominio.Usuario;
-import excecoes.*;
+import execoes.NaoEhMotoristaException;
 
 /**
- * Servlet implementation class CtrVerificaEmail
+ * Servlet implementation class CtrVerificaMotorista
  */
-@WebServlet("/CtrVerificaEmail")
-public class CtrVerificaEmail extends HttpServlet {
+@WebServlet("/CtrVerificaMotorista")
+public class CtrVerificaMotorista extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CtrVerificaEmail() {
+    public CtrVerificaMotorista() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,32 +39,30 @@ public class CtrVerificaEmail extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String email = request.getParameter("emailUsuario");
+		//controlador feito para impedir usuarios que não são motoristas de criar caronas
 		
-		Usuario aux = new Usuario(null,null,null);
+		Usuario novoUsuario = (Usuario) request.getAttribute("novoUsuario");
+		request.setAttribute("novoUsuario", novoUsuario);
 		
 		try {
-			if(aux.verificaEmail(email)){
+			if(novoUsuario.ehMotorista(novoUsuario.getEmail())){
 				
-				Usuario novoUsuario = aux.montaUsuario(email);
-				// enviando para JSP, sempre enviar como novoUsuario
-				request.setAttribute("novoUsuario", novoUsuario);
-				
-				RequestDispatcher rdSucesso = request.getRequestDispatcher("./pagInicial.jsp");
-				rdSucesso.forward(request, response);
-				
+				RequestDispatcher rdSucesso = request.getRequestDispatcher("./criar/criarCarona.jsp");
+				rdSucesso.forward(request, response);				
 			}
 			else{
-				throw new EmailInvalidoException();
+				throw new NaoEhMotoristaException();
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch(EmailInvalidoException e){
-			RequestDispatcher rdErro = request.getRequestDispatcher("./execoes/emailInvalido.jsp");
+		} catch (NaoEhMotoristaException e) {
+			RequestDispatcher rdErro = request.getRequestDispatcher("./execoes/naoMotorista.jsp");
 			rdErro.forward(request, response);
+			e.printStackTrace();
 		}
+		
+		
 	}
 
 }

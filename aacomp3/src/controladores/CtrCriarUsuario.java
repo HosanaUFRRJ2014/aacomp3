@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dominio.Usuario;
-import excecoes.CampoInvalidoException;
+import execoes.CampoInvalidoException;
 
 /**
  * Servlet implementation class CtrCriarUsu
@@ -55,7 +55,7 @@ public class CtrCriarUsuario extends HttpServlet {
 				try {
 					novoUsuario.armazenar();
 					
-					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou nï¿½o um veiculo
+					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou não um veiculo
 					request.setAttribute("novoUsuario", novoUsuario);
 					RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoCadastro.jsp");
 					rdSucesso.forward(request,response);
@@ -65,23 +65,17 @@ public class CtrCriarUsuario extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
-
-			}catch(CampoInvalidoException e){	
-				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
-				rdErro.forward(request, response);
-			}
-		
-			
-			
-// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou nï¿½o um veiculo
-			request.setAttribute("novoUsuario", novoUsuario);
-			RequestDispatcher rdSucesso = request.getRequestDispatcher("/sucessoCadastro");
-			rdSucesso.forward(request,response);
-			
-
+		}catch(CampoInvalidoException e){	
+			RequestDispatcher rdErro = request.getRequestDispatcher("./execoes/campoInvalido.jsp");
+			rdErro.forward(request, response);
 		}
 
 
+
+		
+
+
+	}
 
 
 
