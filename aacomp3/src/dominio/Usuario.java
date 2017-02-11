@@ -142,7 +142,7 @@ public class Usuario
 		usuariodao.adicionaUsuario(this.nome, this.email, this.telefone);
 	}
 	
-	// verifica se o email está cadastrado no banco de dados
+	// verifica se o email estï¿½ cadastrado no banco de dados
 	public boolean verificaEmail(String email) throws ClassNotFoundException
 	{
 		UsuarioDAO usuariodao = new UsuarioDAO();
@@ -161,7 +161,6 @@ public class Usuario
 		
 	}
 	
-<<<<<<< HEAD
 	public Usuario montaUsuario(String email) throws ClassNotFoundException{
 		
 		UsuarioDAO aux = new UsuarioDAO();
@@ -178,11 +177,11 @@ public class Usuario
 	//se tratam de regras de negÃ³cio. Nesse caso, esses mÃ©todos acessariam
 	//a camada de dados tb. Penso isso baseada no livro de PadrÃµes Arquiteturais
 	//do Martin Fowler e nos exemplos da disciplina.
-=======
-	
-	//realizar busca no banco dado um email de Usuário
-	/*A dúvida é: esse método fica em Usuario. (vai exigir um monte de gambiarra, como construtor vazio)
-	 *  ou fica em Grupo.(fica estranho, pois fica grupo lidando com usuario). Por hora, escolhendo a opção 1 */
+//=======
+//	
+	//realizar busca no banco dado um email de Usuï¿½rio
+	/*A dï¿½vida ï¿½: esse mï¿½todo fica em Usuario. (vai exigir um monte de gambiarra, como construtor vazio)
+	 *  ou fica em Grupo.(fica estranho, pois fica grupo lidando com usuario). Por hora, escolhendo a opï¿½ï¿½o 1 */
 	public Usuario buscar(String email) throws ClassNotFoundException
 	{
 		UsuarioDAO  usuariodao = new UsuarioDAO();
@@ -193,8 +192,8 @@ public class Usuario
 	}
 	
 	
->>>>>>> refs/heads/hosana
-	
+//>>>>>>> refs/heads/hosana
+//	
 	
 	
 	

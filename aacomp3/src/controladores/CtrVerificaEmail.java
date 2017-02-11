@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dominio.Usuario;
-import execoes.CampoInvalidoException;
-import execoes.EmailInvalidoException;
+import excecoes.CampoInvalidoException;
+import excecoes.EmailInvalidoException;
 
 /**
  * Servlet implementation class CtrVerificaEmail

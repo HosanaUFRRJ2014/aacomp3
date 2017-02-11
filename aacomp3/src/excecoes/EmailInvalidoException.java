@@ -1,9 +1,9 @@
-package execoes;
+package excecoes;
 
 public class EmailInvalidoException extends Exception {
 
 	public EmailInvalidoException(){
-		super("Você digitou um email invalido!");
+		super("Vocï¿½ digitou um email invalido!");
 	}
 	
 }
