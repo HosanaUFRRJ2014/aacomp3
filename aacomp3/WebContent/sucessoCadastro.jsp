@@ -30,8 +30,7 @@ td
 
 </style>
 </head>
-<body>
-<<<<<<< HEAD
+
 	<%
 		
 		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
@@ -41,11 +40,7 @@ td
 	%>
 	<h1 align = center>	Seu cadastro foi realizado com sucesso <%=nome %>!	</h1>
 	<h2 align = center> Para usufruir dos beneficios do aplicativo utilize o email cadastrado.</h2>
-=======
 
-	<h1 align = center>	Seu cadastro foi realizado com sucesso!	</h1>
-	<h2 align = center> Para usufruir dos beneficios do aplicativo, utilize o email cadastrado.</h2>
->>>>>>> refs/heads/hosana
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
 	

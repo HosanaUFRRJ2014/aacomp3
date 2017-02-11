@@ -2,6 +2,8 @@ package dominio;
 
 import java.util.ArrayList;
 
+import projetoDAO.VeiculoDAO;
+
 public class Veiculo 
 {
 	private String modelo;
@@ -11,6 +13,17 @@ public class Veiculo
 	private int numeroVagas;
 	
 	private ArrayList<Carona> caronas;
+	
+	public Veiculo(String modelo,String placa,String cor,int numeroVagas)
+	{
+        this.modelo = modelo;
+        this.placa = placa;
+        this.cor = cor;
+		
+		
+		caronas = new ArrayList<Carona>();
+		
+	}
 	
 	public Veiculo(String modelo,String placa,String cor,int numeroVagas, Motorista motorista)
 	{
@@ -67,6 +80,20 @@ public class Veiculo
 	public void setCaronas(ArrayList<Carona> caronas) 
 	{
 		this.caronas = caronas;
+	}
+
+	public void setMotorista(Motorista novoMotorista) {
+		this.motorista = novoMotorista;
+		
+	}
+
+	public void armazenar() throws ClassNotFoundException 
+	{
+		VeiculoDAO veiculodao = new VeiculoDAO();
+		
+		veiculodao.adicionaVeiculo(idUsuario, this.placa, this.cor, this.modelo);
+		
+		
 	}
 	
 	

@@ -50,20 +50,8 @@ td
 				<label> Telefone *:</label>
 				<input type= "text" name = "telefoneUsuario"></p>
 				
-<<<<<<< HEAD
 
-=======
-<!-- 				<br> -->
-<!-- criar uma nova jsp com tela de Sucesso e opção de cadastrar um veiculo -->
-<!-- 				<p><label> Selecione como você pretende interagir com os outros usuários</label></p> -->
-<!-- 				<input type= "radio" name = "rd" value= "caroneiro"> Caroneiro -->
-<!-- 				<input type= "radio" name = "rd" value= "motorista"> Motorista e caroneiro -->
-<!-- 		        <br><br> -->
-				
-					
-<!-- 				<p><label> botoes </label></p> -->
-<!-- 				<input type= "button" value="botao1">  -->
->>>>>>> refs/heads/hosana
+
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 
 				

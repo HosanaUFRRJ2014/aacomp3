@@ -8,7 +8,7 @@
 <style>
 body 
 {
-  background: url(carona6.png) no-repeat white;
+  background: url(../carona6.png) no-repeat white;
   background-size: cover;
 }
 
@@ -30,35 +30,36 @@ td
 </style>
 </head>
 <body>
-    
-    <%
+
+	<h1 align = center>
+	Algo errado? <br> <br>
+	<b>		Altere seu cadastro		</b>
+	</h1>
+	
+		<%
 		
 		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
-		String nome = novoUsuario.getNome();
 		request.setAttribute("novoUsuario", novoUsuario);
 	
 	%>
 
-	<h1 align = center>
-	Opa!! Mais um transporte!! <br> <br>
-	<b>		CADASTRE UM NOVO VEÍCULO		</b>
-	</h1>
-
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form method="post" action="../CtrCriarVeiculo">
+	<form method="post" action="../CtrAltUsuario">
 	<tr>
 		<td width=50 >
 			
-								
-				<br>
-				<label> Modelo *:</label>
-				<input type= "text" name = "modeloVeiculo"></p>
-				<label> Placa *:</label>
-				<input type= "text" name = "placaVeiculo"></p>
-				<label> Cor *:</label>
-				<input type= "text" name = "corVeiculo"></p>
-				<label> Número de vagas (Número total de assentos - 1) *:</label>
-				<input type= "number" name = "numVagasVeiculo"></p>
+<!-- 			    Não exite necessidade desse campo caso a sessão salve o email do usuário logado -->
+<!-- 				<label> Informe seu email cadastrado na nossa base *:(Esse campo não pode ser alterado, apenas informado)</label> -->
+<!-- 				<input type= "text" name = "emailUsuario"></p>				 -->
+
+                <br>Caso não deseje alterar um dos campos, apenas deixe-o em branco.
+				<br><br>
+				<label> Informe um novo nome de usuário:</label>
+				<input type= "text" name = "novoNomeUsuario"></p>
+				
+				<label> Informe um novo telefone para contato:</label>
+				<input type= "text" name = "novoTelefoneUsuario"></P>
+				
 
 
 				<input type= "reset" value="limpar"> 
