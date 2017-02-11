@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dominio.Usuario;
-import execoes.CampoInvalidoException;
+import excecoes.CampoInvalidoException;
 
 /**
  * Servlet implementation class CtrCriarUsu
@@ -65,9 +65,25 @@ public class CtrCriarUsuario extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
+<<<<<<< HEAD
 		}catch(CampoInvalidoException e){	
 			RequestDispatcher rdErro = request.getRequestDispatcher("./campoInvalido.jsp");
 			rdErro.forward(request, response);
+=======
+			}catch(CampoInvalidoException e){	
+				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
+				rdErro.forward(request, response);
+			}
+		
+			
+			
+// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou não um veiculo
+			request.setAttribute("novoUsuario", novoUsuario);
+			RequestDispatcher rdSucesso = request.getRequestDispatcher("/sucessoCadastro");
+			rdSucesso.forward(request,response);
+			
+			
+>>>>>>> refs/heads/hosana
 		}
 
 
