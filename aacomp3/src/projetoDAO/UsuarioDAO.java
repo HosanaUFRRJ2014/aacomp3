@@ -1,7 +1,9 @@
 package projetoDAO;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import dominio.Usuario;
@@ -57,7 +59,7 @@ public void adicionaUsuario(String nome, String email,String telefone){
 	
 	public String procuraEmail(int ID){
 		
-		String sql = "select email from usuarios where idgrupo=?";
+		String sql = "select email from usuarios where idusuario=?";
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
 			stmt.setInt(1,ID);
@@ -79,7 +81,7 @@ public void adicionaUsuario(String nome, String email,String telefone){
 	
 	public String procuraTelefone(int ID){
 		
-		String sql = "select telefone from usuarios where idgrupo=?";
+		String sql = "select telefone from usuarios where idusuario=?";
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
 			stmt.setInt(1,ID);
@@ -101,7 +103,7 @@ public void adicionaUsuario(String nome, String email,String telefone){
 	
 	public boolean procuraMotorista(int ID){
 		
-		String sql = "select motorista from usuarios where idgrupo=?";
+		String sql = "select motorista from usuarios where idusuario=?";
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
 			stmt.setInt(1,ID);
@@ -248,6 +250,44 @@ public void adicionaUsuario(String nome, String email,String telefone){
 			throw new RuntimeException(e);
 		}
 				
+		
+	}
+	
+public ArrayList<String> recuperaPorEmail(String email){
+		
+		String sql = "select * from usuarios where email=?";
+		try{			
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);
+			stmt.setString(1, email);
+			
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			ArrayList<String> retorno = new ArrayList<String>();
+			
+			//idUsuario = retorno[1]
+			Integer idUsuario = rs.getInt(1);
+			retorno.add(idUsuario.toString());
+			
+			//nome = retorno[2]
+			retorno.add(rs.getString(2));
+			//email = retorno[3]
+			retorno.add(rs.getString(3));
+			//telefone = retorno[4]
+			retorno.add(rs.getString(4));
+			
+			//motorista = retorno[5]
+			Boolean bol = rs.getBoolean(5);
+			retorno.add(bol.toString());
+			
+			rs.close();
+			stmt.close();
+			
+			return retorno;
+			
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
 		
 	}
 	

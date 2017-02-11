@@ -18,14 +18,14 @@ import execoes.CampoInvalidoException;
 @WebServlet("/CtrCriarUsuario")
 public class CtrCriarUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CtrCriarUsuario() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public CtrCriarUsuario() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,45 +39,47 @@ public class CtrCriarUsuario extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
+
 		String nome = request.getParameter("nomeUsuario");
 		String telefone = request.getParameter("telefoneUsuario");
 		String email = request.getParameter("emailUsuario");
-		
+
 		Usuario novoUsuario = new Usuario(nome, email, telefone);
-		
+
 		try{
-				
+
 			if(nome.equals("") || telefone.equals("") || email.equals("")){
 				throw new CampoInvalidoException();
-				}			
-			else{
-				
+			}			
+			else{				
 				try {
 					novoUsuario.armazenar();
+					
+					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou não um veiculo
+					request.setAttribute("novoUsuario", novoUsuario);
+					RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoCadastro.jsp");
+					rdSucesso.forward(request,response);
+					
 				} catch (ClassNotFoundException e) {
 					// eclipse me OBRIGOU a criar esse Try/Catch
 					e.printStackTrace();
 				}
 			}
-			}catch(CampoInvalidoException e){	
-				RequestDispatcher rdErro = request.getRequestDispatcher("campoInvalido.jsp");
-				rdErro.forward(request, response);
-			}
-		
-			
-			
-// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou não um veiculo
-			request.setAttribute("novoUsuario", novoUsuario);
-			RequestDispatcher rdSucesso = request.getRequestDispatcher("/sucessoCadastro");
-			rdSucesso.forward(request,response);
-			
-			
+		}catch(CampoInvalidoException e){	
+			RequestDispatcher rdErro = request.getRequestDispatcher("./campoInvalido.jsp");
+			rdErro.forward(request, response);
 		}
+
+
+
 		
-		
-		
-		
+
+
 	}
+
+
+
+
+}
 
 

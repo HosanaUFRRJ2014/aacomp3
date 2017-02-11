@@ -135,10 +135,34 @@ public class Usuario
 		usuariodao.adicionaUsuario(this.nome, this.email, this.telefone);
 	}
 	
+	// verifica se o email est� cadastrado no banco de dados
+	public boolean verificaEmail(String email) throws ClassNotFoundException
+	{
+		UsuarioDAO usuariodao = new UsuarioDAO();
+		
+		if(usuariodao.verificaEmail(email)){
+			return true;
+		}
+		
+		return false;
+	}
+	
 	public void alterar(String nome, String telefone)
 	{
 		//manipulações do banco de dados usando a classe UsuarioTDG do
 		//do pacote dados
+		
+	}
+	
+	public Usuario montaUsuario(String email) throws ClassNotFoundException{
+		
+		UsuarioDAO aux = new UsuarioDAO();
+		
+		ArrayList<String> info = aux.recuperaPorEmail(email);
+		
+		Usuario retorno = new Usuario(info.get(2),info.get(3),info.get(4));
+		
+		return retorno;
 		
 	}
 	

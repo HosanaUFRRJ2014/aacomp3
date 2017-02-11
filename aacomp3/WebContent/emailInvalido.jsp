@@ -27,17 +27,25 @@ td {
 </style>
 </head>
 <body>
-	<h1 align=center>Você informou um campo incorretamente.</h1>
-	<table align=center width=600 border=1 bgcolor="white" bordercolor="black" borderstyle="solid">
+	<h1 align=center>O email informado não está cadastrado ou está incorreto.</h1>
+	<table align=center width=600 border=1 bgcolor="white"
+		bordercolor="black" borderstyle="solid">
 		<tr>
 			<td width=50 >
-					
+			
 				<form>
+					<label>Volte e tente novamente.</label>
 					<input type="button" value="Retornar" onClick="history.go(-1)">
+				</form>
+				
+				<label>Não está cadastrado?</label>
+				<form action="./criar/criarUsuario.jsp" method="post">
+					<input type="submit" value="Cadastre-se">
 				</form>
 			
 			</td>
 		</tr>
+			
 	</table>
 
 </body>

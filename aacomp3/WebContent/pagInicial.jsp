@@ -31,31 +31,33 @@ td
 </style>
 </head>
 <body>
-	<%
-		
+	<%		
 		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
 		String nome = novoUsuario.getNome();
-		request.setAttribute("novoUsuario", novoUsuario);
-	
+		request.setAttribute("novoUsuario",novoUsuario);
 	%>
-	<h1 align = center>	Seu cadastro foi realizado com sucesso <%=nome %>!	</h1>
-	<h2 align = center> Para usufruir dos beneficios do aplicativo utilize o email cadastrado.</h2>
-
-	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
 	
+	<h1 align = center>	Bem vindo <%=nome %>!</h1>	
+
+	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 	
 	
 	<tr>
 	<td width=50 >							
 				<br>
-		<label>Deseja cadastrar um veiculo e se tornar um motorista do aplicativo?</label>
-		<form action="criarVeiculo.jsp" method="post">
+		<label>Escolha uma das opções abaixo:</label>
+		
+			<form action="alterarInformacoes.jsp" method="post">
+					
+			<input type="submit" value="Alterar Informações">
 			
-			<input type="submit" value="Sim">
-		</form>	
-		<form action="pagInicial.jsp" method="post">
+			</form>
 			
-			<input type="submit" value="Nao">
-		</form>
+			<form action="criarVeiculo.jsp" method="post">		
+			
+			<input type="submit" value="Cadastrar um veiculo">
+			
+			</form>
+		
 		</td>
 	</tr>
 	

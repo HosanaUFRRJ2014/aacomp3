@@ -1,5 +1,6 @@
 package projetoDAO;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import dominio.Usuario;
@@ -10,9 +11,17 @@ public class TesteDAO {
 		// TODO Auto-generated method stub		
 		
 		UsuarioDAO teste = new UsuarioDAO();
-		String email = "juberto@juberto.com";
+		Usuario teste2 = new Usuario(null,null,null);
+		String email = "adeberto@adeberto.com.br";
 		
-		System.out.println(teste.verificaEmail(email));
+		ArrayList aux = teste.recuperaPorEmail(email);
+		
+		for(int i = 0; i < aux.size();i++){
+			System.out.println(aux.get(i));
+		}
+		
+		System.out.println(teste2.verificaEmail(email));
+		System.out.println(teste.procuraEmail(8));
 		
 		
 		
