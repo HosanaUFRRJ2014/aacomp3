@@ -12,6 +12,7 @@ import projetoDAO.UsuarioDAO;
 
 public class Usuario 
 {
+	private int id;
 	private String nome;
 	private String email;
 	private String telefone;
@@ -123,6 +124,16 @@ public class Usuario
 		
 		return aux.procuraMotorista(email);		
 		
+	}
+	
+	
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {

@@ -131,7 +131,7 @@ public class Veiculo
 		VeiculoDAO veiculodao = new VeiculoDAO();
 
 		//precisa desse método no DAO
-		veiculodao.mudaCor(novaCor);
+		veiculodao.mudaCor(id, novaCor);
 
 	}
 

@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 public class Grupo 
 {
+	private int id;
 	private String nome;
 	private String descricao;
 	private String regras; 
@@ -42,6 +43,14 @@ public class Grupo
 	{
 		//u.participarDoGrupo(this); Eu dúvida se faço isso aqui ou faço externamente.
 		return usuarios.add(u);
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Motorista extends Usuario {
 
+
 	private ArrayList<Veiculo> veiculos;
 
 	
@@ -52,6 +53,7 @@ public class Motorista extends Usuario {
 	public ArrayList<Veiculo> getVeiculos() {
 		return veiculos;
 	}
+	
 	
 	
 	

@@ -2,6 +2,7 @@ package dominio;
 
 public class Logradouro 
 {
+	private int id;
 	private String CEP;
 	private String estado;
 	private String cidade;
@@ -24,6 +25,14 @@ public class Logradouro
 		this.distrito = distrito;
 		this.endereco = endereco;
 		this.numero = numero;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 
@@ -55,6 +64,8 @@ public class Logradouro
 	public int getNumero() {
 		return numero;
 	}
+	
+	
 	
 	
 

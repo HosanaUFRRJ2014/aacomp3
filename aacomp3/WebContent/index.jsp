@@ -29,14 +29,14 @@ td {
 <body>
 
 	<h1 align=center>
-		<b> CaronaJá </b>
+		<b> Caronaê - O seu site de caronas!! </b>
 	</h1>
 
 	<table align=center width=600 border=1 bgcolor="white"
 		bordercolor="black" borderstyle="solid">
 	
 			<tr>			
-				<td width=50><br> 
+				<td width=50 align = center><br> 
 					<label> Digite o email cadastrado</label>					
 					<form action = "./CtrVerificaEmail" method="post">
 					<input type="text" name="emailUsuario">	</p>
@@ -45,7 +45,7 @@ td {
 					
 					<label> Ainda não é cadastrado?</label> 
 					<form action = "./criar/criarUsuario.jsp">
-					<input type="submit" name="Cadastre-se!">
+					<input type="submit" value="Cadastre-se!" name="Cadastre-se!">
 					</form>
 					
 				</td>
