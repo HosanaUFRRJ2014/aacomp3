@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import dominio.Usuario;
 import dominio.Carona;
@@ -44,7 +44,9 @@ public class CtrCriarCarona extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Usuario recuperado = (Usuario)request.getAttribute("novoUsuario");
+		HttpSession session = request.getSession();
+		
+		Usuario recuperado = (Usuario)session.getAttribute("novoUsuario");
 		String emailUsuario = recuperado.getEmail();
 		
 		String diaCarona = request.getParameter("diaCarona");

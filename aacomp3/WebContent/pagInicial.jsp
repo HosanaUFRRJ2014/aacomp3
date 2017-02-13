@@ -53,11 +53,13 @@ td
 </style>
 </head>
 <body>
-	<%	
-	String nome = "Descomentar as linhas!!!";
-// 		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
-// 		String nome = novoUsuario.getNome();
-// 		request.setAttribute("novoUsuario",novoUsuario);
+	
+
+
+	<%		
+		Usuario novoUsuario = (Usuario) session.getAttribute("novoUsuario");
+		String nome = novoUsuario.getNome();
+
 	%>
 	
 	<h1 align = center>	Bem vindo <%=nome %>!</h1>	

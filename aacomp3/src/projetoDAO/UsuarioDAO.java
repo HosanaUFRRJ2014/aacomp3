@@ -35,12 +35,35 @@ public void adicionaUsuario(String nome, String email,String telefone){
 		}		
 	}
 	
-	public String procuraNome(int ID){
+	public String procuraNome(String email){
 		
-		String sql = "select nome from usuarios where idgrupo=?";
+		String sql = "select nome from usuarios where email=?";
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			stmt.setInt(1,ID);
+			stmt.setString(1,email);
+			
+			ResultSet rs = stmt.executeQuery();		
+			rs.next();
+			String retorno = rs.getString(1);
+			
+			rs.close();
+			stmt.close();
+			return retorno;
+			
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}
+		
+		
+	}	
+	
+	
+	public String procuraTelefone(String email){
+		
+		String sql = "select telefone from usuarios where email=?";
+		try{
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);
+			stmt.setString(1,email);
 			
 			ResultSet rs = stmt.executeQuery();		
 			rs.next();
@@ -57,56 +80,13 @@ public void adicionaUsuario(String nome, String email,String telefone){
 		
 	}
 	
-	public String procuraEmail(int ID){
+	//busca no banco se o usuario é motorista ou não 
+	public boolean procuraMotorista(String email){
 		
-		String sql = "select email from usuarios where idusuario=?";
+		String sql = "select motorista from usuarios where email=?";
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			stmt.setInt(1,ID);
-			
-			ResultSet rs = stmt.executeQuery();		
-			rs.next();
-			String retorno = rs.getString(1);
-			
-			rs.close();
-			stmt.close();
-			return retorno;
-			
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-		
-		
-	}
-	
-	public String procuraTelefone(int ID){
-		
-		String sql = "select telefone from usuarios where idusuario=?";
-		try{
-			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			stmt.setInt(1,ID);
-			
-			ResultSet rs = stmt.executeQuery();		
-			rs.next();
-			String retorno = rs.getString(1);
-			
-			rs.close();
-			stmt.close();
-			return retorno;
-			
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-		
-		
-	}
-	
-	public boolean procuraMotorista(int ID){
-		
-		String sql = "select motorista from usuarios where idusuario=?";
-		try{
-			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			stmt.setInt(1,ID);
+			stmt.setString(1, email);
 			
 			ResultSet rs = stmt.executeQuery();		
 			rs.next();
@@ -118,18 +98,18 @@ public void adicionaUsuario(String nome, String email,String telefone){
 			
 		}catch(SQLException e){
 			throw new RuntimeException(e);
-		}
-			
+		}			
 	}
 	
-	public void mudaNome(int ID, String novoNome){
+	public void mudaInformacoes(String email, String novoNome, String novoTelefone){
 		
-		String sql = "update usuarios set nome=? where idusuario=?";
+		String sql = "update usuarios set (nome,telefone)=(?,?) where email=?";
 		
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
 			stmt.setString(1,novoNome);
-			stmt.setInt(2,ID);
+			stmt.setString(2, novoTelefone);
+			stmt.setString(3,email);
 			
 			stmt.execute();
 			stmt.close();	
@@ -137,23 +117,7 @@ public void adicionaUsuario(String nome, String email,String telefone){
 		}catch(SQLException e){
 			throw new RuntimeException(e);
 		}
-	}
-	
-	public void mudaTelefone(int ID,String novoTelefone){
-		
-		String sql = "update usuarios set telefone=? where idusuario=?";
-		
-		try{
-			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			stmt.setString(1, novoTelefone);
-			stmt.setInt(2,ID);
-			
-			stmt.execute();
-			stmt.close();
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-	}
+	}	
 	
 	public void mudaMotorista(String email){
 		
@@ -222,33 +186,6 @@ public void adicionaUsuario(String nome, String email,String telefone){
 			throw new RuntimeException(e);
 		}
 	}
-
-	public Usuario buscarPorEmail(String email) 
-	{
-        
-		String sql = "select * from usuarios where email=" + email;
-		
-		try{
-			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			
-			ResultSet rs = stmt.executeQuery();
-			
-			Usuario usuario = null;
-			
-			while(rs.next()){
-				
-				usuario = new Usuario(rs.getString(2),rs.getString(3),rs.getString(4));
-				
-				
-			}
-			rs.close();
-			stmt.close();
-			return usuario;
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-		
-	}
 	
 	public boolean verificaEmail(String email){
 		
@@ -280,7 +217,7 @@ public void adicionaUsuario(String nome, String email,String telefone){
 		
 	}
 	
-public ArrayList<String> recuperaPorEmail(String email){
+	public ArrayList<String> recuperaPorEmail(String email){
 		
 		String sql = "select * from usuarios where email=?";
 		try{			
@@ -290,22 +227,19 @@ public ArrayList<String> recuperaPorEmail(String email){
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
 			
-			ArrayList<String> retorno = new ArrayList<String>();
+			ArrayList<String> retorno = new ArrayList<String>();				
 			
-			//idUsuario = retorno[1]
-			Integer idUsuario = rs.getInt(1);
-			retorno.add(idUsuario.toString());
-			
-			//nome = retorno[2]
+			//retorno[0] = nome
+			retorno.add(rs.getString(1));
+			//retorno[1] = email
 			retorno.add(rs.getString(2));
-			//email = retorno[3]
+			//retorno[2] = telefone
 			retorno.add(rs.getString(3));
-			//telefone = retorno[4]
-			retorno.add(rs.getString(4));
 			
-			//motorista = retorno[5]
-			Boolean bol = rs.getBoolean(5);
-			retorno.add(bol.toString());
+			Boolean motorista = rs.getBoolean(4);
+			
+			//retorno[3] = motorista
+			retorno.add(motorista.toString());
 			
 			rs.close();
 			stmt.close();

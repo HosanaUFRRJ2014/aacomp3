@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
+<<<<<<< HEAD
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -50,15 +51,13 @@ td
 				<label> Cor *:</label>
 				<input type= "text" name = "corVeiculo"></p>
 				<label> Número vagas (Número de assentos - 1) *:</label>
-				<input type= "number" name = "numVagas"></p>
+				<input type= "number" name = "numVagasVeiculo"></p>
 				
 
 
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 
-				
-		
-	
+
 	
 		</td>
 	</tr>

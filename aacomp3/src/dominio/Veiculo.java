@@ -14,6 +14,11 @@ public class Veiculo
 
 	private ArrayList<Carona> caronas;
 
+	public Veiculo(){
+		//para auxiliar na crian�ar de veiculos nas jsp
+	}
+	
+
 	public Veiculo(String modelo,String placa,String cor,int numeroVagas)
 	{
 		this.modelo = modelo;
@@ -33,7 +38,33 @@ public class Veiculo
 
 		caronas = new ArrayList<Carona>();
 
+		
 	}
+	
+	
+	public ArrayList<String> veiculosDeUmDono(String email) throws ClassNotFoundException{
+		
+		VeiculoDAO aux = new VeiculoDAO();
+		
+		return aux.veiculosDeUmDono(email);
+	}
+	
+	
+//	public void armazenar(String emailDono) throws ClassNotFoundException 
+//	{
+//		VeiculoDAO veiculodao = new VeiculoDAO();
+//		
+//		veiculodao.adicionaVeiculo(emailDono, this.placa, this.cor, this.modelo);
+//		
+//		
+//	}	
+	
+	//daqui para baixo apenas getters and setters
+	
+//	public void setMotorista(Motorista novoMotorista) {
+//		this.motorista = novoMotorista;
+//		
+//	}
 
 	public String getCor() 
 	{
@@ -79,6 +110,7 @@ public class Veiculo
 	public void setCaronas(ArrayList<Carona> caronas) 
 	{
 		this.caronas = caronas;
+
 	}
 
 	public void setMotorista(Motorista novoMotorista) {

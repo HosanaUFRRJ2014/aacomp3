@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 
 public class CaronaDAO {
 	
@@ -16,7 +17,7 @@ public class CaronaDAO {
 		
 	}
 	
-	public void adicionarCarona(int idMotorista, Date dia, Date horarioSaida, int idParadaOrigem, int idParadaDestino, int idVeiculo) throws ClassNotFoundException{
+	public void adicionarCarona(String emailMotorista, Date dia, Time horarioSaida, int idParadaOrigem, int idParadaDestino, int idVeiculo) throws ClassNotFoundException{
 		
 		String sql = "insert into caronas" + 
 					"(idusuario,dia,saida,idparadaorigem,idparadadestino,vagasrest,idveiculo,cancelado)"+
@@ -24,9 +25,9 @@ public class CaronaDAO {
 		try{
 			//pegar a quantidade de vagas atual da carona
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);			
-			stmt.setInt(1,idMotorista);
+			stmt.setString(1,emailMotorista);
 			stmt.setDate(2, dia);
-			stmt.setDate(3, horarioSaida);
+			stmt.setTime(3, horarioSaida);
 			stmt.setInt(4, idParadaOrigem);
 			stmt.setInt(5, idParadaDestino);
 			

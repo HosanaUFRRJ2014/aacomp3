@@ -1,6 +1,7 @@
 package dominio;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class Motorista extends Usuario {
@@ -19,7 +20,7 @@ public class Motorista extends Usuario {
 		return veiculos.add(veiculo);
 	}
 	
-	public void criarCarona(Veiculo veiculo, Date dia, Date horarioSaida, Logradouro logrOrigem, Logradouro logrDestino)
+	public void criarCarona(Veiculo veiculo, Date dia, Time horarioSaida, Logradouro logrOrigem, Logradouro logrDestino)
 	{
 		Carona carona = new Carona(veiculo, dia, horarioSaida, logrOrigem, logrDestino);
 		veiculo.addCarona(carona);

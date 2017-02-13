@@ -1,12 +1,13 @@
 package dominio;
 
 import java.sql.Date;
+import java.sql.Time;
 
 public class Carona 
 {
 	private Veiculo veiculo;
 	private Date dia;
-	private Date horarioSaida;
+	private Time horarioSaida;
 	private Logradouro logrOrigem;
 	private Logradouro logrDestino;
 	private boolean cancelada;
@@ -25,7 +26,8 @@ public class Carona
      * saber o numero de vagas? Se preciso salvar, salvo em Caronas. (esxiste a posssibilidade de
      * salvar em veículos)
 	 * *******/
-	public Carona(Veiculo veiculo, Date dia, Date horarioSaida, Logradouro logrOrigem, Logradouro logrDestino) 
+	
+	public Carona(Veiculo veiculo, Date dia, Time horarioSaida, Logradouro logrOrigem, Logradouro logrDestino) 
 	{
 		this.veiculo = veiculo;
 		this.dia = dia;
@@ -60,7 +62,7 @@ public class Carona
 	}
 
 
-	public Date getHorarioSaida() {
+	public Time getHorarioSaida() {
 		return horarioSaida;
 	}
 

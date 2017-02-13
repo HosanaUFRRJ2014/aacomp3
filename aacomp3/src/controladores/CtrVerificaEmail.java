@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dominio.Usuario;
 import excecoes.CampoInvalidoException;
@@ -45,18 +46,17 @@ public class CtrVerificaEmail extends HttpServlet {
 		String email = request.getParameter("emailUsuario");
 		
 		Usuario aux = new Usuario(null,null,null);
-		PrintWriter out = response.getWriter();
+		
 		try {
 			if(aux.verificaEmail(email)){
 				
 				Usuario novoUsuario = aux.montaUsuario(email);
 				// enviando para JSP, sempre enviar como novoUsuario
-				request.setAttribute("novoUsuario", novoUsuario);
-				out.println(novoUsuario.getEmail());
-				out.println(novoUsuario.getNome());
-				out.println(novoUsuario.getTelefone());
-			//	RequestDispatcher rdSucesso = request.getRequestDispatcher("./pagInicial.jsp");
-			//	rdSucesso.forward(request, response);
+				HttpSession session = request.getSession();
+				session.setAttribute("novoUsuario", novoUsuario);			
+				
+				RequestDispatcher rdSucesso = request.getRequestDispatcher("./pagInicial.jsp");
+				rdSucesso.forward(request, response);
 				
 			}
 			else{
@@ -66,7 +66,7 @@ public class CtrVerificaEmail extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}catch(EmailInvalidoException e){
-			RequestDispatcher rdErro = request.getRequestDispatcher("./emailInvalido.jsp");
+			RequestDispatcher rdErro = request.getRequestDispatcher("./execoes/emailInvalido.jsp");
 			rdErro.forward(request, response);
 		}
 	}

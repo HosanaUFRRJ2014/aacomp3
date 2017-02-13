@@ -17,12 +17,12 @@ public class VeiculoDAO {
 		
 	}
 	
-	public void adicionaVeiculo(String emailDono, String placa, String cor, String modelo) throws ClassNotFoundException{
+	public void adicionaVeiculo(String emailUsuario, String placa, String cor, String modelo) throws ClassNotFoundException{
 		
 		String sql = "insert into veiculos" + "(idusuario,placa,cor,modelo)" + "values(?,?,?,?)";
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			stmt.setString(1,emailDono);
+			stmt.setString(1,emailUsuario);
 			stmt.setString(2, placa);
 			stmt.setString(3,cor);
 			stmt.setString(4, modelo);
@@ -31,7 +31,7 @@ public class VeiculoDAO {
 			stmt.close();
 			
 			UsuarioDAO usu = new UsuarioDAO();
-			usu.mudaMotorista(emailDono);
+			usu.mudaMotorista(emailUsuario);
 			
 			
 		}catch(SQLException e){
@@ -39,10 +39,33 @@ public class VeiculoDAO {
 		}	
 	}
 	
-	public String buscaDono(int ID){
+	public int recuperaID(String placa,String modelo){
+		String sql = "select idveiculo where (placa,modelo)=(?,?)";
 		
-		String sql = "select idusuario from veiculos where idveiculo=?";
-		String sql2 = "select nome from usuarios where idusuario=?";
+		try{
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);
+			stmt.setString(1,placa);
+			stmt.setString(2, modelo);			
+			
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			int retorno = rs.getInt(1);
+			
+			stmt.close();	
+			rs.close();
+			
+			return retorno;
+			
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}	
+	}
+	
+	public String buscaDono(String email){
+		
+		String sql = "select emailusuario from veiculos where idveiculo=?";
+		String sql2 = "select nome from usuarios where email=?";
 		
 		try{
 			
@@ -122,6 +145,64 @@ public class VeiculoDAO {
 		}catch(SQLException e){
 			throw new RuntimeException(e);
 		}		
+	}
+	
+	public ArrayList<String> veiculosDeUmDono(String emailDono){
+		
+		String sql = "select modelo from veiculos where emailusuario=?";
+		String sql2= "select placa from veiculos where emailusuario=?";
+		
+		try{
+					
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);
+			PreparedStatement stmt2 = this.conexao.prepareStatement(sql2);
+			
+			stmt.setString(1,emailDono);
+			stmt2.setString(1, emailDono);
+			
+			ResultSet rs = stmt.executeQuery();
+			ResultSet rs2 = stmt2.executeQuery();
+			
+			ArrayList<String> retorno = new ArrayList<String>();
+			
+			while(rs.next() && rs2.next()){
+				
+				retorno.add(rs.getString(1));
+				retorno.add(rs2.getString(1));
+				
+			}
+					
+			rs.close();
+			stmt.close();
+					
+			return retorno;
+					
+					
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}		
+		
+	}
+	
+	//muda cor do veiculo dado o ID do veiculo
+	public void mudaCor(int ID, String novaCor){
+		
+		String sql = "update veiculos set cor=? where idveiculo=?";
+		
+		try{
+					
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);
+			stmt.setString(1,novaCor);
+			stmt.setInt(2, ID);
+			
+					
+			stmt.execute();
+			stmt.close();			
+					
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}		
+		
 	}
 
 
