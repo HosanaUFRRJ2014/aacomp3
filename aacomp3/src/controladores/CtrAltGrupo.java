@@ -15,16 +15,16 @@ import excecoes.CampoInvalidoException;
 import excecoes.UsuarioNaoEncontradoException;
 
 /**
- * Servlet implementation class AltGrupo
+ * Servlet implementation class CtrAltGrupo
  */
-@WebServlet("/AltGrupo")
-public class AltGrupo extends HttpServlet {
+@WebServlet("/CtrAltGrupo")
+public class CtrAltGrupo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AltGrupo() {
+    public CtrAltGrupo() {
         super();
         // TODO Auto-generated constructor stub
     }

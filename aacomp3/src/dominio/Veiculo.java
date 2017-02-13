@@ -11,28 +11,28 @@ public class Veiculo
 	private String cor;
 	private Motorista motorista;
 	private int numeroVagas;
-	
+
 	private ArrayList<Carona> caronas;
-	
+
 	public Veiculo(String modelo,String placa,String cor,int numeroVagas)
 	{
-        this.modelo = modelo;
-        this.placa = placa;
-        this.cor = cor;		
-		
+		this.modelo = modelo;
+		this.placa = placa;
+		this.cor = cor;		
+
 		caronas = new ArrayList<Carona>();
-		
+
 	}
-	
+
 	public Veiculo(String modelo,String placa,String cor,int numeroVagas, Motorista motorista)
 	{
-        this.modelo = modelo;
-        this.placa = placa;
-        this.cor = cor;
+		this.modelo = modelo;
+		this.placa = placa;
+		this.cor = cor;
 		this.motorista = motorista;
-		
+
 		caronas = new ArrayList<Carona>();
-		
+
 	}
 
 	public String getCor() 
@@ -54,21 +54,21 @@ public class Veiculo
 	{
 		return placa;
 	}
-	
+
 	public int getNumeroVagas()
 	{
 		return numeroVagas;
 	}
-	
+
 	public Motorista getMotorista()
 	{
 		return motorista;
 	}
-	
+
 	public boolean addCarona(Carona carona)
 	{
 		return this.getCaronas().add(carona);
-		
+
 	}
 
 	public ArrayList<Carona> getCaronas() 
@@ -83,20 +83,28 @@ public class Veiculo
 
 	public void setMotorista(Motorista novoMotorista) {
 		this.motorista = novoMotorista;
-		
+
 	}
 
 	public void armazenar(String emailDono) throws ClassNotFoundException 
 	{
 		VeiculoDAO veiculodao = new VeiculoDAO();
-		
+
 		veiculodao.adicionaVeiculo(emailDono, this.placa, this.cor, this.modelo);
-		
-		
+
+
 	}
-	
-	
-	
-	
+
+	public void alterar(String novaCor) {
+		VeiculoDAO veiculodao = new VeiculoDAO();
+
+		//precisa desse método no DAO
+		veiculodao.mudaCor(novaCor);
+
+	}
+
+
+
+
 
 }

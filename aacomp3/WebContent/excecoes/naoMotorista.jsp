@@ -31,15 +31,15 @@ td {
 	<table align=center width=600 border=1 bgcolor="white"
 		bordercolor="black" borderstyle="solid">
 		<tr>
-			<td width=50 >
+			<td width=50 align=center >
 			
 				<form>
-					<label>Volte para a pagina inicial</label>
+					<label>Volte para a pagina inicial</label> <br>
 					<input type="button" value="Retornar" onClick="history.go(-1)">
 				</form>
-				
+				<br>
 				<label>Deseja cadastrar um veiculo e se tornar um motorita?</label>
-				<form action="./criar/criarVeiculo.jsp" method="post">
+				<form action="../criar/criarVeiculo.jsp" method="post">
 					<input type="submit" value="Cadastrar Veiculo">
 				</form>
 			

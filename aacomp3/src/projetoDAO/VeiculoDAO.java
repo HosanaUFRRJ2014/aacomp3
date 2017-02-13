@@ -59,7 +59,7 @@ public class VeiculoDAO {
 			//rs2 recebe o Nome do usuario com o ID no carro
 			ResultSet rs2 = stmt2.executeQuery();
 			rs2.next();
-			//retorno será o nome do usuario
+			//retorno serï¿½ o nome do usuario
 			String retorno = rs2.getString(1);
 			
 			return retorno;
@@ -81,10 +81,10 @@ public class VeiculoDAO {
 			stmt.setInt(1,ID);
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
-			// cria Lista que irá conter todas informações do carro
+			// cria Lista que irï¿½ conter todas informaï¿½ï¿½es do carro
 			List<String> retorno = new ArrayList<String>();
 			
-			//adiciona na Lista as informação da coluna 3(placa), 4(cor), 5(modelo)
+			//adiciona na Lista as informaï¿½ï¿½o da coluna 3(placa), 4(cor), 5(modelo)
 			retorno.add(rs.getString(3));
 			retorno.add(rs.getString(4));
 			retorno.add(rs.getString(5));	
@@ -110,7 +110,7 @@ public class VeiculoDAO {
 			stmt.setInt(1,ID);
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
-			// retorno irá receber a quantidade de vagas do carro
+			// retorno irï¿½ receber a quantidade de vagas do carro
 			int retorno = rs.getInt(1);
 					
 			rs.close();
@@ -123,5 +123,6 @@ public class VeiculoDAO {
 			throw new RuntimeException(e);
 		}		
 	}
+
 
 }
