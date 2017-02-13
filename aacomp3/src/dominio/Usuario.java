@@ -1,7 +1,12 @@
 package dominio;
 
+import java.awt.List;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import projetoDAO.UsuarioDAO;
 
@@ -15,11 +20,10 @@ public class Usuario
 	//se recebido mais de 3 avaliações ruins, ele é expulso do grupo.
 	private HashMap<Grupo, ArrayList<Avaliacao>> avaliacoesPorGrupo;
 
-	//não funciona, pois usuario deve estar ativo ou inativo
-	//em cada grupo que ele participa. Ver Map ou hash
-	//	private boolean ativo;
-	private HashMap<Grupo, Boolean> grupos;
-	//private ArrayList <Grupo> gruposParticipados;
+
+	//private LinkedHashMap<Grupo, Boolean> grupos;
+	private LinkedList <Grupo> gruposQueUsuarioEstaAtivo;
+	private LinkedList <Grupo> gruposQueUsuarioEstaInativo;
 
 	//apenas para a busca do Usuario no caso de criarGrupo
 	public Usuario()
@@ -38,7 +42,8 @@ public class Usuario
 		//continuar a instanciação de avaliacoesPorGrupo
 
 
-		grupos = new HashMap<Grupo, Boolean>();
+		gruposQueUsuarioEstaAtivo = new LinkedList<Grupo>();
+		gruposQueUsuarioEstaInativo = new LinkedList<Grupo>();
 
 	}
 
@@ -75,7 +80,7 @@ public class Usuario
 	public boolean participarDoGrupo(Grupo grupo)
 	{
 		//ver método adicionarUsuario em Grupo.java
-		return grupos.put(grupo,true);
+		return gruposQueUsuarioEstaAtivo.add(grupo);
 	}
 
 
@@ -134,6 +139,22 @@ public class Usuario
 
 	public String getEmail() {
 		return email;
+	}
+
+	public LinkedList<Grupo> getGruposQueUsuarioEstaAtivo() {
+		return gruposQueUsuarioEstaAtivo;
+	}
+
+	public void setGruposQueUsuarioEstaAtivo(LinkedList<Grupo> gruposQueUsuarioEstaAtivo) {
+		this.gruposQueUsuarioEstaAtivo = gruposQueUsuarioEstaAtivo;
+	}
+
+	public LinkedList<Grupo> getGruposQueUsuarioEstaInativo() {
+		return gruposQueUsuarioEstaInativo;
+	}
+
+	public void setGruposQueUsuarioEstaInativo(LinkedList<Grupo> gruposQueUsuarioEstaInativo) {
+		this.gruposQueUsuarioEstaInativo = gruposQueUsuarioEstaInativo;
 	}
 
 	public void armazenar() throws ClassNotFoundException

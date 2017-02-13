@@ -51,19 +51,12 @@ public class AltUsuario extends HttpServlet {
 				throw new CampoInvalidoException();
 			}			
 			else{				
-				try {
-					
-					usuarioExistente.alterar(novoNome, novoTelefone);
-					
-					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
-					request.setAttribute("novoUsuario", usuarioExistente);
-					RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoAlterar.jsp");
-					rdSucesso.forward(request,response);
-					
-				} catch (ClassNotFoundException e) {
-					// eclipse me OBRIGOU a criar esse Try/Catch
-					e.printStackTrace();
-				}
+				usuarioExistente.alterar(novoNome, novoTelefone);
+				
+				// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
+				request.setAttribute("novoUsuario", usuarioExistente);
+				RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoAlterar.jsp");
+				rdSucesso.forward(request,response);
 			}
 
 			}catch(CampoInvalidoException e){	
@@ -72,11 +65,11 @@ public class AltUsuario extends HttpServlet {
 			}
 		
 			
-			
-// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
-			request.setAttribute("novoUsuario", novoUsuario);
-			RequestDispatcher rdSucesso = request.getRequestDispatcher("/sucessoCadastro");
-			rdSucesso.forward(request,response);
+//			
+//// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
+//			request.setAttribute("novoUsuario", usu);
+//			RequestDispatcher rdSucesso = request.getRequestDispatcher("/sucessoCadastro");
+//			rdSucesso.forward(request,response);
 	}
 
 }

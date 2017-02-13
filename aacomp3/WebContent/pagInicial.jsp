@@ -28,10 +28,32 @@ td
     border:black;
 }
 
+.btn-group .button {
+    background-color: black;
+    border: 1px solid green;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    width: 150px;
+    display: block;
+}
+
+.btn-group .button:not(:last-child) {
+    border-bottom: none; /* Prevent double borders */
+}
+
+.btn-group .button:hover {
+    background-color: #3e8e41;
+}
+
 </style>
 </head>
 <body>
-	<%		
+	<%	
 		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
 		String nome = novoUsuario.getNome();
 		request.setAttribute("novoUsuario",novoUsuario);
@@ -42,21 +64,21 @@ td
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 	
 	
 	<tr>
-	<td width=50 >							
+	<td width=50 align=center>							
 				<br>
 		<label>Escolha uma das opções abaixo:</label>
-		
-			<form action="alterarInformacoes.jsp" method="post">
-					
-			<input type="submit" value="Alterar Informações">
+		<br>
+		<br>
+		<br>
 			
-			</form>
+			<div class="btn-group" >
+  				<a href="./criar/criarVeiculo.jsp" class="button">Cadastrar um veiculo</a>
+  				<a href="./alterar/alterarUsuario.jsp" class="button">Alterar Informações de Usuário</a>
+  				<a href="selecionarGrupo.jsp" class="button">Alterar Informações de um Grupo</a>
+  				<a href="setarendereco" class="button">Button</a>
+			</div>
 			
-			<form action="criarVeiculo.jsp" method="post">		
 			
-			<input type="submit" value="Cadastrar um veiculo">
-			
-			</form>
 		
 		</td>
 	</tr>
