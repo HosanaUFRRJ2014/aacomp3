@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="dominio.*" import="java.util.LinkedList"
-    
-    %>
+    pageEncoding="UTF-8" import="dominio.Usuario"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,7 +8,7 @@
 <style>
 body 
 {
-  background: url(carona6.png) no-repeat white;
+  background: url(../carona6.png) no-repeat white;
   background-size: cover;
 }
 
@@ -33,47 +31,34 @@ td
 </head>
 <body>
 
-<%-- 	<% --%>
-		
-<!-- // 		
-// 		
-	 -->
-<%-- 	%> --%>
-
-	<h1 align = center>
-	Mudar é sempre bom! <br> <br>
-	<b>		Selecione um grupo para alterar		</b>
-	</h1>
-	
 	<%
-	   
-	Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
-	request.setAttribute("novoUsuario", novoUsuario);
-	LinkedList<Grupo> gruposQueParticipa = new LinkedList<Grupo>(); 
-			gruposQueParticipa = novoUsuario.getGruposQueUsuarioEstaAtivo(); //em algum momento, vai precisar pegar isso do banco.
+		
+// 		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
+// 		request.setAttribute("novoUsuario", novoUsuario);
 	
 	%>
+
+	<h1 align = center>
+	Participou do Lata Velha? <br> <br>
+	<b>		Altere a cor do veículo		</b>
+	</h1>
 	
 
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form method="post" action="./alterarGrupo.jsp">
+	<form method="post" action="../CtrAltUsuario">
 	<tr>
-		<td width=50 align=center>
+		<td width=50 >
 			
 <!-- 			    Não exite necessidade desse campo caso a sessão salve o email do usuário logado -->
 <!-- 				<label> Informe seu email cadastrado na nossa base *:(Esse campo não pode ser alterado, apenas informado)</label> -->
 <!-- 				<input type= "text" name = "emailUsuario"></p>				 -->
 
-            
-				
-				<select>
-				<%for(Grupo g : gruposQueParticipa){%> 
- 						<option value="grupo"><%=g.getNome() %></option> <!-- Exibe nomes dos grupos vindos do banco -->
-  				<%} %>
-				</select>
+         
+				<br><br>
+				<label> Informe uma nova cor para o veículo:</label>
+				<input type= "text" name = "novaCorVeiculo"></p>
 
-                <br>
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 
 				

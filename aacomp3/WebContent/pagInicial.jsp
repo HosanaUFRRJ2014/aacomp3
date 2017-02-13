@@ -54,9 +54,10 @@ td
 </head>
 <body>
 	<%	
-		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
-		String nome = novoUsuario.getNome();
-		request.setAttribute("novoUsuario",novoUsuario);
+	String nome = "Descomentar as linhas!!!";
+// 		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
+// 		String nome = novoUsuario.getNome();
+// 		request.setAttribute("novoUsuario",novoUsuario);
 	%>
 	
 	<h1 align = center>	Bem vindo <%=nome %>!</h1>	
@@ -75,6 +76,7 @@ td
   				<a href="./criar/criarVeiculo.jsp" class="button">Cadastrar um veiculo</a>
   				<a href="./alterar/alterarUsuario.jsp" class="button">Alterar Informações de Usuário</a>
   				<a href="selecionarGrupo.jsp" class="button">Alterar Informações de um Grupo</a>
+  				<a href="selecionarGrupo.jsp" class="button">Alterar cor de um carro</a>
   				<a href="setarendereco" class="button">Button</a>
 			</div>
 			

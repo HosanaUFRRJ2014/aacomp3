@@ -47,6 +47,12 @@ public class Motorista extends Usuario {
 	{
 	     carona.setCancelada(true);	
 	}
+
+	public ArrayList<Veiculo> getVeiculos() {
+		return veiculos;
+	}
+	
+	
 	
 
 }
