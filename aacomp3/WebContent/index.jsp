@@ -39,7 +39,7 @@ td {
 				<td width=50><br> 
 					<label> Digite o email cadastrado</label>					
 					<form action = "./CtrVerificaEmail" method="post">
-					<input type="text" name="emailUsuario">	</p>
+					<input type= "text" name="emailUsuario">	</p>
 					<input type = "submit" value="Login" ></p>
 					</form>
 					

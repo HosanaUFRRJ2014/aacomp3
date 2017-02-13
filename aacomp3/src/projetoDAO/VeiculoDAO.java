@@ -17,12 +17,12 @@ public class VeiculoDAO {
 		
 	}
 	
-	public void adicionaVeiculo(int idUsuario, String placa, String cor, String modelo) throws ClassNotFoundException{
+	public void adicionaVeiculo(String emailDono, String placa, String cor, String modelo) throws ClassNotFoundException{
 		
 		String sql = "insert into veiculos" + "(idusuario,placa,cor,modelo)" + "values(?,?,?,?)";
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			stmt.setInt(1,idUsuario);
+			stmt.setString(1,emailDono);
 			stmt.setString(2, placa);
 			stmt.setString(3,cor);
 			stmt.setString(4, modelo);
@@ -31,7 +31,7 @@ public class VeiculoDAO {
 			stmt.close();
 			
 			UsuarioDAO usu = new UsuarioDAO();
-			usu.mudaMotorista(idUsuario);
+			usu.mudaMotorista(emailDono);
 			
 			
 		}catch(SQLException e){

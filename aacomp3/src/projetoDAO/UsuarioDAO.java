@@ -155,13 +155,13 @@ public void adicionaUsuario(String nome, String email,String telefone){
 		}
 	}
 	
-	public void mudaMotorista(int ID){
+	public void mudaMotorista(String email){
 		
-		String sql = "update usuarios set motorista=true where idusuario=?";
+		String sql = "update usuarios set motorista=true where email=?";
 		
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			stmt.setInt(1,ID);
+			stmt.setString(1,email);
 			
 			stmt.execute();
 			stmt.close();
