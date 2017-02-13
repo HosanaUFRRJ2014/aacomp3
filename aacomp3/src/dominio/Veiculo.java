@@ -18,8 +18,7 @@ public class Veiculo
 	{
         this.modelo = modelo;
         this.placa = placa;
-        this.cor = cor;
-		
+        this.cor = cor;		
 		
 		caronas = new ArrayList<Carona>();
 		
@@ -87,11 +86,11 @@ public class Veiculo
 		
 	}
 
-	public void armazenar() throws ClassNotFoundException 
+	public void armazenar(String emailDono) throws ClassNotFoundException 
 	{
 		VeiculoDAO veiculodao = new VeiculoDAO();
 		
-		veiculodao.adicionaVeiculo(idUsuario, this.placa, this.cor, this.modelo);
+		veiculodao.adicionaVeiculo(emailDono, this.placa, this.cor, this.modelo);
 		
 		
 	}
