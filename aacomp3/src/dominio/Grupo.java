@@ -3,16 +3,13 @@ package dominio;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import projetoDAO.GrupoDAO;
-import projetoDAO.UsuarioDAO;
-
 public class Grupo 
 {
 	private String nome;
 	private String descricao;
 	private String regras; 
 	
-	private int limMinAvaliacoesRuins;
+	private long limMinAvaliacoesRuins;
 	
 	private boolean ativo;
 	
@@ -32,7 +29,7 @@ public class Grupo
 	}
 	
 	//construtor para caso o usuário queira padronizar o limMinAvaliacoesRuins
-	public Grupo(Usuario donoGrupo, String nomeGrupo, String descricao, String regras, int lim)
+	public Grupo(Usuario donoGrupo, String nomeGrupo, String descricao, String regras, long lim)
 	{
 		this(donoGrupo, nomeGrupo, descricao,  regras);
 		limMinAvaliacoesRuins = lim;
@@ -72,7 +69,7 @@ public class Grupo
 		return limMinAvaliacoesRuins;
 	}
 
-	public void setLimMinAvaliacoesRuins(int limMinAvaliacoesRuins)
+	public void setLimMinAvaliacoesRuins(long limMinAvaliacoesRuins)
 	{
 		this.limMinAvaliacoesRuins = limMinAvaliacoesRuins;
 	}
@@ -118,15 +115,7 @@ public class Grupo
 		return false;
 		
 	}
-
-	public void armazenar() throws ClassNotFoundException 
-	{
-		GrupoDAO grupodao = new GrupoDAO();
-		grupodao.adicionaGrupo(this.nome, this.descricao, this.regras, this.limMinAvaliacoesRuins);
-		
-	}
 	
-
 //	public boolean todosUsuariosInativos(ArrayList<Usuario> us)
 //	{
 //		

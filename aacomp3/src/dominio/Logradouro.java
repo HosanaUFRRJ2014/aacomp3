@@ -9,6 +9,12 @@ public class Logradouro
 	private String endereco;
 	private int numero;
 	
+	// para criar testes iniciais
+	public Logradouro(String CEP, int numero)
+	{
+		this.CEP = CEP;		
+		this.numero = numero;
+	}
 	
 	public Logradouro(String CEP, String estado, String cidade, String distrito, String endereco, int numero)
 	{

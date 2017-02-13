@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="dominio.Usuario"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -30,32 +30,39 @@ td
 </style>
 </head>
 <body>
+    
+    <%
+		
+		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
+		String nome = novoUsuario.getNome();
+		request.setAttribute("novoUsuario", novoUsuario);
+	
+	%>
 
 	<h1 align = center>
-	Novo por aqui? <br> <br>
-	<b>		CADASTRAR-SE		</b>
+	Opa!! Mais um transporte!! <br> <br>
+	<b>		CADASTRE UM NOVO VEÍCULO		</b>
 	</h1>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form method="post" action="../CtrCriarUsuario">
+	<form method="post" action="../CtrCriarVeiculo">
 	<tr>
 		<td width=50 >
 			
 								
 				<br>
-				<label> Nome *:</label>
-				<input type= "text" name = "nomeUsuario"></p>
-				<label> Email *:</label>
-				<input type= "text" name = "emailUsuario"></p>
-				<label> Telefone *:</label>
-				<input type= "text" name = "telefoneUsuario"></p>
-				
+				<label> Modelo *:</label>
+				<input type= "text" name = "modeloVeiculo"></p>
+				<label> Placa *:</label>
+				<input type= "text" name = "placaVeiculo"></p>
+				<label> Cor *:</label>
+				<input type= "text" name = "corVeiculo"></p>
+				<label> Número de vagas (Número total de assentos - 1) *:</label>
+				<input type= "number" name = "numVagasVeiculo"></p>
+
 
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 
-				
-		
-	
 	
 		</td>
 	</tr>

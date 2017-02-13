@@ -34,7 +34,6 @@ td
 	<h1 align = center><b>		CRIAR GRUPO		</b></h1>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-<<<<<<< HEAD
 	<form>
 	<tr>
 		<td width=50 >
@@ -49,24 +48,6 @@ td
 				<input type= "text" name = "regrasGrupo"></p>
 				<label> Limite de avaliações ruins que um usuário pode receber: (Opcional)</label>
 				<input type= "text" name = "limiteAvalRuinsGrupo"></p>
-=======
-	<form method="post" action="../CtrCriarGrupo">
-	<tr>
-		<td width=50 >
-			
-								
-				<br>
-				<label> Digite seu email já cadastrado no sistema *:</label>
-				<input type= "text" name = "emailDonoGrupo"></p>
-				<label> Nome *:</label>
-				<input type= "text" name = "nomeGrupo"></p>
-				<label> Descrição *:</label>
-				<input type= "text" name = "descricaoGrupo"></p>
-				<label> Regras *:</label>
-				<input type= "text" name = "regrasGrupo"></p>
-				<label> Limite de avaliações ruins que um usuário pode receber: (Opcional)</label>
-				<input type= "number" name = "limiteAvalRuinsGrupo"></p>
->>>>>>> refs/heads/hosana
 				
 <!-- 			    Adicionar email do cara que está criando o grupo. Pré-requisito: email/usuario já cadasttrado no sistema. -->
 				

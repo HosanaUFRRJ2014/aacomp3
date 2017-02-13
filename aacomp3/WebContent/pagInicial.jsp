@@ -31,10 +31,10 @@ td
 </style>
 </head>
 <body>
+
 	<%		
-		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
+		Usuario novoUsuario = (Usuario) session.getAttribute("novoUsuario");
 		String nome = novoUsuario.getNome();
-		request.setAttribute("novoUsuario",novoUsuario);
 	%>
 	
 	<h1 align = center>	Bem vindo <%=nome %>!</h1>	
@@ -52,7 +52,7 @@ td
 			
 			</form>
 			
-			<form action="criarVeiculo.jsp" method="post">		
+			<form action="./criar/criarVeiculo.jsp" method="post">		
 			
 			<input type="submit" value="Cadastrar um veiculo">
 			
