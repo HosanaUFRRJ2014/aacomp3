@@ -44,8 +44,8 @@ td
 				<input type= "text" name = "nomeGrupo"></p>
 				<label> Descrição *:</label>
 				<input type= "text" name = "descricaoGrupo"></p>
-				<label> Regras *:</label>
-				<input type= "text" name = "regrasGrupo"></p>
+				<label> Regras *:</label> <br>
+				<textarea name="regrasGrupo" rows=10 cols=20>Digite as regras para o grupo aqui.</textarea> <br><br>
 				<label> Limite de avaliações ruins que um usuário pode receber: (Opcional)</label>
 				<input type= "text" name = "limiteAvalRuinsGrupo"></p>
 				

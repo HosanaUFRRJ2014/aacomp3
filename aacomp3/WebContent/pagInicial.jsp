@@ -57,8 +57,10 @@ td
 
 
 	<%		
-		Usuario novoUsuario = (Usuario) session.getAttribute("novoUsuario");
-		String nome = novoUsuario.getNome();
+// 		Usuario novoUsuario = (Usuario) session.getAttribute("novoUsuario");
+// 		String nome = novoUsuario.getNome();
+		
+		String nome  = "Descomentar linhas";
 
 	%>
 	
@@ -75,10 +77,12 @@ td
 		<br>
 			
 			<div class="btn-group" >
-  				<a href="./criar/criarVeiculo.jsp" class="button">Cadastrar um veiculo</a>
+  				<a href="./criar/criarVeiculo.jsp" class="button">Cadastrar um Veículo</a>
   				<a href="./alterar/alterarUsuario.jsp" class="button">Alterar Informações de Usuário</a>
-  				<a href="selecionarGrupo.jsp" class="button">Alterar Informações de um Grupo</a>
-  				<a href="selecionarGrupo.jsp" class="button">Alterar cor de um carro</a>
+  				<a href="./listar/listarVeiculos.jsp" class="button">Listar Meus Veículos (Apenas para Motoristas)</a>
+<!--   				<a href="./alterar/alterarVeiculo.jsp" class="button">Alterar Cor de um Veículo</a> -->
+  				<a href="listar/listarGrupos.jsp" class="button">Listar Grupos que Faço Parte</a>
+  				<a href="setarendereco" class="button">Button</a>
   				<a href="setarendereco" class="button">Button</a>
 			</div>
 			

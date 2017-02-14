@@ -2,17 +2,23 @@ package dominio;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Motorista extends Usuario {
 
 
-	private ArrayList<Veiculo> veiculos;
+	private LinkedList<Veiculo> veiculos;
 
+	
+	//apenas para facilitar na jsp
+	public Motorista()
+	{
+		
+	}
 	
 	public Motorista(String nome, String email, String telefone, Veiculo veiculo) {
 		super(nome, email, telefone);
-		veiculos = new ArrayList<Veiculo>();
+		veiculos = new LinkedList<Veiculo>();
 		veiculos.add(veiculo);
 	}
 	
@@ -50,7 +56,7 @@ public class Motorista extends Usuario {
 	     carona.setCancelada(true);	
 	}
 
-	public ArrayList<Veiculo> getVeiculos() {
+	public LinkedList<Veiculo> getVeiculos() {
 		return veiculos;
 	}
 	
