@@ -3,6 +3,9 @@ package dominio;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import projetoDAO.GrupoDAO;
+import projetoDAO.ParticipaDAO;
+
 public class Grupo 
 {
 	private int id;
@@ -10,7 +13,7 @@ public class Grupo
 	private String descricao;
 	private String regras; 
 	
-	private long limMinAvaliacoesRuins;
+	private int limMinAvaliacoesRuins;
 	
 	private boolean ativo;
 	
@@ -30,15 +33,32 @@ public class Grupo
 	}
 	
 	//construtor para caso o usuário queira padronizar o limMinAvaliacoesRuins
-	public Grupo(Usuario donoGrupo, String nomeGrupo, String descricao, String regras, long lim)
+	public Grupo(Usuario donoGrupo, String nomeGrupo, String descricao, String regras, int lim)
 	{
 		this(donoGrupo, nomeGrupo, descricao,  regras);
 		limMinAvaliacoesRuins = lim;
 		
 	}
 	
-
+	public void armazenar() throws ClassNotFoundException{
+		
+		GrupoDAO aux = new GrupoDAO();
+		ParticipaDAO aux2 = new ParticipaDAO();
+		
+		aux.adicionaGrupo(this.nome, this.descricao, this.regras, this.limMinAvaliacoesRuins);
+		aux2.adicionaParticipa(this.usuarios.get(0).getEmail(), this.id);
+		
+	}
 	
+	
+	
+	
+	
+	
+	
+	
+
+	//daqui para baixo apenas getters and setters
 	public boolean adicionarUsuario(Usuario u)
 	{
 		//u.participarDoGrupo(this); Eu dúvida se faço isso aqui ou faço externamente.

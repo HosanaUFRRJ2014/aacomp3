@@ -16,12 +16,12 @@ import java.util.Set;
 		this.conexao = new ConnectionFactory().getConnection();
 	}
 	
-	public void adicionaParticipa(int idUsuario, int idGrupo){
-		String sql = "insert into participa" + "(idusuario,idgrupo,ativo)" + "values(?,?,true)";
+	public void adicionaParticipa(String emailUsuario, int idGrupo){
+		String sql = "insert into participa" + "(emailusuario,idgrupo,ativo)" + "values(?,?,true)";
 		
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			stmt.setInt(1,idUsuario);
+			stmt.setString(1,emailUsuario);
 			stmt.setInt(2, idGrupo);
 			
 			stmt.execute();
@@ -32,7 +32,8 @@ import java.util.Set;
 		}	
 	}
 	
-	public Set<String> gruposDoUsuario(int idUsuario){
+	//retorna o nome de todos grupos em que um usuario está
+	public ArrayList<String> gruposDoUsuario(int idUsuario){
 		
 		String sql = "select nome from grupos where idgrupo=?";
 		String sql2 = "select idgrupo from participa where idusuario=?";
@@ -50,7 +51,7 @@ import java.util.Set;
 			}
 			rs2.close();
 			stmt2.close();
-			Set<String> retorno = new HashSet<String>();			
+			ArrayList<String> retorno = new ArrayList<String>();			
 			for(int contador = 0;contador<idGrupos.size();contador++){
 				stmt.setInt(1,idGrupos.get(contador));
 				ResultSet rs = stmt.executeQuery();
@@ -66,10 +67,11 @@ import java.util.Set;
 		}
 	}
 	
-public Set<String> usuariosDoGrupo(int idGrupo){
+	//retorna o nome de todos usuarios de um grupo
+	public ArrayList<String> usuariosDoGrupo(int idGrupo){
 		
-		String sql2 = "select idusuario from participa where idgrupo=?";
-		String sql = "select nome from usuarios where idusuario=?";
+		String sql2 = "select emailusuario from participa where idgrupo=?";
+		String sql = "select nome from usuarios where email=?";
 			
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
@@ -85,8 +87,9 @@ public Set<String> usuariosDoGrupo(int idGrupo){
 			}
 			rs2.close();
 			stmt2.close();
+			
 			//retorno será Set que irá receber os nomes dos usuarios
-			Set<String> retorno = new HashSet<String>();			
+			ArrayList<String> retorno = new ArrayList<String>();			
 			for(int contador = 0;contador<idUsuarios.size();contador++){
 				//passa para STMT os IDs dos usuarios para poder então pegar o nome do usuario
 				stmt.setInt(1,idUsuarios.get(contador));

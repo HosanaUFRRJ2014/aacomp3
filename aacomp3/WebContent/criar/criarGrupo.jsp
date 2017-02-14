@@ -47,14 +47,8 @@ td
 				<label> Regras *:</label>
 				<input type= "text" name = "regrasGrupo"></p>
 				<label> Limite de avaliações ruins que um usuário pode receber: (Opcional)</label>
-				<input type= "text" name = "limiteAvalRuinsGrupo"></p>
-				
-<!-- 			    Adicionar email do cara que está criando o grupo. Pré-requisito: email/usuario já cadasttrado no sistema. -->
-				
-				
-				
-<!-- 				<p><label> botoes </label></p> -->
-<!-- 				<input type= "button" value="botao1">  -->
+				<input type= "text" name = "limiteAvalRuinsGrupo"></p>				
+
 				
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 
