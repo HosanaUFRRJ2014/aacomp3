@@ -10,6 +10,12 @@ public class Motorista extends Usuario {
 	private ArrayList<Veiculo> veiculos;
 
 	
+	//apenas para facilitar na jsp
+	public Motorista()
+	{
+		
+	}
+	
 	public Motorista(String nome, String email, String telefone, Veiculo veiculo) {
 		super(nome, email, telefone);
 		veiculos = new ArrayList<Veiculo>();
