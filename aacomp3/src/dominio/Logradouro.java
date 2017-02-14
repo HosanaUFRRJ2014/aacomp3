@@ -1,5 +1,7 @@
 package dominio;
 
+import projetoDAO.LogradouroDAO;
+
 public class Logradouro 
 {
 	private int id;
@@ -10,22 +12,43 @@ public class Logradouro
 	private String endereco;
 	private int numero;
 	
-	// para criar testes iniciais
-	public Logradouro(String CEP, int numero)
-	{
-		this.CEP = CEP;		
-		this.numero = numero;
-	}
 	
-	public Logradouro(String CEP, String estado, String cidade, String distrito, String endereco, int numero)
+	
+	public Logradouro(String CEP, String estado, String cidade, String distrito, String rua, int numero)
 	{
 		this.CEP = CEP;
 		this.estado = estado;
 		this.cidade = cidade;
 		this.distrito = distrito;
-		this.endereco = endereco;
+		this.endereco = rua;
 		this.numero = numero;
 	}
+	
+	
+	public void armazena() throws ClassNotFoundException{
+		
+		LogradouroDAO aux = new LogradouroDAO();
+		
+		aux.adicionaLogradouro(this.CEP, this.numero, this.estado, this.cidade, this.distrito, this.endereco);
+		
+	}
+	
+	public boolean verifica() throws ClassNotFoundException{
+		
+		LogradouroDAO aux = new LogradouroDAO();
+		
+		return aux.verificaLogradouro(this.CEP, this.numero);
+	}
+	
+	public void recuperaID() throws ClassNotFoundException{
+		
+		LogradouroDAO aux = new LogradouroDAO();
+		
+		this.id = aux.recuperaID(this.CEP, this.numero);
+	}
+	
+	
+	//daqui para baixo apenas getters and setters
 	
 	public int getId() {
 		return id;
@@ -64,15 +87,6 @@ public class Logradouro
 	public int getNumero() {
 		return numero;
 	}
-	
-	
-	
-	
-
-	/*Fazer a verificação do CEP!!!*/
-	
-	
-	
 	
 
 }

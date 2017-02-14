@@ -47,8 +47,8 @@ td
 	
 	<%
 	   
-	Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
-	request.setAttribute("novoUsuario", novoUsuario);
+	Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");
+	
 	LinkedList<Grupo> gruposQueParticipa = new LinkedList<Grupo>(); 
 			gruposQueParticipa = novoUsuario.getGruposQueUsuarioEstaAtivo(); //em algum momento, vai precisar pegar isso do banco.
 	

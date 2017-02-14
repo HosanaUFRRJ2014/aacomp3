@@ -9,9 +9,20 @@
 </head>
 <body>
 <%
-	Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");
+	String resposta = request.getParameter("opcao");
+	String[] teste = resposta.split("/");
+	out.println(" opcao escolhida foi  " + resposta + "  o slipt foi = ");
+	out.println("  modelo:  ");
+	out.println(teste[0]);
+	out.println("  placa:  ");
+	out.println(teste[1]);
 	
-	out.println(novoUsuario.getEmail()+ " " + novoUsuario.getNome()+ " " + novoUsuario.getTelefone());
+	if(teste[0].equals("modelo0")){
+		out.println("testo0 ta certo");
+	}
+	if(teste[1].equals("placa0")){
+		out.println("teste1 ta certo");
+	}
 %>
 
 </body>

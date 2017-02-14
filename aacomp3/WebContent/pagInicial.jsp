@@ -79,6 +79,7 @@ td
   				<a href="./alterar/alterarUsuario.jsp" class="button">Alterar Informações de Usuário</a>
   				<a href="selecionarGrupo.jsp" class="button">Alterar Informações de um Grupo</a>
   				<a href="selecionarGrupo.jsp" class="button">Alterar cor de um carro</a>
+  				<a href="./criar/criarCarona.jsp" class="button">Criar uma nova Carona	</a>
   				<a href="setarendereco" class="button">Button</a>
 			</div>
 			

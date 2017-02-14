@@ -72,7 +72,7 @@ public class CtrCriarVeiculo extends HttpServlet {
 					auxUsu.mudaMotorista(email);
 					
 					VeiculoDAO auxVei = new VeiculoDAO();
-					auxVei.adicionaVeiculo(email, placa, cor, modelo);
+					auxVei.adicionaVeiculo(email, placa, cor, modelo,Integer.parseInt(numVagas));
 					
 					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar um novo veiculo, se quiser
 					

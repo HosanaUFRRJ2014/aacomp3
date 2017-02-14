@@ -189,7 +189,7 @@ public void adicionaUsuario(String nome, String email,String telefone){
 	
 	public boolean verificaEmail(String email){
 		
-		String sql = "select email from usuarios where email like ?";
+		String sql = "select email from usuarios where email=?";
 		
 		try{
 			
@@ -199,12 +199,21 @@ public void adicionaUsuario(String nome, String email,String telefone){
 			ResultSet rs = stmt.executeQuery();
 			
 			if(rs.next()==false){
+				rs.close();				
+				stmt.close();
+				
 				return false;
+			}else{
+				
+				String aux = rs.getString(1);
+				
+				if(aux.equals(email)){
+					rs.close();
+					stmt.close();
+					return true;
+				}
 			}
-			String aux = rs.getString(1);
-			if(aux.equals(email)){
-				return true;
-			}
+			
 			rs.close();
 			stmt.close();
 			

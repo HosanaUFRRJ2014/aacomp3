@@ -3,6 +3,8 @@ package dominio;
 import java.sql.Date;
 import java.sql.Time;
 
+import projetoDAO.CaronaDAO;
+
 public class Carona 
 {
 	private int id;
@@ -37,7 +39,16 @@ public class Carona
 		this.logrDestino = logrDestino;
 		this.cancelada = false;
 	}
+	
+	public void armazena() throws ClassNotFoundException{
+		
+		CaronaDAO novaCarona = new CaronaDAO();
+		
+		novaCarona.adicionarCarona(this.veiculo.getMotorista().getEmail(), this.dia, this.horarioSaida, this.logrOrigem.getId(), this.logrDestino.getId(),this.veiculo.getNumeroVagas(), this.veiculo.getID());
 
+	}
+	
+	//daqui para baixo apenas getters and setters
 
 	public int getId() {
 		return id;

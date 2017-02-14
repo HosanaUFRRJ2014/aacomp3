@@ -17,15 +17,16 @@ public class VeiculoDAO {
 		
 	}
 	
-	public void adicionaVeiculo(String emailUsuario, String placa, String cor, String modelo) throws ClassNotFoundException{
+	public void adicionaVeiculo(String emailUsuario, String placa, String cor, String modelo,int vagas) throws ClassNotFoundException{
 		
-		String sql = "insert into veiculos" + "(idusuario,placa,cor,modelo)" + "values(?,?,?,?)";
+		String sql = "insert into veiculos" + "(emailusuario,placa,cor,modelo,vagas)" + "values(?,?,?,?,?)";
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
 			stmt.setString(1,emailUsuario);
 			stmt.setString(2, placa);
 			stmt.setString(3,cor);
 			stmt.setString(4, modelo);
+			stmt.setInt(5, vagas);
 			
 			stmt.execute();
 			stmt.close();
@@ -39,8 +40,8 @@ public class VeiculoDAO {
 		}	
 	}
 	
-	public int recuperaID(String placa,String modelo){
-		String sql = "select idveiculo where (placa,modelo)=(?,?)";
+	public int recuperaID(String modelo,String placa){
+		String sql = "select idveiculo from veiculos where (placa,modelo)=(?,?)";
 		
 		try{
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
@@ -94,7 +95,7 @@ public class VeiculoDAO {
 		
 	}
 	
-	public List<String> buscaInformacoes(int ID){
+	public ArrayList<String> buscaInformacoes(int ID){
 		
 		String sql = "select * from veiculos where idveiculo=?";		
 		
@@ -105,12 +106,21 @@ public class VeiculoDAO {
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
 			// cria Lista que ir� conter todas informa��es do carro
-			List<String> retorno = new ArrayList<String>();
+			ArrayList<String> retorno = new ArrayList<String>();
 			
-			//adiciona na Lista as informa��o da coluna 3(placa), 4(cor), 5(modelo)
+			//adiciona na Lista as informacoes do carro:, retorno[1] = emailDono...
+			// retorno[0] = id
+			retorno.add(String.valueOf(rs.getInt(1)));
+			//retorno[1] = emailDono
+			retorno.add(rs.getString(2));
+			//retorno[2] = placa
 			retorno.add(rs.getString(3));
+			//retorno[3] = cor
 			retorno.add(rs.getString(4));
+			//retorno[4] = modelo
 			retorno.add(rs.getString(5));	
+			//retorno[5] = vagas
+			retorno.add(String.valueOf(rs.getInt(6)));
 			
 			rs.close();
 			stmt.close();

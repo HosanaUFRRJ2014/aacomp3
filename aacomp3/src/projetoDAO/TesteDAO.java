@@ -10,31 +10,34 @@ import java.util.GregorianCalendar;
 import java.util.HashSet;
 
 import dominio.Usuario;
+import dominio.Veiculo;
 
 public class TesteDAO {
 
 	public static void main(String[] args) throws ClassNotFoundException {
 		// TODO Auto-generated method stub				
 		
+		String teste = "fusca/UFO1523";
+		String info[] = teste.split("/");
+		Veiculo vei = new Veiculo();
 		
-		GregorianCalendar data = new GregorianCalendar();
-		String teste = "11/02";
-		SimpleDateFormat dia = new SimpleDateFormat("dd/mm");
-		Date teste2;
-		Long mili = data.getTimeInMillis();
-		String hora = "10:10:15";
-		Time horas = new Time(mili);
-		try {
-			teste2 = dia.parse(teste);
-			System.out.println(horas.toString());
-			System.out.println(dia.format(teste2));
-		} catch (ParseException e) {
-			System.out.println("Você digitou data em um formato invalido!");
+		System.out.println(info[0]+"   " + info[1]);
+		
+		vei.recuperaID(info[0], info[1]);
+		System.out.println(vei.getID());
+		
+		
+		Veiculo novo = vei.recuperaCarro(vei.getID());
+		System.out.println(novo.getModelo());
+		
+			ArrayList<String> informa = novo.recuperaInfo();
+			for(int i=0;i<informa.size();i++){
+				System.out.println(informa.get(i));
+			}
 		}
-		
 		
 		
 		
 	}
 
-}
+

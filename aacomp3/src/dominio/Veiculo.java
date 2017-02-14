@@ -6,6 +6,7 @@ import projetoDAO.VeiculoDAO;
 
 public class Veiculo 
 {
+	private int id;
 	private String modelo;
 	private String placa;
 	private String cor;
@@ -19,8 +20,9 @@ public class Veiculo
 	}
 	
 
-	public Veiculo(String modelo,String placa,String cor,int numeroVagas)
+	public Veiculo(int ID,String modelo,String placa,String cor,int numeroVagas)
 	{
+		this.id = ID;
 		this.modelo = modelo;
 		this.placa = placa;
 		this.cor = cor;		
@@ -50,14 +52,50 @@ public class Veiculo
 	}
 	
 	
-//	public void armazenar(String emailDono) throws ClassNotFoundException 
-//	{
-//		VeiculoDAO veiculodao = new VeiculoDAO();
-//		
-//		veiculodao.adicionaVeiculo(emailDono, this.placa, this.cor, this.modelo);
-//		
-//		
-//	}	
+
+	public void armazenar() throws ClassNotFoundException 
+	{
+		VeiculoDAO veiculodao = new VeiculoDAO();
+
+		veiculodao.adicionaVeiculo(this.motorista.getEmail(), this.placa, this.cor, this.modelo,this.numeroVagas);
+
+
+	}
+
+	public void alterar(String novaCor) throws ClassNotFoundException {
+		
+		VeiculoDAO veiculodao = new VeiculoDAO();
+
+		//precisa desse método no DAO
+		veiculodao.mudaCor(this.id, novaCor);
+
+	}	
+	
+	public void recuperaID(String modelo, String placa) throws ClassNotFoundException {
+		
+		VeiculoDAO aux = new VeiculoDAO();
+		
+		this.setID(aux.recuperaID(modelo,placa));
+	}
+	
+	public Veiculo recuperaCarro(int ID) throws ClassNotFoundException{
+		
+		VeiculoDAO aux = new VeiculoDAO();
+		ArrayList<String> info = aux.buscaInformacoes(ID);
+		Veiculo novoMontado = new Veiculo(Integer.parseInt(info.get(0)),info.get(4),info.get(2),info.get(3),Integer.parseInt(info.get(5)));
+		
+		
+		return novoMontado;
+		
+	}
+	
+	public ArrayList<String> recuperaInfo() throws ClassNotFoundException{
+		
+		VeiculoDAO aux = new VeiculoDAO();
+		
+		return aux.buscaInformacoes(this.id);
+		
+	}
 	
 	//daqui para baixo apenas getters and setters
 	
@@ -118,23 +156,17 @@ public class Veiculo
 
 	}
 
-	public void armazenar(String emailDono) throws ClassNotFoundException 
-	{
-		VeiculoDAO veiculodao = new VeiculoDAO();
-
-		veiculodao.adicionaVeiculo(emailDono, this.placa, this.cor, this.modelo);
-
+	public void setID(int ID) {
+		
+		this.id = ID;
 
 	}
-
-	public void alterar(String novaCor) {
-		VeiculoDAO veiculodao = new VeiculoDAO();
-
-		//precisa desse método no DAO
-		veiculodao.mudaCor(id, novaCor);
+	
+	public int getID() {
+		
+		return this.id;	
 
 	}
-
 
 
 

@@ -10,13 +10,20 @@
 <body>
 
 <form action="teste.jsp" method="post">
-
+<select name="opcao">
 <%
 	
-	Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");
-	out.println(novoUsuario.getEmail());
+for(int contador = 0; contador < 10;contador++){
+String teste1 = "modelo" + contador;
+String teste2 = "placa" + contador;%>
 
-%>
+<option><%=teste1 %><%="/"%><%=teste2 %></option>
+
+<%	
+}				
+%>		
+</select>
+
 
 <input type="submit" value="Enviar">
 
