@@ -19,6 +19,17 @@ public class Veiculo
 		//para auxiliar na crian�ar de veiculos nas jsp
 	}
 	
+	public Veiculo(String modelo,String placa,String cor,int numeroVagas)
+	{
+	
+		this.modelo = modelo;
+		this.placa = placa;
+		this.cor = cor;		
+
+		caronas = new ArrayList<Carona>();
+
+	}
+	
 
 	public Veiculo(int ID,String modelo,String placa,String cor,int numeroVagas)
 	{
