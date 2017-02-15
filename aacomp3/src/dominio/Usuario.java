@@ -97,10 +97,10 @@ public class Usuario
 		
 		ParticipaDAO aux2 = new ParticipaDAO();
 		
-		//pega o ID de todos grupos que o usuario está
+		//pega o ID de todos grupos que o usuario estï¿½
 		ArrayList<Integer> gruposDoUsuario = aux2.gruposDoUsuario(email);
 		
-		//usuario está em nenhum grupo? pode retornar
+		//usuario estï¿½ em nenhum grupo? pode retornar
 		if(gruposDoUsuario.isEmpty()){
 			return retorno;
 		}
@@ -109,7 +109,7 @@ public class Usuario
 		
 		for(int contador = 0; contador<gruposDoUsuario.size();contador++){
 			
-			//cria grupo que o usuario está
+			//cria grupo que o usuario estï¿½
 			Grupo doUsuario = auxGrupo.recuperaGrupo(gruposDoUsuario.get(contador), retorno);
 			
 			//se o usuario estiver ativo no grupo adiciona no linked list ativo

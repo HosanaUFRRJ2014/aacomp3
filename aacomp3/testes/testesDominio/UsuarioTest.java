@@ -1,4 +1,4 @@
-package dominio;
+package testesDominio;
 
 import static org.junit.Assert.*;
 
@@ -134,59 +134,5 @@ public class UsuarioTest {
 		
 	}
 
-	@Test
-	public void testGetNome() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetNome() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetTelefone() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetTelefone() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetAvaliacoesPorGrupo() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetAvaliacoesPorGrupo() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetEmail() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetGruposQueUsuarioEstaAtivo() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetGruposQueUsuarioEstaAtivo() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetGruposQueUsuarioEstaInativo() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetGruposQueUsuarioEstaInativo() {
-		fail("Not yet implemented");
-	}
 
 }
