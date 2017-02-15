@@ -45,35 +45,16 @@ td
 	<b>		Selecione um grupo para alterar		</b>
 	</h1>
 	
-	<%
-	   
-	Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");
-	
-	LinkedList<Grupo> gruposQueParticipa = new LinkedList<Grupo>(); 
-			gruposQueParticipa = novoUsuario.getGruposQueUsuarioEstaAtivo(); //em algum momento, vai precisar pegar isso do banco.
-	
-	%>
 	
 
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form method="post" action="./alterarGrupo.jsp">
+	<form method="post" action="./alterar/alterarGrupo.jsp">
 	<tr>
 		<td width=50 align=center>
 			
-<!-- 			    Não exite necessidade desse campo caso a sessão salve o email do usuário logado -->
-<!-- 				<label> Informe seu email cadastrado na nossa base *:(Esse campo não pode ser alterado, apenas informado)</label> -->
-<!-- 				<input type= "text" name = "emailUsuario"></p>				 -->
-
-            
+         
 				
-				<select>
-				<%for(Grupo g : gruposQueParticipa){%> 
- 						<option value="grupo"><%=g.getNome() %></option> <!-- Exibe nomes dos grupos vindos do banco -->
-  				<%} %>
-				</select>
-
-                <br>
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 
 				

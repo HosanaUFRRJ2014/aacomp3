@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dominio.Usuario;
 import excecoes.CampoInvalidoException;
@@ -39,37 +40,47 @@ public class CtrAltUsuario extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String novoNome = request.getParameter("nomeUsuario");
-		String novoTelefone = request.getParameter("telefoneUsuario");
-	    Usuario usuarioExistente = (Usuario)request.getAttribute("novoUsuario");
-
-		//Usuario novoUsuario = new Usuario(novoNome, usuarioExistente.getEmail(), novoTelefone);
+		
+		HttpSession session = request.getSession();
+		
+		String novoNome = request.getParameter("novoNomeUsuario");
+		String novoTelefone = request.getParameter("novoTelefoneUsuario");
+	    Usuario usuarioExistente = (Usuario)session.getAttribute("novoUsuario");		
 
 		try{
 
 			if(novoNome.equals("") && novoTelefone.equals("")){
 				throw new CampoInvalidoException();
-			}			
-			else{				
-				usuarioExistente.alterar(novoNome, novoTelefone);
-				
-				// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
-				request.setAttribute("novoUsuario", usuarioExistente);
-				RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoAlterar.jsp");
-				rdSucesso.forward(request,response);
+			}	
+			else if(novoNome.equals("")){
+				usuarioExistente.alterar(usuarioExistente.getNome(), novoTelefone);
+				usuarioExistente.setTelefone(novoTelefone);
 			}
+			else if(novoTelefone.equals("")){
+				usuarioExistente.alterar(novoNome, usuarioExistente.getTelefone());
+				usuarioExistente.setNome(novoNome);
+			}
+			else{				
+				usuarioExistente.alterar(novoNome, novoTelefone);	
+				usuarioExistente.setNome(novoNome);
+			}
+			
+			// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
+			session.removeAttribute("novoUsuario");
+			session.setAttribute("novoUsuario", usuarioExistente);
+			
+			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoAlterar.jsp");
+			rdSucesso.forward(request,response);
 
 			}catch(CampoInvalidoException e){	
 				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
 				rdErro.forward(request, response);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		
-			
-//			
-//// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
-//			request.setAttribute("novoUsuario", usu);
-//			RequestDispatcher rdSucesso = request.getRequestDispatcher("/sucessoCadastro");
-//			rdSucesso.forward(request,response);
+
 	}
 
 }

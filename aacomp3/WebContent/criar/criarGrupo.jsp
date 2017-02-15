@@ -34,7 +34,7 @@ td
 	<h1 align = center><b>		CRIAR GRUPO		</b></h1>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form>
+	<form action="../CtrCriarGrupos" method="post">
 	<tr>
 		<td width=50 >
 			

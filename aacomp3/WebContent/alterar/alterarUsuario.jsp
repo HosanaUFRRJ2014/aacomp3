@@ -31,28 +31,24 @@ td
 </head>
 <body>
 
+	<%	
+		Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");
+		String nome = novoUsuario.getNome();
+	%>
+
 	<h1 align = center>
-	Algo errado? <br> <br>
+	Algo errado <%=nome %> ? <br> <br>
 	<b>		Altere seu cadastro		</b>
 	</h1>
 	
-		<%
-		
-		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
-		request.setAttribute("novoUsuario", novoUsuario);
 	
-	%>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
 	<form method="post" action="../CtrAltUsuario">
 	<tr>
-		<td width=50 >
-			
-<!-- 			    Não exite necessidade desse campo caso a sessão salve o email do usuário logado -->
-<!-- 				<label> Informe seu email cadastrado na nossa base *:(Esse campo não pode ser alterado, apenas informado)</label> -->
-<!-- 				<input type= "text" name = "emailUsuario"></p>				 -->
+		<td width=50 >		
 
-                <br>Caso não deseje alterar um dos campos, apenas deixe-o em branco.
+                <br>Campos deixados em branco não serão alterados.
 				<br><br>
 				<label> Informe um novo nome de usuário:</label>
 				<input type= "text" name = "novoNomeUsuario"></p>

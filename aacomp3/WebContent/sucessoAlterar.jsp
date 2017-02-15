@@ -28,15 +28,13 @@ td {
 </style>
 </head>
 
-<%
-		
-		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
-		String nome = novoUsuario.getNome();
-		request.setAttribute("novoUsuario", novoUsuario);
-	
+	<%		
+		Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");
+		String nome = novoUsuario.getNome();		
 	%>
+	
 <h1 align=center>
-	<%=nome %>, seus dados foram alterados com sucesso!
+	<%=nome %>, dados foram alterados com sucesso!
 </h1>
 
 
@@ -45,12 +43,13 @@ td {
 
 
 	<tr>
-		<td align=center width=50><br>
+		<td align=center width=50><br>			
+			
 
 			<form action="pagInicial.jsp" method="post">
-
-				<input type="button" value="VoltarPagInicial">
+				<input type="submit" value="Voltar para Pagina Inicial">
 			</form>
+			
 		</td>
 	</tr>
 

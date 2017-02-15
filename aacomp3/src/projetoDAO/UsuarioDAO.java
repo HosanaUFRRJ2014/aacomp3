@@ -238,13 +238,12 @@ public void adicionaUsuario(String nome, String email,String telefone){
 			
 			ArrayList<String> retorno = new ArrayList<String>();				
 			
-			//retorno[0] = ID
-			retorno.add(String.valueOf(rs.getInt(0)));
-			//retorno[1] = nome
+			
+			//retorno[0] = nome
 			retorno.add(rs.getString(1));
-			//retorno[2] = email
+			//retorno[1] = email
 			retorno.add(rs.getString(2));
-			//retorno[3] = telefone
+			//retorno[2] = telefone
 			retorno.add(rs.getString(3));
 			
 			Boolean motorista = rs.getBoolean(4);

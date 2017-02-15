@@ -56,12 +56,9 @@ td
 	
 
 
-	<%		
-// 		Usuario novoUsuario = (Usuario) session.getAttribute("novoUsuario");
-// 		String nome = novoUsuario.getNome();
-		
-		String nome  = "Descomentar linhas";
-
+	<%			
+		Usuario novoUsuario = (Usuario) session.getAttribute("novoUsuario");
+		String nome = novoUsuario.getNome();
 	%>
 	
 	<h1 align = center>	Bem vindo <%=nome %>!</h1>	
@@ -79,8 +76,10 @@ td
 			<div class="btn-group" >
   				<a href="./criar/criarVeiculo.jsp" class="button">Cadastrar um Veículo</a>
   				<a href="./alterar/alterarUsuario.jsp" class="button">Alterar Informações de Usuário</a>
-
-  				<a href="selecionarGrupo.jsp" class="button">Alterar Informações de um Grupo</a>
+  				
+				<a href="./criar/criarGrupo.jsp" class="button">Criar um novo Grupo de Caronas</a>
+  				<a href="./alterar/alterarGrupo.jsp" class="button">Alterar Informações de um Grupo</a>
+  				
   				<a href="selecionarGrupo.jsp" class="button">Alterar cor de um carro</a>
   				<a href="./criar/criarCarona.jsp" class="button">Criar uma nova Carona	</a>
 

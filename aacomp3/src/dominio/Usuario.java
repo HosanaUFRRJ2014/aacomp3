@@ -8,11 +8,11 @@ import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
+import projetoDAO.ParticipaDAO;
 import projetoDAO.UsuarioDAO;
 
 public class Usuario 
-{
-	private int id;
+{	
 	private String nome;
 	private String email;
 	private String telefone;
@@ -57,6 +57,77 @@ public class Usuario
 
 	}
 	
+	
+
+	public void armazenar() throws ClassNotFoundException
+	{
+		UsuarioDAO usuariodao = new UsuarioDAO();
+		
+		usuariodao.adicionaUsuario(this.nome, this.email, this.telefone);
+	}
+	
+	// verifica se o email estï¿½ cadastrado no banco de dados
+	public boolean verificaEmail(String email) throws ClassNotFoundException
+	{
+		UsuarioDAO usuariodao = new UsuarioDAO();
+		
+		if(usuariodao.verificaEmail(email)){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void alterar(String nome, String telefone) throws ClassNotFoundException
+	{		
+		UsuarioDAO aux = new UsuarioDAO();
+		
+		aux.mudaInformacoes(this.email, nome, telefone);
+		
+	}
+	
+	public Usuario montaUsuario(String email) throws ClassNotFoundException{
+		
+		UsuarioDAO aux = new UsuarioDAO();
+		Grupo auxGrupo = new Grupo();
+		
+		ArrayList<String> info = aux.recuperaPorEmail(email);
+		
+		Usuario retorno = new Usuario(info.get(0),info.get(1),info.get(2));
+		
+		ParticipaDAO aux2 = new ParticipaDAO();
+		
+		//pega o ID de todos grupos que o usuario está
+		ArrayList<Integer> gruposDoUsuario = aux2.gruposDoUsuario(email);
+		
+		//usuario está em nenhum grupo? pode retornar
+		if(gruposDoUsuario.isEmpty()){
+			return retorno;
+		}
+		LinkedList<Grupo> ativos = new LinkedList<Grupo>();
+		LinkedList<Grupo> inativos = new LinkedList<Grupo>();
+		
+		for(int contador = 0; contador<gruposDoUsuario.size();contador++){
+			
+			//cria grupo que o usuario está
+			Grupo doUsuario = auxGrupo.recuperaGrupo(gruposDoUsuario.get(contador), retorno);
+			
+			//se o usuario estiver ativo no grupo adiciona no linked list ativo
+			if(doUsuario.isAtivo()){
+				ativos.add(doUsuario);
+			}
+			else{
+				inativos.add(doUsuario);
+			}
+		}
+		
+		retorno.setGruposQueUsuarioEstaAtivo(ativos);
+		retorno.setGruposQueUsuarioEstaInativo(inativos);
+		return retorno;
+		
+	}
+	
+	
 	public void avaliar(Grupo grupo,Usuario usuarioAvaliado, int estrelas)
 	{
 		Avaliacao avaliacao = new Avaliacao(estrelas);
@@ -72,7 +143,8 @@ public class Usuario
 	
 		
 		
-	}
+	}	
+	
 	
 	public void criarGrupo(String nome, String descricao, String regras)
 	{
@@ -128,15 +200,11 @@ public class Usuario
 	}
 	
 	
+	
+	
+	//daqui para baixo apenas getters and setters
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	
 	public String getNome() {
 		return nome;
 	}
@@ -183,45 +251,8 @@ public class Usuario
 	public void setGruposQueUsuarioEstaInativo(LinkedList<Grupo> gruposQueUsuarioEstaInativo) {
 		this.gruposQueUsuarioEstaInativo = gruposQueUsuarioEstaInativo;
 	}
+	
 
-	public void armazenar() throws ClassNotFoundException
-	{
-		UsuarioDAO usuariodao = new UsuarioDAO();
-		
-		usuariodao.adicionaUsuario(this.nome, this.email, this.telefone);
-	}
-	
-	// verifica se o email estï¿½ cadastrado no banco de dados
-	public boolean verificaEmail(String email) throws ClassNotFoundException
-	{
-		UsuarioDAO usuariodao = new UsuarioDAO();
-		
-		if(usuariodao.verificaEmail(email)){
-			return true;
-		}
-		
-		return false;
-	}
-	
-	public void alterar(String email,String nome, String telefone) throws ClassNotFoundException
-	{		
-		UsuarioDAO aux = new UsuarioDAO();
-		
-		aux.mudaInformacoes(email, nome, telefone);
-		
-	}
-	
-	public Usuario montaUsuario(String email) throws ClassNotFoundException{
-		
-		UsuarioDAO aux = new UsuarioDAO();
-		
-		ArrayList<String> info = aux.recuperaPorEmail(email);
-		
-		Usuario retorno = new Usuario(info.get(0),info.get(1),info.get(2));
-		
-		return retorno;
-		
-	}
 	
 	//pensando em colocar os mÃ©todos convidar e participar tb, pois
 	//se tratam de regras de negÃ³cio. Nesse caso, esses mÃ©todos acessariam
