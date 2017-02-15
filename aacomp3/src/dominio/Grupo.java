@@ -54,6 +54,7 @@ public class Grupo
 		this.ativo = Ativo;
 	}
 	
+
 	public void armazenar() throws ClassNotFoundException, JaExisteException{
 		
 		GrupoDAO aux = new GrupoDAO();
