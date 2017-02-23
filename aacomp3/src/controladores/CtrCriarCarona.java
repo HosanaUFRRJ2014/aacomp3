@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import dominio.Usuario;
 import dominio.Veiculo;
-import projetoDAO.CaronaDAO;
+import projetoTDG.CaronaTDG;
 import dominio.Carona;
 import dominio.Logradouro;
 import dominio.Motorista;

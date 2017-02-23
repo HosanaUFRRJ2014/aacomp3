@@ -1,4 +1,4 @@
-package projetoDAO;
+package projetoTDG;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VeiculoDAO {
+public class VeiculoTDG {
 	
 	private Connection conexao;
 	
-	public VeiculoDAO() throws ClassNotFoundException{
+	public VeiculoTDG() throws ClassNotFoundException{
 		
 		this.conexao = new ConnectionFactory().getConnection();
 		
@@ -31,7 +31,7 @@ public class VeiculoDAO {
 			stmt.execute();
 			stmt.close();
 			
-			UsuarioDAO usu = new UsuarioDAO();
+			UsuarioTDG usu = new UsuarioTDG();
 			usu.mudaMotorista(emailUsuario);
 			
 			

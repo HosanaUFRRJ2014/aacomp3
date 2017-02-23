@@ -1,6 +1,6 @@
 package dominio;
 
-import projetoDAO.LogradouroDAO;
+import projetoTDG.LogradouroTDG;
 
 public class Logradouro 
 {
@@ -27,7 +27,7 @@ public class Logradouro
 	
 	public void armazena() throws ClassNotFoundException{
 		
-		LogradouroDAO aux = new LogradouroDAO();
+		LogradouroTDG aux = new LogradouroTDG();
 		
 		aux.adicionaLogradouro(this.CEP, this.numero, this.estado, this.cidade, this.distrito, this.endereco);
 		
@@ -35,14 +35,14 @@ public class Logradouro
 	
 	public boolean verifica() throws ClassNotFoundException{
 		
-		LogradouroDAO aux = new LogradouroDAO();
+		LogradouroTDG aux = new LogradouroTDG();
 		
 		return aux.verificaLogradouro(this.CEP, this.numero);
 	}
 	
 	public void recuperaID() throws ClassNotFoundException{
 		
-		LogradouroDAO aux = new LogradouroDAO();
+		LogradouroTDG aux = new LogradouroTDG();
 		
 		this.id = aux.recuperaID(this.CEP, this.numero);
 	}

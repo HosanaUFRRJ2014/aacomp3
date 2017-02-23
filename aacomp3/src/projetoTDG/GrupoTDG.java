@@ -1,15 +1,15 @@
-package projetoDAO;
+package projetoTDG;
 import java.sql.*;
 import java.util.ArrayList;
 
 //import projetoEntidades.Grupo;
 
 
-public class GrupoDAO {
+public class GrupoTDG {
 	
 	private Connection conexao;
 	
-	public GrupoDAO() throws ClassNotFoundException{
+	public GrupoTDG() throws ClassNotFoundException{
 		this.conexao = new ConnectionFactory().getConnection();
 	}
 	

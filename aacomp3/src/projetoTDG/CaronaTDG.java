@@ -1,4 +1,4 @@
-package projetoDAO;
+package projetoTDG;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -7,11 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 
-public class CaronaDAO {
+public class CaronaTDG {
 	
 	private Connection conexao;
 	
-	public CaronaDAO() throws ClassNotFoundException{
+	public CaronaTDG() throws ClassNotFoundException{
 		
 		this.conexao = new ConnectionFactory().getConnection();
 		

@@ -3,7 +3,7 @@ package dominio;
 import java.sql.Date;
 import java.sql.Time;
 
-import projetoDAO.CaronaDAO;
+import projetoTDG.CaronaTDG;
 
 public class Carona 
 {
@@ -42,7 +42,7 @@ public class Carona
 	
 	public void armazena() throws ClassNotFoundException{
 		
-		CaronaDAO novaCarona = new CaronaDAO();
+		CaronaTDG novaCarona = new CaronaTDG();
 		
 		novaCarona.adicionarCarona(this.veiculo.getMotorista().getEmail(), this.dia, this.horarioSaida, this.logrOrigem.getId(), this.logrDestino.getId(),this.veiculo.getNumeroVagas(), this.veiculo.getID());
 
