@@ -39,7 +39,7 @@ public class CtrVerificaMotorista extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//controlador feito para impedir usuarios que não são motoristas de criar caronas
+		//controlador feito para impedir usuarios que nï¿½o sï¿½o motoristas de criar caronas
 		
 		Usuario novoUsuario = (Usuario) request.getAttribute("novoUsuario");
 		request.setAttribute("novoUsuario", novoUsuario);
@@ -57,7 +57,7 @@ public class CtrVerificaMotorista extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NaoEhMotoristaException e) {
-			RequestDispatcher rdErro = request.getRequestDispatcher("./execoes/naoMotorista.jsp");
+			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/naoMotorista.jsp");
 			rdErro.forward(request, response);
 			e.printStackTrace();
 		}

@@ -1,6 +1,7 @@
 package dominio;
 
 import java.awt.List;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,10 +9,19 @@ import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import excecoes.CampoInvalidoException;
 import projetoDAO.ParticipaDAO;
 import projetoDAO.UsuarioDAO;
 
-public class Usuario 
+@WebServlet("/Usuario")
+public class Usuario extends HttpServlet
 {	
 	private String nome;
 	private String email;
@@ -26,20 +36,22 @@ public class Usuario
 	private LinkedList <Grupo> gruposQueUsuarioEstaAtivo;
 	private LinkedList <Grupo> gruposQueUsuarioEstaInativo;
 
-	//apenas para a busca do Usuario no caso de criarGrupo
-	public Usuario()
-	{
-
-	}
 
 	//não funciona, pois usuario deve estar ativo ou inativo
 	//em cada grupo que ele participa. Ver Map ou hash
 //	private boolean ativo;
 	private HashMap<Grupo, Boolean> grupos;
 	//private ArrayList <Grupo> gruposParticipados;
+
+	//apenas para a busca do Usuario no caso de criarGrupo
+	public Usuario()
+	{
+        super();
+	}
 	
 	public Usuario(String nome, String email, String telefone)
 	{
+		super();
 		
 		this.nome = nome;
 		this.email = email;
@@ -57,6 +69,56 @@ public class Usuario
 
 	}
 	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String nome = request.getParameter("nomeUsuario");
+		String telefone = request.getParameter("telefoneUsuario");
+		String email = request.getParameter("emailUsuario");
+
+		Usuario novoUsuario = new Usuario(nome, email, telefone); //mudar isso aqui!!!
+
+		try{
+
+			if(nome.equals("") || telefone.equals("") || email.equals("")){
+				throw new CampoInvalidoException();
+			}			
+			else{				
+				try {
+					novoUsuario.armazenar();
+					
+					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
+					request.setAttribute("novoUsuario", novoUsuario);
+					RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoCadastro.jsp");
+					rdSucesso.forward(request,response);
+					
+				} catch (ClassNotFoundException e) {
+					// eclipse me OBRIGOU a criar esse Try/Catch
+					e.printStackTrace();
+				}
+			}
+		}catch(CampoInvalidoException e){	
+			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
+			rdErro.forward(request, response);
+		}
+
+
+
+		
+
+
+	}
+
 	
 
 	public void armazenar() throws ClassNotFoundException

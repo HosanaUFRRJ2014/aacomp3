@@ -71,7 +71,7 @@ public class CtrVerificaEmail extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}catch(EmailInvalidoException e){
-			RequestDispatcher rdErro = request.getRequestDispatcher("./execoes/emailInvalido.jsp");
+			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/emailInvalido.jsp");
 			rdErro.forward(request, response);
 		}
 	}

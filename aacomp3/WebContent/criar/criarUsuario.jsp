@@ -37,7 +37,7 @@ td
 	</h1>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form method="post" action="../CtrCriarUsuario">
+	<form method="post" action="../Usuario">
 	<tr>
 		<td width=50 >
 			
@@ -48,7 +48,7 @@ td
 				<label> Email *:</label>
 				<input type= "text" name = "emailUsuario"></p>
 				<label> Telefone *:</label>
-				<input type= "text" name = "telefoneUsuario"></p>
+				<input type= "number" name = "telefoneUsuario"></p>
 				
 
 				<input type= "reset" value="limpar"> 
