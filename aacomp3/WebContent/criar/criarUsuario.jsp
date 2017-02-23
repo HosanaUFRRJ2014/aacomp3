@@ -31,13 +31,19 @@ td
 </head>
 <body>
 
+    <%			
+        HttpSession session2 = request.getSession();
+		session2.setAttribute("nomeJSP", "nomeJSP");
+
+	%>
+
 	<h1 align = center>
 	Novo por aqui? <br> <br>
 	<b>		CADASTRAR-SE		</b>
 	</h1>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form method="post" action="../CtrCriarUsuario">
+	<form method="post" action="../Usuario">
 	<tr>
 		<td width=50 >
 			
@@ -48,8 +54,9 @@ td
 				<label> Email *:</label>
 				<input type= "text" name = "emailUsuario"></p>
 				<label> Telefone *:</label>
-				<input type= "text" name = "telefoneUsuario"></p>
+				<input type= "number" name = "telefoneUsuario"></p>
 				
+				<input type= "text" name = "<%=request.getRequestURI()%>" value="criarUsuario" hidden></p>
 
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 

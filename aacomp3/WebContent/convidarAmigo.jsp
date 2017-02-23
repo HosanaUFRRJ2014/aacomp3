@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="dominio.Usuario"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,27 +31,37 @@ td
 </head>
 <body>
 
-	<h1 align = center><b>		CRIAR GRUPO		</b></h1>
+	<%
+		
+// 		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
+// 		request.setAttribute("novoUsuario", novoUsuario);
+	
+	%>
+
+	<h1 align = center>
+	Está gostando desse grupo? <br> <br>
+	<b>		Convide um amigo para participar!!!		</b>
+	</h1>
+	
+
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form action="../CtrCriarGrupos" method="post">
+	<form method="post" action="sucessoConvite.jsp">
 	<tr>
 		<td width=50 >
 			
-								
-				<br>
-				<label> Nome *:</label>
-				<input type= "text" name = "nomeGrupo"></p>
-				<label> Descrição *:</label>
-				<input type= "text" name = "descricaoGrupo"></p>
-				<label> Regras *:</label> <br>
-				<textarea name="regrasGrupo" rows=10 cols=20>Digite as regras para o grupo aqui.</textarea> <br><br>
-				<label> Limite de avaliações ruins que um usuário pode receber: (Opcional)</label>
-				<input type= "text" name = "limiteAvalRuinsGrupo"></p>				
+<!-- 			    Não exite necessidade desse campo caso a sessão salve o email do usuário logado -->
+<!-- 				<label> Informe seu email cadastrado na nossa base *:(Esse campo não pode ser alterado, apenas informado)</label> -->
+<!-- 				<input type= "text" name = "emailUsuario"></p>				 -->
 
-				
+   
+				<br> <br>
+				<label> Informe o email do seu amigo :</label>
+				<input type= "text" name = "emailAmigo"></p>
+
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 
+				
 		
 	
 	

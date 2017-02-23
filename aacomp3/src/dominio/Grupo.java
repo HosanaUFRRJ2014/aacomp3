@@ -3,8 +3,10 @@ package dominio;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import excecoes.JaExisteException;
 import projetoDAO.GrupoDAO;
 import projetoDAO.ParticipaDAO;
+import projetoDAO.UsuarioDAO;
 
 public class Grupo 
 {
@@ -18,6 +20,10 @@ public class Grupo
 	private boolean ativo;
 	
 	private ArrayList <Usuario> usuarios;
+	
+	public Grupo(){
+		
+	}
 	
 	//Default de min de avaliações ruins é 3, caso o dono não queira definir
 	public Grupo(Usuario donoGrupo, String nomeGrupo, String descricao, String regras)
@@ -36,34 +42,86 @@ public class Grupo
 	public Grupo(Usuario donoGrupo, String nomeGrupo, String descricao, String regras, int lim)
 	{
 		this(donoGrupo, nomeGrupo, descricao,  regras);
-		limMinAvaliacoesRuins = lim;
+		this.limMinAvaliacoesRuins = lim;
 		
 	}
 	
-	public void armazenar() throws ClassNotFoundException{
+	//construtor para recuperar do banco de dados
+	public Grupo(int ID,Usuario donoGrupo, String nomeGrupo, String descricao, String regras, int lim,boolean Ativo)
+	{
+		this(donoGrupo, nomeGrupo, descricao,  regras,lim);
+		this.id = ID;
+		this.ativo = Ativo;
+	}
+	
+
+	public void armazenar() throws ClassNotFoundException, JaExisteException{
 		
 		GrupoDAO aux = new GrupoDAO();
-		ParticipaDAO aux2 = new ParticipaDAO();
 		
-		aux.adicionaGrupo(this.nome, this.descricao, this.regras, this.limMinAvaliacoesRuins);
-		aux2.adicionaParticipa(this.usuarios.get(0).getEmail(), this.id);
+		if(!aux.garanteIntegridade(this.nome, this.descricao)){
+			throw new JaExisteException();
+		}else{
+			aux.adicionaGrupo(this.nome, this.descricao, this.regras, this.limMinAvaliacoesRuins);
+		}		
+	}
+	
+	public void alterar(String novoNome,String novaDescricao,int novoLimite) throws ClassNotFoundException{
+		
+		GrupoDAO aux = new GrupoDAO();
+		
+		aux.alteraGrupo(this.id, novoNome, novaDescricao, novoLimite);
 		
 	}
 	
+	public void recuperaID() throws ClassNotFoundException{
+		
+		GrupoDAO aux = new GrupoDAO();
+		
+		this.setId(aux.recuperaID(this.nome, this.descricao));
+		
+	}
 	
+	public void adicionarUsuario(Usuario novoUsuario) throws ClassNotFoundException
+	{
+		
+		ParticipaDAO aux = new ParticipaDAO();
+		
+		aux.adicionaParticipa(novoUsuario.getEmail(), this.id);	
+		
+	}
 	
+	public void recuperaUsuarios(int ID) throws ClassNotFoundException{
+		
+		ParticipaDAO aux = new ParticipaDAO();		
+		Usuario auxUsu = new Usuario();
+		
+		ArrayList<String> emails = aux.usuariosDoGrupo(ID);
+		
+		for(int contador = 0; contador<emails.size(); contador++){			
+			
+			this.usuarios.add(auxUsu.montaUsuario(emails.get(contador)));
+			
+		}		
+	}
 	
-	
+	public Grupo recuperaGrupo(int ID,Usuario dono) throws ClassNotFoundException{
+		
+		GrupoDAO aux = new GrupoDAO();
+		
+		ArrayList<String> info = aux.recuperaGrupo(ID);
+		
+		Grupo retorno = new Grupo(Integer.parseInt(info.get(0)),dono,info.get(1),info.get(2),info.get(3),Integer.parseInt(info.get(4)),Boolean.parseBoolean(info.get(5)));
+				
+		return retorno;
+		
+	}
 	
 	
 	
 
 	//daqui para baixo apenas getters and setters
-	public boolean adicionarUsuario(Usuario u)
-	{
-		//u.participarDoGrupo(this); Eu dúvida se faço isso aqui ou faço externamente.
-		return usuarios.add(u);
-	}
+	
 	
 	public int getId() {
 		return id;
@@ -93,19 +151,19 @@ public class Grupo
 		this.descricao = descricao;
 	}
 
-	public long getLimMinAvaliacoesRuins() 
+	public int getLimMinAvaliacoesRuins() 
 	{
 		return limMinAvaliacoesRuins;
 	}
 
-	public void setLimMinAvaliacoesRuins(long limMinAvaliacoesRuins)
+	public void setLimMinAvaliacoesRuins(int limMinAvaliacoesRuins)
 	{
 		this.limMinAvaliacoesRuins = limMinAvaliacoesRuins;
 	}
 
 	public boolean isAtivo() 
 	{
-		return ativo;
+		return this.ativo;
 	}
 
 //	public boolean desativarGrupo(boolean ativo) 

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="dominio.Usuario"%>
+    pageEncoding="UTF-8" import="dominio.Usuario" import="java.util.LinkedList" import="dominio.Grupo"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,13 +31,19 @@ td
 </head>
 <body>
 
+	
+	
 	<%
-		
-		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
-		request.setAttribute("novoUsuario", novoUsuario);
+	   
+	Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");
+	
+	LinkedList<Grupo> gruposQueParticipa = novoUsuario.getGruposQueUsuarioEstaAtivo(); //em algum momento, vai precisar pegar isso do banco.
 	
 	%>
+	
+	
 
+	
 	<h1 align = center>
 	Algo errado? <br> <br>
 	<b>		Altere as informações do grupo		</b>
@@ -46,26 +52,38 @@ td
 
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form method="post" action="../CtrAltUsuario">
+	<form method="post" action="../CtrAltGrupo">
 	<tr>
-		<td width=50 >
-			
-<!-- 			    Não exite necessidade desse campo caso a sessão salve o email do usuário logado -->
-<!-- 				<label> Informe seu email cadastrado na nossa base *:(Esse campo não pode ser alterado, apenas informado)</label> -->
-<!-- 				<input type= "text" name = "emailUsuario"></p>				 -->
+		<td width=50 >		
+		
+				
+				<label> Escolha o grupo que deseja alterar</label>
+				<select name="grupoEscolhido">
+				<%					
+					for(Grupo g : gruposQueParticipa){						
+				%> 
+ 						<option><%=g.getNome()%><%="/"%><%=g.getDescricao()%></option> <!-- Exibe nomes dos grupos vindos do banco -->
+  				<%}   				
+  				%>
+				</select>
+				
+				
+                <br>
 
                 <br>Caso não deseje alterar um dos campos, apenas deixe-o em branco.
 				<br><br>
 				<label> Informe um novo nome para o grupo:</label>
-				<input type= "text" name = "novoNomeGrupo"></p>
+				<input type= "text" name = "novoNome"></p>
 				
 				<label> Informe um nova descricao para o grupo:</label>
-				<input type= "text" name = "novaDescricaoGrupo"></p>
+				<input type= "text" name = "novaDescricao"></p>
 				
 				<label> Informe um novo limite mínimo de avaliações ruins:</label>
-				<input type= "text" name = "novoLimMinGrupo"></p>
+				<input type= "text" name = "novoLimMin"></p>
 
-
+				
+	
+				
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 
 				

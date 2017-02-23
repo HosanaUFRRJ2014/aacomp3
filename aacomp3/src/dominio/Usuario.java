@@ -1,18 +1,31 @@
 package dominio;
 
 import java.awt.List;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
+import excecoes.CampoInvalidoException;
+import projetoDAO.ParticipaDAO;
 import projetoDAO.UsuarioDAO;
 
-public class Usuario 
-{
-	private int id;
+@WebServlet("/Usuario")
+public class Usuario extends HttpServlet
+{	
 	private String nome;
 	private String email;
 	private String telefone;
@@ -26,20 +39,23 @@ public class Usuario
 	private LinkedList <Grupo> gruposQueUsuarioEstaAtivo;
 	private LinkedList <Grupo> gruposQueUsuarioEstaInativo;
 
-	//apenas para a busca do Usuario no caso de criarGrupo
-	public Usuario()
-	{
-
-	}
 
 	//não funciona, pois usuario deve estar ativo ou inativo
 	//em cada grupo que ele participa. Ver Map ou hash
 //	private boolean ativo;
 	private HashMap<Grupo, Boolean> grupos;
 	//private ArrayList <Grupo> gruposParticipados;
+
+	//apenas para a busca do Usuario no caso de criarGrupo
+	public Usuario()
+	{
+        super();
+	}
 	
 	public Usuario(String nome, String email, String telefone)
 	{
+		super();
+		
 		this.nome = nome;
 		this.email = email;
 		this.telefone = telefone;
@@ -56,6 +72,200 @@ public class Usuario
 
 	}
 	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		
+		
+		String criarUsuario = request.getParameter("/aacomp3/criar/criarUsuario.jsp");
+		String alterarUsuario = request.getParameter("/aacomp3/alterar/alterarUsuario.jsp");
+      //  System.out.println(strings);
+	//	Usuario novoUsuario = new Usuario(nome, email, telefone); //mudar isso aqui!!!
+
+		if(!criarUsuario.equals(""))
+		{
+			criarUsuario(request,response);
+		}
+		
+		else if(!alterarUsuario.equals(""))
+		{
+			alterarUsuario(request,response);
+		}
+
+
+
+		
+
+
+	}
+	
+	/**
+	 * Método para criação do Usuário dentro do método post
+	 * @throws IOException 
+	 * @throws ServletException 
+	 * **/
+	public void criarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		String nome = request.getParameter("nomeUsuario");
+		String telefone = request.getParameter("telefoneUsuario");
+		String email = request.getParameter("emailUsuario");
+		
+		
+		try{
+
+			if(nome.equals("") || telefone.equals("") || email.equals("")){
+				throw new CampoInvalidoException();
+			}			
+			else{				
+				try {
+					
+					this.setNome(nome);
+					this.setTelefone(telefone);
+					this.setEmail(email);
+					
+					this.armazenar();
+					
+					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
+					request.setAttribute("novoUsuario", this);
+					RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoCadastro.jsp");
+					rdSucesso.forward(request,response);
+					
+				} catch (ClassNotFoundException e) {
+					// eclipse me OBRIGOU a criar esse Try/Catch
+					e.printStackTrace();
+				}
+			}
+		}catch(CampoInvalidoException e){	
+			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
+			rdErro.forward(request, response);
+		}
+	}
+	
+	/**
+	 * Método para alteração de usuário dentro do método post
+	 * **/
+	public void alterarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+        HttpSession session = request.getSession();
+		
+		String novoNome = request.getParameter("novoNomeUsuario");
+		String novoTelefone = request.getParameter("novoTelefoneUsuario");
+	    Usuario usuarioExistente = (Usuario)session.getAttribute("novoUsuario");		
+
+		try{
+
+			if(novoNome.equals("") && novoTelefone.equals("")){
+				throw new CampoInvalidoException();
+			}	
+			else if(novoNome.equals("")){
+				usuarioExistente.alterar(usuarioExistente.getNome(), novoTelefone);
+				usuarioExistente.setTelefone(novoTelefone);
+			}
+			else if(novoTelefone.equals("")){
+				usuarioExistente.alterar(novoNome, usuarioExistente.getTelefone());
+				usuarioExistente.setNome(novoNome);
+			}
+			else{				
+				usuarioExistente.alterar(novoNome, novoTelefone);	
+				usuarioExistente.setNome(novoNome);
+			}
+			
+			// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
+			session.removeAttribute("novoUsuario");
+			session.setAttribute("novoUsuario", usuarioExistente);
+			
+			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoAlterar.jsp");
+			rdSucesso.forward(request,response);
+
+			}catch(CampoInvalidoException e){	
+				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
+				rdErro.forward(request, response);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+
+
+	public void armazenar() throws ClassNotFoundException
+	{
+		UsuarioDAO usuariodao = new UsuarioDAO();
+		
+		usuariodao.adicionaUsuario(this.nome, this.email, this.telefone);
+	}
+	
+	// verifica se o email est� cadastrado no banco de dados
+	public boolean verificaEmail(String email) throws ClassNotFoundException
+	{
+		UsuarioDAO usuariodao = new UsuarioDAO();
+		
+		if(usuariodao.verificaEmail(email)){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public void alterar(String nome, String telefone) throws ClassNotFoundException
+	{		
+		UsuarioDAO aux = new UsuarioDAO();
+		
+		aux.mudaInformacoes(this.email, nome, telefone);
+		
+	}
+	
+	public Usuario montaUsuario(String email) throws ClassNotFoundException{
+		
+		UsuarioDAO aux = new UsuarioDAO();
+		Grupo auxGrupo = new Grupo();
+		
+		ArrayList<String> info = aux.recuperaPorEmail(email);
+		
+		Usuario retorno = new Usuario(info.get(0),info.get(1),info.get(2));
+		
+		ParticipaDAO aux2 = new ParticipaDAO();
+		
+		//pega o ID de todos grupos que o usuario est�
+		ArrayList<Integer> gruposDoUsuario = aux2.gruposDoUsuario(email);
+		
+		//usuario est� em nenhum grupo? pode retornar
+		if(gruposDoUsuario.isEmpty()){
+			return retorno;
+		}
+		LinkedList<Grupo> ativos = new LinkedList<Grupo>();
+		LinkedList<Grupo> inativos = new LinkedList<Grupo>();
+		
+		for(int contador = 0; contador<gruposDoUsuario.size();contador++){
+			
+			//cria grupo que o usuario est�
+			Grupo doUsuario = auxGrupo.recuperaGrupo(gruposDoUsuario.get(contador), retorno);
+			
+			//se o usuario estiver ativo no grupo adiciona no linked list ativo
+			if(doUsuario.isAtivo()){
+				ativos.add(doUsuario);
+			}
+			else{
+				inativos.add(doUsuario);
+			}
+		}
+		
+		retorno.setGruposQueUsuarioEstaAtivo(ativos);
+		retorno.setGruposQueUsuarioEstaInativo(inativos);
+		return retorno;
+		
+	}
+	
+	
 	public void avaliar(Grupo grupo,Usuario usuarioAvaliado, int estrelas)
 	{
 		Avaliacao avaliacao = new Avaliacao(estrelas);
@@ -71,7 +281,8 @@ public class Usuario
 	
 		
 		
-	}
+	}	
+	
 	
 	public void criarGrupo(String nome, String descricao, String regras)
 	{
@@ -127,15 +338,11 @@ public class Usuario
 	}
 	
 	
+	
+	
+	//daqui para baixo apenas getters and setters
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	
 	public String getNome() {
 		return nome;
 	}
@@ -165,7 +372,12 @@ public class Usuario
 	public String getEmail() {
 		return email;
 	}
-
+    
+	private void setEmail(String email) 
+	{
+		this.email = email;
+		
+	}
 
 	public LinkedList<Grupo> getGruposQueUsuarioEstaAtivo() {
 		return gruposQueUsuarioEstaAtivo;
@@ -182,45 +394,8 @@ public class Usuario
 	public void setGruposQueUsuarioEstaInativo(LinkedList<Grupo> gruposQueUsuarioEstaInativo) {
 		this.gruposQueUsuarioEstaInativo = gruposQueUsuarioEstaInativo;
 	}
+	
 
-	public void armazenar() throws ClassNotFoundException
-	{
-		UsuarioDAO usuariodao = new UsuarioDAO();
-		
-		usuariodao.adicionaUsuario(this.nome, this.email, this.telefone);
-	}
-	
-	// verifica se o email est� cadastrado no banco de dados
-	public boolean verificaEmail(String email) throws ClassNotFoundException
-	{
-		UsuarioDAO usuariodao = new UsuarioDAO();
-		
-		if(usuariodao.verificaEmail(email)){
-			return true;
-		}
-		
-		return false;
-	}
-	
-	public void alterar(String email,String nome, String telefone) throws ClassNotFoundException
-	{		
-		UsuarioDAO aux = new UsuarioDAO();
-		
-		aux.mudaInformacoes(email, nome, telefone);
-		
-	}
-	
-	public Usuario montaUsuario(String email) throws ClassNotFoundException{
-		
-		UsuarioDAO aux = new UsuarioDAO();
-		
-		ArrayList<String> info = aux.recuperaPorEmail(email);
-		
-		Usuario retorno = new Usuario(info.get(0),info.get(1),info.get(2));
-		
-		return retorno;
-		
-	}
 	
 	//pensando em colocar os métodos convidar e participar tb, pois
 	//se tratam de regras de negócio. Nesse caso, esses métodos acessariam

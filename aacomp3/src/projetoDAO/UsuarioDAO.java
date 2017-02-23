@@ -238,6 +238,7 @@ public void adicionaUsuario(String nome, String email,String telefone){
 			
 			ArrayList<String> retorno = new ArrayList<String>();				
 			
+			
 			//retorno[0] = nome
 			retorno.add(rs.getString(1));
 			//retorno[1] = email

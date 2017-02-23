@@ -1,6 +1,7 @@
 package controladores;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -45,76 +46,78 @@ public class CtrAltGrupo extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		String emailDonoGrupo = request.getParameter("emailDonoGrupo");
-		String nome = request.getParameter("nomeGrupo");
-		String descricao = request.getParameter("descricaoGrupo");
-		String regras = request.getParameter("regrasGrupo");
-
-		String limiteAvalRuinsGrupo = request.getParameter("limiteAvalRuinsGrupo");
-
-		//verificando se o Usuario criador do grupo existe
-		/****************************************************************************************************/
-		//cria esse pseudo usuario s� para realizar busca no banco dado o email. 
-		Usuario usuarioAbuscar = new Usuario();
-
-		//Objeto que receber� o usuario cujo o email � o informado em criarGrupo.jsp, caso exista.
-		Usuario donoGrupo = null;
+		String escolhido = request.getParameter("grupoEscolhido");
+		PrintWriter out = response.getWriter();
+		out.println(escolhido);
+		
+		String [] info = escolhido.split("/");
+		
+		String nomeGrupo = info[0];
+		String descricaoGrupo = info[1];
+		
+		String novoNome = request.getParameter("novoNome");
+		String novaDescricao = request.getParameter("novaDescricao");
+		String novoLimite = request.getParameter("novoLimMin");
+		
+		Usuario recuperado = (Usuario) session.getAttribute("novoUsuario");
+		
+		Grupo aux = new Grupo();
+		aux.setDescricao(descricaoGrupo);
+		aux.setNome(nomeGrupo);
+		
 		try 
 		{
-			donoGrupo = usuarioAbuscar.buscar(emailDonoGrupo);
-
-
-			if(donoGrupo == null)
-				throw new UsuarioNaoEncontradoException();
-		}
-		catch(UsuarioNaoEncontradoException e)
-		{
-			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/usuarioInexistente.jsp");
-			rdErro.forward(request, response);
-		}
-
-	    catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-
-		/****************************************************************************************************/
-
-		//verificando se todos os campos foram preenchidos 
-		try{
-
-			if(emailDonoGrupo.equals("") || nome.equals("") || descricao.equals("") || regras.equals("")){
+			aux.recuperaID();
+			aux.recuperaGrupo(aux.getId(), recuperado);
+			
+			//tratando casos de campos em branco
+			// todos campos em branco = erro
+			if(novoNome.equals("") && novaDescricao.equals("") && novoLimite.equals("")){
 				throw new CampoInvalidoException();
+			}	
+			//novoNome em branco
+			else if(novoNome.equals("")){
+				//novo limite e novo nome em branco
+				if(novoLimite.equals("")){
+					aux.alterar(aux.getNome(), novaDescricao, aux.getLimMinAvaliacoesRuins());
+				}
+				//novo nome e nova descricao em branco
+				else if(novaDescricao.equals("")){
+					aux.alterar(aux.getNome(),aux.getDescricao(), Integer.parseInt(novoLimite));
+				}				
 			}
-		}catch(CampoInvalidoException e){	
-			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
-			rdErro.forward(request, response);
+			// nova descricao em branco
+			else if(novaDescricao.equals("")){
+				
+				if(novoNome.equals("")){
+					aux.alterar(aux.getNome(),aux.getDescricao(), Integer.parseInt(novoLimite));
+				}
+				
+				
+			}
+			else if(novoLimite.equals("")){
+				aux.alterar(novoNome,novaDescricao, aux.getLimMinAvaliacoesRuins());
+				
+			}
+			else{				
+				aux.alterar(novoNome, novaDescricao,Integer.parseInt(novoLimite));	
+				
+			}
+			
+			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoAlterar.jsp");
+			rdSucesso.forward(request,response);
+			
 		}
-
-		Grupo novoGrupo;
-
-		//criar grupo com limite de avalia��es ruins padr�o
-		if(limiteAvalRuinsGrupo.equals(""))
-		{
-			novoGrupo = new Grupo(donoGrupo, nome, descricao, regras);
-		}
-
-		//criar limite de avalia��es ruins personalizado
-		else 
-		{
-			novoGrupo = new Grupo(donoGrupo, nome, descricao, regras, Integer.parseInt(limiteAvalRuinsGrupo));
-		}
-
-
-
-		/*****************falta adicionar o usuario no grupo na camada de dados tamb�m!!!************/
-		try {
-			novoGrupo.armazenar();
-		} catch (ClassNotFoundException e) {
+		catch (ClassNotFoundException e) {
 			// eclipse me OBRIGOU a criar esse Try/Catch
 			e.printStackTrace();
 		}
+		catch(CampoInvalidoException e){
+			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
+			rdErro.forward(request, response);
+		}
+	
 	}
+
 
 }

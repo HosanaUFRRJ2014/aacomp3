@@ -113,11 +113,6 @@ public class Carona
 	}
 
 
-	public void armazenar()
-	{
-		//comunicacao com a camada de dados;
-	}
-
 	public void alterar()
 	{
 		//comunicacao com a camada de dados

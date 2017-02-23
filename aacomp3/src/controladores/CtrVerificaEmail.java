@@ -45,15 +45,20 @@ public class CtrVerificaEmail extends HttpServlet {
 		// TODO Auto-generated method stub
 		String email = request.getParameter("emailUsuario");
 		
-		Usuario aux = new Usuario(null,null,null);
+		Usuario aux = new Usuario();
 		
 		try {
 			if(aux.verificaEmail(email)){
 				
 				Usuario novoUsuario = aux.montaUsuario(email);
 				// enviando para JSP, sempre enviar como novoUsuario
+				
 				HttpSession session = request.getSession();
-				session.setAttribute("novoUsuario", novoUsuario);			
+				session.setAttribute("novoUsuario", novoUsuario);
+				
+			//	PrintWriter out = response.getWriter();
+				
+			//	out.println(novoUsuario.getGruposQueUsuarioEstaAtivo().get(0).getNome());
 				
 				RequestDispatcher rdSucesso = request.getRequestDispatcher("./pagInicial.jsp");
 				rdSucesso.forward(request, response);
@@ -66,7 +71,7 @@ public class CtrVerificaEmail extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}catch(EmailInvalidoException e){
-			RequestDispatcher rdErro = request.getRequestDispatcher("./execoes/emailInvalido.jsp");
+			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/emailInvalido.jsp");
 			rdErro.forward(request, response);
 		}
 	}
