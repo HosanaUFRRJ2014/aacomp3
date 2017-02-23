@@ -1,4 +1,4 @@
-package projetoDAO;
+package projetoTDG;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-	public class ParticipaDAO {
+	public class ParticipaTDG {
 	
 		private Connection conexao;
 	
-	public ParticipaDAO() throws ClassNotFoundException{
+	public ParticipaTDG() throws ClassNotFoundException{
 		this.conexao = new ConnectionFactory().getConnection();
 	}
 	

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import excecoes.JaExisteException;
-import projetoDAO.GrupoDAO;
-import projetoDAO.ParticipaDAO;
-import projetoDAO.UsuarioDAO;
+import projetoTDG.GrupoTDG;
+import projetoTDG.ParticipaTDG;
+import projetoTDG.UsuarioTDG;
 
 public class Grupo 
 {
@@ -57,7 +57,7 @@ public class Grupo
 
 	public void armazenar() throws ClassNotFoundException, JaExisteException{
 		
-		GrupoDAO aux = new GrupoDAO();
+		GrupoTDG aux = new GrupoTDG();
 		
 		if(!aux.garanteIntegridade(this.nome, this.descricao)){
 			throw new JaExisteException();
@@ -68,7 +68,7 @@ public class Grupo
 	
 	public void alterar(String novoNome,String novaDescricao,int novoLimite) throws ClassNotFoundException{
 		
-		GrupoDAO aux = new GrupoDAO();
+		GrupoTDG aux = new GrupoTDG();
 		
 		aux.alteraGrupo(this.id, novoNome, novaDescricao, novoLimite);
 		
@@ -76,7 +76,7 @@ public class Grupo
 	
 	public void recuperaID() throws ClassNotFoundException{
 		
-		GrupoDAO aux = new GrupoDAO();
+		GrupoTDG aux = new GrupoTDG();
 		
 		this.setId(aux.recuperaID(this.nome, this.descricao));
 		
@@ -85,7 +85,7 @@ public class Grupo
 	public void adicionarUsuario(Usuario novoUsuario) throws ClassNotFoundException
 	{
 		
-		ParticipaDAO aux = new ParticipaDAO();
+		ParticipaTDG aux = new ParticipaTDG();
 		
 		aux.adicionaParticipa(novoUsuario.getEmail(), this.id);	
 		
@@ -93,7 +93,7 @@ public class Grupo
 	
 	public void recuperaUsuarios(int ID) throws ClassNotFoundException{
 		
-		ParticipaDAO aux = new ParticipaDAO();		
+		ParticipaTDG aux = new ParticipaTDG();		
 		Usuario auxUsu = new Usuario();
 		
 		ArrayList<String> emails = aux.usuariosDoGrupo(ID);
@@ -107,7 +107,7 @@ public class Grupo
 	
 	public Grupo recuperaGrupo(int ID,Usuario dono) throws ClassNotFoundException{
 		
-		GrupoDAO aux = new GrupoDAO();
+		GrupoTDG aux = new GrupoTDG();
 		
 		ArrayList<String> info = aux.recuperaGrupo(ID);
 		

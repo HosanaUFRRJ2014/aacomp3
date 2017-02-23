@@ -1,4 +1,4 @@
-package projetoDAO;
+package projetoTDG;
 
 import java.sql.Time;
 import java.text.ParseException;
@@ -14,14 +14,14 @@ import dominio.Grupo;
 import dominio.Usuario;
 import dominio.Veiculo;
 
-public class TesteDAO {
+public class TesteTDG {
 
 	public static void main(String[] args) throws ClassNotFoundException {
 		// TODO Auto-generated method stub				
 		
 		
 		Usuario aux = new Usuario();
-		ParticipaDAO aux2 = new ParticipaDAO();
+		ParticipaTDG aux2 = new ParticipaTDG();
 		Grupo aux3 = new Grupo();
 		
 		Usuario novo = aux.montaUsuario("dessa@hotmail.com.br");

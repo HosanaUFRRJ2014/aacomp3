@@ -1,15 +1,15 @@
-package projetoDAO;
+package projetoTDG;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LogradouroDAO {	
+public class LogradouroTDG {	
 	
 	private Connection conexao;
 	
-	public LogradouroDAO() throws ClassNotFoundException{
+	public LogradouroTDG() throws ClassNotFoundException{
 		
 		this.conexao = new ConnectionFactory().getConnection();
 		

@@ -1,14 +1,14 @@
-package projetoDAO;
+package projetoTDG;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class ParadaDAO {
+public class ParadaTDG {
 
 	private Connection conexao;
 	
-	public ParadaDAO() throws ClassNotFoundException{
+	public ParadaTDG() throws ClassNotFoundException{
 		
 		this.conexao = new ConnectionFactory().getConnection();
 	}

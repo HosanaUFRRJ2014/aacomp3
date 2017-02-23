@@ -2,7 +2,7 @@ package dominio;
 
 import java.util.ArrayList;
 
-import projetoDAO.VeiculoDAO;
+import projetoTDG.VeiculoTDG;
 
 public class Veiculo 
 {
@@ -57,7 +57,7 @@ public class Veiculo
 	
 	public ArrayList<String> veiculosDeUmDono(String email) throws ClassNotFoundException{
 		
-		VeiculoDAO aux = new VeiculoDAO();
+		VeiculoTDG aux = new VeiculoTDG();
 		
 		return aux.veiculosDeUmDono(email);
 	}
@@ -66,7 +66,7 @@ public class Veiculo
 
 	public void armazenar() throws ClassNotFoundException 
 	{
-		VeiculoDAO veiculodao = new VeiculoDAO();
+		VeiculoTDG veiculodao = new VeiculoTDG();
 
 		veiculodao.adicionaVeiculo(this.motorista.getEmail(), this.placa, this.cor, this.modelo,this.numeroVagas);
 
@@ -75,7 +75,7 @@ public class Veiculo
 
 	public void alterar(String novaCor) throws ClassNotFoundException {
 		
-		VeiculoDAO veiculodao = new VeiculoDAO();
+		VeiculoTDG veiculodao = new VeiculoTDG();
 
 		//precisa desse método no DAO
 		veiculodao.mudaCor(this.id, novaCor);
@@ -84,14 +84,14 @@ public class Veiculo
 	
 	public void recuperaID(String modelo, String placa) throws ClassNotFoundException {
 		
-		VeiculoDAO aux = new VeiculoDAO();
+		VeiculoTDG aux = new VeiculoTDG();
 		
 		this.setID(aux.recuperaID(modelo,placa));
 	}
 	
 	public Veiculo recuperaCarro(int ID) throws ClassNotFoundException{
 		
-		VeiculoDAO aux = new VeiculoDAO();
+		VeiculoTDG aux = new VeiculoTDG();
 		ArrayList<String> info = aux.buscaInformacoes(ID);
 		Veiculo novoMontado = new Veiculo(Integer.parseInt(info.get(0)),info.get(4),info.get(2),info.get(3),Integer.parseInt(info.get(5)));
 		
@@ -102,7 +102,7 @@ public class Veiculo
 	
 	public ArrayList<String> recuperaInfo() throws ClassNotFoundException{
 		
-		VeiculoDAO aux = new VeiculoDAO();
+		VeiculoTDG aux = new VeiculoTDG();
 		
 		return aux.buscaInformacoes(this.id);
 		

@@ -1,4 +1,4 @@
-package projetoDAO;
+package projetoTDG;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,11 +8,11 @@ import java.util.Set;
 
 import dominio.Usuario;
 
-public class UsuarioDAO {
+public class UsuarioTDG {
 	
 	private Connection conexao;
 	
-	public UsuarioDAO() throws ClassNotFoundException{
+	public UsuarioTDG() throws ClassNotFoundException{
 		this.conexao = new ConnectionFactory().getConnection();
 	}
 	

@@ -15,8 +15,8 @@ import dominio.Motorista;
 import dominio.Usuario;
 import dominio.Veiculo;
 import excecoes.CampoInvalidoException;
-import projetoDAO.UsuarioDAO;
-import projetoDAO.VeiculoDAO;
+import projetoTDG.UsuarioTDG;
+import projetoTDG.VeiculoTDG;
 
 /**
  * Servlet implementation class CtrCriarVeiculo
@@ -68,10 +68,10 @@ public class CtrCriarVeiculo extends HttpServlet {
 					
 					Veiculo novoVeiculo = new Veiculo(modelo,placa,cor,Integer.parseInt(numVagas));
 					
-					UsuarioDAO auxUsu = new UsuarioDAO();					
+					UsuarioTDG auxUsu = new UsuarioTDG();					
 					auxUsu.mudaMotorista(email);
 					
-					VeiculoDAO auxVei = new VeiculoDAO();
+					VeiculoTDG auxVei = new VeiculoTDG();
 					auxVei.adicionaVeiculo(email, placa, cor, modelo,Integer.parseInt(numVagas));
 					
 					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar um novo veiculo, se quiser

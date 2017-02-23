@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import excecoes.CampoInvalidoException;
-import projetoDAO.ParticipaDAO;
-import projetoDAO.UsuarioDAO;
+import projetoTDG.ParticipaTDG;
+import projetoTDG.UsuarioTDG;
 
 @WebServlet("/Usuario")
 public class Usuario extends HttpServlet
@@ -123,7 +123,7 @@ public class Usuario extends HttpServlet
 
 	public void armazenar() throws ClassNotFoundException
 	{
-		UsuarioDAO usuariodao = new UsuarioDAO();
+		UsuarioTDG usuariodao = new UsuarioTDG();
 		
 		usuariodao.adicionaUsuario(this.nome, this.email, this.telefone);
 	}
@@ -131,7 +131,7 @@ public class Usuario extends HttpServlet
 	// verifica se o email est� cadastrado no banco de dados
 	public boolean verificaEmail(String email) throws ClassNotFoundException
 	{
-		UsuarioDAO usuariodao = new UsuarioDAO();
+		UsuarioTDG usuariodao = new UsuarioTDG();
 		
 		if(usuariodao.verificaEmail(email)){
 			return true;
@@ -142,7 +142,7 @@ public class Usuario extends HttpServlet
 	
 	public void alterar(String nome, String telefone) throws ClassNotFoundException
 	{		
-		UsuarioDAO aux = new UsuarioDAO();
+		UsuarioTDG aux = new UsuarioTDG();
 		
 		aux.mudaInformacoes(this.email, nome, telefone);
 		
@@ -150,14 +150,14 @@ public class Usuario extends HttpServlet
 	
 	public Usuario montaUsuario(String email) throws ClassNotFoundException{
 		
-		UsuarioDAO aux = new UsuarioDAO();
+		UsuarioTDG aux = new UsuarioTDG();
 		Grupo auxGrupo = new Grupo();
 		
 		ArrayList<String> info = aux.recuperaPorEmail(email);
 		
 		Usuario retorno = new Usuario(info.get(0),info.get(1),info.get(2));
 		
-		ParticipaDAO aux2 = new ParticipaDAO();
+		ParticipaTDG aux2 = new ParticipaTDG();
 		
 		//pega o ID de todos grupos que o usuario est�
 		ArrayList<Integer> gruposDoUsuario = aux2.gruposDoUsuario(email);
@@ -255,7 +255,7 @@ public class Usuario extends HttpServlet
 	
 	public boolean ehMotorista(String email) throws ClassNotFoundException{
 		
-		UsuarioDAO aux = new UsuarioDAO();
+		UsuarioTDG aux = new UsuarioTDG();
 		
 		return aux.procuraMotorista(email);		
 		
