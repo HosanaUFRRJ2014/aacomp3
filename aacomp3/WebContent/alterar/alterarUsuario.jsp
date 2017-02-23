@@ -44,7 +44,7 @@ td
 	
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form method="post" action="../CtrAltUsuario">
+	<form method="post" action="../Usuario">
 	<tr>
 		<td width=50 >		
 

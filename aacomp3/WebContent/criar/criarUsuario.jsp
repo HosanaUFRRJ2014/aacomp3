@@ -31,6 +31,12 @@ td
 </head>
 <body>
 
+    <%			
+        HttpSession session2 = request.getSession();
+		session2.setAttribute("nomeJSP", "nomeJSP");
+
+	%>
+
 	<h1 align = center>
 	Novo por aqui? <br> <br>
 	<b>		CADASTRAR-SE		</b>
@@ -50,6 +56,7 @@ td
 				<label> Telefone *:</label>
 				<input type= "number" name = "telefoneUsuario"></p>
 				
+				<input type= "text" name = "<%=request.getRequestURI()%>" value="criarUsuario" hidden></p>
 
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 

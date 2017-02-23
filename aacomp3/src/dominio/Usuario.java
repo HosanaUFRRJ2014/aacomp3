@@ -4,6 +4,7 @@ import java.awt.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
@@ -15,6 +16,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import excecoes.CampoInvalidoException;
 import projetoDAO.ParticipaDAO;
@@ -82,12 +85,42 @@ public class Usuario extends HttpServlet
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		
+		
+		String criarUsuario = request.getParameter("/aacomp3/criar/criarUsuario.jsp");
+		String alterarUsuario = request.getParameter("/aacomp3/alterar/alterarUsuario.jsp");
+      //  System.out.println(strings);
+	//	Usuario novoUsuario = new Usuario(nome, email, telefone); //mudar isso aqui!!!
+
+		if(!criarUsuario.equals(""))
+		{
+			criarUsuario(request,response);
+		}
+		
+		else if(!alterarUsuario.equals(""))
+		{
+			alterarUsuario(request,response);
+		}
+
+
+
+		
+
+
+	}
+	
+	/**
+	 * Método para criação do Usuário dentro do método post
+	 * @throws IOException 
+	 * @throws ServletException 
+	 * **/
+	public void criarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		String nome = request.getParameter("nomeUsuario");
 		String telefone = request.getParameter("telefoneUsuario");
 		String email = request.getParameter("emailUsuario");
-
-		Usuario novoUsuario = new Usuario(nome, email, telefone); //mudar isso aqui!!!
-
+		
+		
 		try{
 
 			if(nome.equals("") || telefone.equals("") || email.equals("")){
@@ -95,10 +128,15 @@ public class Usuario extends HttpServlet
 			}			
 			else{				
 				try {
-					novoUsuario.armazenar();
+					
+					this.setNome(nome);
+					this.setTelefone(telefone);
+					this.setEmail(email);
+					
+					this.armazenar();
 					
 					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
-					request.setAttribute("novoUsuario", novoUsuario);
+					request.setAttribute("novoUsuario", this);
 					RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoCadastro.jsp");
 					rdSucesso.forward(request,response);
 					
@@ -111,15 +149,53 @@ public class Usuario extends HttpServlet
 			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
 			rdErro.forward(request, response);
 		}
-
-
-
+	}
+	
+	/**
+	 * Método para alteração de usuário dentro do método post
+	 * **/
+	public void alterarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+        HttpSession session = request.getSession();
 		
+		String novoNome = request.getParameter("novoNomeUsuario");
+		String novoTelefone = request.getParameter("novoTelefoneUsuario");
+	    Usuario usuarioExistente = (Usuario)session.getAttribute("novoUsuario");		
 
+		try{
 
+			if(novoNome.equals("") && novoTelefone.equals("")){
+				throw new CampoInvalidoException();
+			}	
+			else if(novoNome.equals("")){
+				usuarioExistente.alterar(usuarioExistente.getNome(), novoTelefone);
+				usuarioExistente.setTelefone(novoTelefone);
+			}
+			else if(novoTelefone.equals("")){
+				usuarioExistente.alterar(novoNome, usuarioExistente.getTelefone());
+				usuarioExistente.setNome(novoNome);
+			}
+			else{				
+				usuarioExistente.alterar(novoNome, novoTelefone);	
+				usuarioExistente.setNome(novoNome);
+			}
+			
+			// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou n�o um veiculo
+			session.removeAttribute("novoUsuario");
+			session.setAttribute("novoUsuario", usuarioExistente);
+			
+			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoAlterar.jsp");
+			rdSucesso.forward(request,response);
+
+			}catch(CampoInvalidoException e){	
+				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
+				rdErro.forward(request, response);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
-	
 
 	public void armazenar() throws ClassNotFoundException
 	{
@@ -296,7 +372,12 @@ public class Usuario extends HttpServlet
 	public String getEmail() {
 		return email;
 	}
-
+    
+	private void setEmail(String email) 
+	{
+		this.email = email;
+		
+	}
 
 	public LinkedList<Grupo> getGruposQueUsuarioEstaAtivo() {
 		return gruposQueUsuarioEstaAtivo;
