@@ -5,8 +5,6 @@ import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import excecoes.CampoInvalidoException;
-import projetoDAO.UsuarioDAO;
-import projetoDAO.VeiculoDAO;
+import dto.UsuarioDTO;
+import dto.VeiculoDTO;
+import projetoTDG.UsuarioTDG;
+import projetoTDG.VeiculoTDG;
+
 
 @WebServlet("/Veiculo")
 public class Veiculo extends HttpServlet
@@ -34,7 +35,7 @@ public class Veiculo extends HttpServlet
 	}
 
 	public Veiculo(String modelo,String placa,String cor,int numeroVagas)
-	{
+	{	
 
 		this.modelo = modelo;
 		this.placa = placa;
@@ -53,7 +54,6 @@ public class Veiculo extends HttpServlet
 		this.cor = cor;		
 
 		caronas = new ArrayList<Carona>();
-
 	}
 
 	public Veiculo(String modelo,String placa,String cor,int numeroVagas, Motorista motorista)
@@ -63,8 +63,7 @@ public class Veiculo extends HttpServlet
 		this.cor = cor;
 		this.motorista = motorista;
 
-		caronas = new ArrayList<Carona>();
-
+		caronas = new ArrayList<Carona>();	
 
 	}
 
@@ -80,12 +79,12 @@ public class Veiculo extends HttpServlet
 			this.criarVeiculo(request, response);	
 		}
 
-		else if(opcao.equals("criarUsuario"))
+		else if(opcao.equals("alterarVeiculo"))
 		{
 			this.alterarVeiculo(request, response);
 		}
 
-		
+
 
 
 
@@ -121,22 +120,17 @@ public class Veiculo extends HttpServlet
 			else{				
 				try {
 
-				//	Veiculo novoVeiculo = new Veiculo(modelo,placa,cor,Integer.parseInt(numVagas));
-					
-					this.setModelo(modelo);
-					this.setPlaca(placa);
-					this.setCor(cor);
-					this.setNumeroVagas(Integer.parseInt(numVagas));
+					Veiculo novoVeiculo = new Veiculo(modelo,placa,cor,Integer.parseInt(numVagas));
 
-					UsuarioDAO auxUsu = new UsuarioDAO();					
+					UsuarioTDG auxUsu = new UsuarioTDG();					
 					auxUsu.mudaMotorista(email);
 
-					VeiculoDAO auxVei = new VeiculoDAO();
+					VeiculoTDG auxVei = new VeiculoTDG();
 					auxVei.adicionaVeiculo(email, placa, cor, modelo,Integer.parseInt(numVagas));
 
 					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar um novo veiculo, se quiser
 
-					request.setAttribute("novoVeiculo", this);
+					request.setAttribute("novoVeiculo", novoVeiculo);
 					request.setAttribute("novoUsuario", recuperado);
 
 					RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoMotorista.jsp");
@@ -193,68 +187,52 @@ public class Veiculo extends HttpServlet
 		}
 	}
 
-
-	public ArrayList<String> veiculosDeUmDono(String email) throws ClassNotFoundException{
-
-		VeiculoDAO aux = new VeiculoDAO();
-
-		return aux.veiculosDeUmDono(email);
-	}
+	//
+	//	public ArrayList<String> veiculosDeUmDono(String email) throws ClassNotFoundException{
+	//
+	//		VeiculoDTO aux = new VeiculoDTO();
+	//
+	//		return aux.veiculosDeUmDono(email);
+	//	}
 
 
 
 	public void armazenar() throws ClassNotFoundException 
 	{
-		VeiculoDAO veiculodao = new VeiculoDAO();
 
-		veiculodao.adicionaVeiculo(this.motorista.getEmail(), this.placa, this.cor, this.modelo,this.numeroVagas);
+		VeiculoTDG veiculotdg = new VeiculoTDG();
 
-
+		veiculotdg.adicionaVeiculo(this.motorista.getEmail(), this.placa, this.cor, this.modelo,this.numeroVagas);
 	}
 
 	public void alterar(String novaCor) throws ClassNotFoundException {
 
-		VeiculoDAO veiculodao = new VeiculoDAO();
+		VeiculoTDG veiculotdg = new VeiculoTDG();
 
-		//precisa desse método no DAO
-		veiculodao.mudaCor(this.id, novaCor);
 
+		//precisa desse método no DTO
+		veiculotdg.mudaCor(this.id, novaCor);
 	}	
 
 	public void recuperaID(String modelo, String placa) throws ClassNotFoundException {
 
-		VeiculoDAO aux = new VeiculoDAO();
-
+		VeiculoTDG aux = new VeiculoTDG();
 		this.setID(aux.recuperaID(modelo,placa));
 	}
 
 	public Veiculo recuperaCarro(int ID) throws ClassNotFoundException{
 
-		VeiculoDAO aux = new VeiculoDAO();
-		ArrayList<String> info = aux.buscaInformacoes(ID);
-		Veiculo novoMontado = new Veiculo(Integer.parseInt(info.get(0)),info.get(4),info.get(2),info.get(3),Integer.parseInt(info.get(5)));
 
+		VeiculoTDG aux = new VeiculoTDG();
+		VeiculoDTO info = aux.buscaInformacoes(ID);
+		Veiculo novoMontado = new Veiculo(info.getId(),info.getModelo(),
+				info.getPlaca(),info.getCor(),info.getNumeroVagas());		
 
 		return novoMontado;
 
 	}
 
-	public ArrayList<String> recuperaInfo() throws ClassNotFoundException{
-
-		VeiculoDAO aux = new VeiculoDAO();
-
-		return aux.buscaInformacoes(this.id);
-
-	}
-
 	//daqui para baixo apenas getters and setters
-
-	//	public void setMotorista(Motorista novoMotorista) {
-	//		this.motorista = novoMotorista;
-	//		
-	//	}
-	
-	
 
 	public String getCor() 
 	{

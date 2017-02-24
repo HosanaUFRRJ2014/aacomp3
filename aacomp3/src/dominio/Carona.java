@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import projetoDAO.CaronaDAO;
+import projetoTDG.CaronaTDG;
 
 
 @WebServlet("/Carona")
@@ -55,27 +55,27 @@ public class Carona extends HttpServlet
 		this.logrDestino = logrDestino;
 		this.cancelada = false;
 	}
-	
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		String opcao = request.getParameter("opcao");
-		
+
 		if(opcao.equals("criarCarona"))
 		{
 			this.criarCarona(request, response);
 		}
-		
+
 		else if(opcao.equals("alterarCarona"))
 		{
 			System.out.println("Falta implementar isso");
 		}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * Para usar dentro do doPost.
 	 * @param request 
@@ -83,19 +83,19 @@ public class Carona extends HttpServlet
 	 * @throws IOException 
 	 * @throws ServletException 
 	 * **/
-	
+
 	public void criarCarona(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HttpSession session = request.getSession();
-		
-		
+
+
 		Usuario recuperado = (Usuario)session.getAttribute("novoUsuario");
-		
-		
+
+
 		String diaCarona = request.getParameter("diaCarona");
 		String horaSaida = request.getParameter("horaSaida");
 		String veiculoEscolhido = request.getParameter("veiculoEscolhido");
-		
+
 		//pega informa��es do CEP do logradouro Origem
 		String cepOrigem = request.getParameter("cepOrigem");
 		String estadoOrigem = request.getParameter("ufOrigem");
@@ -104,9 +104,9 @@ public class Carona extends HttpServlet
 		String enderecoOrigem = request.getParameter("ruaOrigem");		
 		String numero1 = request.getParameter("numeroOrigem");
 		int numeroOrigem = Integer.parseInt(numero1);
-		
+
 		Logradouro origem = new Logradouro(cepOrigem,estadoOrigem,cidadeOrigem,distritoOrigem,enderecoOrigem, numeroOrigem);
-		
+
 		//pega informa��es do CEP do logradouro destino
 		String cepDestino = request.getParameter("cepDestino");
 		String estadoDestino = request.getParameter("ufDestino");
@@ -115,19 +115,19 @@ public class Carona extends HttpServlet
 		String enderecoDestino = request.getParameter("ruaDestino");	
 		String numero2 = request.getParameter("numeroDestino");
 		int numeroDestino = Integer.parseInt(numero2);
-		
+
 		Logradouro destino = new Logradouro(cepDestino,estadoDestino,cidadeDestino,distritoDestino,enderecoDestino, numeroDestino);
-		
-		
-		
+
+
+
 		//para transformar os strings recebidos em Data para o Banco
 		DateFormat formata = new SimpleDateFormat("dd/mm");
-		
+
 		try {
 			java.util.Date dia = formata.parse(diaCarona);
 			Date diaSQL = new Date(dia.getTime());
 			Time hora = Time.valueOf(horaSaida);
-			
+
 			//verifica se logradouro origem j� existe, se sim seta o ID do logradouro para podermos colocar ele na ParadaOrigem
 			if(origem.verifica()){
 				origem.recuperaID();
@@ -137,7 +137,7 @@ public class Carona extends HttpServlet
 				origem.armazena();
 				origem.recuperaID();
 			}
-			
+
 			//verifica se logradouro destino j� existe
 			if(destino.verifica()){
 				destino.recuperaID();
@@ -147,26 +147,21 @@ public class Carona extends HttpServlet
 				origem.armazena();
 				origem.recuperaID();
 			}
-			
+
 			String[] infoVeiculo = veiculoEscolhido.split("/");
 			Veiculo aux = new Veiculo();
 			Motorista motorista = recuperado.virarMotorista(aux);
 			aux.recuperaID(infoVeiculo[0], infoVeiculo[1]);
-			
+
 			Veiculo montado = aux.recuperaCarro(aux.getID());
 			montado.setMotorista(motorista);
-					
-			
+
+
 			//finalmente adicionar carona
-			
-			//Carona novaCarona = new Carona(montado,diaSQL, hora, origem, destino);
-			this.setVeiculo(montado);
-			this.setDia(diaSQL);
-			this.setHorarioSaida(hora);
-			this.setLogrOrigem(origem);
-			this.setLogrDestino(destino);
-			this.armazena();
-			
+
+			Carona novaCarona = new Carona(montado,diaSQL, hora, origem, destino);
+			novaCarona.armazena();
+
 		} catch (ParseException e) {
 			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
 			rdErro.forward(request, response);
@@ -175,19 +170,21 @@ public class Carona extends HttpServlet
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+
+
 	}
-	
+
 	public void armazena() throws ClassNotFoundException{
-		
-		CaronaDAO novaCarona = new CaronaDAO();
-		
+
+		CaronaTDG novaCarona = new CaronaTDG();
+
 		novaCarona.adicionarCarona(this.veiculo.getMotorista().getEmail(), this.dia, this.horarioSaida, this.logrOrigem.getId(), this.logrDestino.getId(),this.veiculo.getNumeroVagas(), this.veiculo.getID());
 
 	}
-	
+
 	//daqui para baixo apenas getters and setters
-	
+
 
 	public int getId() {
 		return id;

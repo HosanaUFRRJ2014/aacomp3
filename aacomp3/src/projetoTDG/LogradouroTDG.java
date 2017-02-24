@@ -1,15 +1,17 @@
-package projetoDAO;
+package projetoTDG;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class LogradouroDAO {	
+import dto.LogradouroDTO;
+
+public class LogradouroTDG {	
 	
 	private Connection conexao;
 	
-	public LogradouroDAO() throws ClassNotFoundException{
+	public LogradouroTDG() throws ClassNotFoundException{
 		
 		this.conexao = new ConnectionFactory().getConnection();
 		
@@ -88,26 +90,64 @@ public class LogradouroDAO {
 	
 	public int recuperaID(String cep, int numero){
 		String sql = "select idlogradouro from logradouro where (cep,numero)=(?,?)";
-	try{
-		//pegar a quantidade de vagas atual da carona
-		PreparedStatement stmt = this.conexao.prepareStatement(sql);			
-		
-		stmt.setString(1, cep);
-		stmt.setInt(2, numero);
-		
-		ResultSet rs = stmt.executeQuery();
-		rs.next();
-		
-		int retorno = rs.getInt(1);
-				
-		stmt.execute();
-		stmt.close();
-		
-		return retorno;
-		
-	}catch(SQLException e){
-		throw new RuntimeException(e);
+			try{
+			//pegar a quantidade de vagas atual da carona
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);			
+			
+			stmt.setString(1, cep);
+			stmt.setInt(2, numero);
+			
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			int retorno = rs.getInt(1);
+					
+			stmt.execute();
+			stmt.close();
+			
+			return retorno;
+			
+			}catch(SQLException e){
+			throw new RuntimeException(e);
+			}
 	}
+	
+	public LogradouroDTO recuperaLogradouro(int ID){
+		
+		String sql = "select * from logradouros";
+		
+		try{
+			//pegar a quantidade de vagas atual da carona
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);			
+			
+			stmt.setInt(1, ID);
+			
+			
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			LogradouroDTO retorno = new LogradouroDTO();
+			
+			retorno.setId(rs.getInt(1));
+			retorno.setCEP(rs.getString(2));
+			retorno.setNumero(rs.getInt(3));
+			retorno.setEstado(rs.getString(4));
+			retorno.setEstado(rs.getString(5));
+			retorno.setDistrito(rs.getString(6));
+			retorno.setEndereco(rs.getString(7));
+			
+					
+			rs.close();
+			stmt.close();
+			
+			return retorno;
+			
+			}catch(SQLException e){
+			throw new RuntimeException(e);
+			}
+		
+		
+		
 	}
 	
 }

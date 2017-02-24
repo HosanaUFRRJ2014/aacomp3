@@ -15,7 +15,7 @@ import dominio.Grupo;
 import dominio.Usuario;
 import excecoes.JaExisteException;
 import junit.framework.TestCase;
-import projetoDAO.GrupoDAO;
+import projetoTDG.GrupoTDG;
 
 public class GrupoTest extends TestCase{
 
@@ -36,7 +36,7 @@ public class GrupoTest extends TestCase{
 		Grupo grupo = new Grupo(null,nome, descricao,regras,limite);
 		grupo.armazenar();
 		
-		GrupoDAO grupodao = new GrupoDAO(); 
+		GrupoTDG grupodao = new GrupoTDG(); 
 		
         String sql = "select count(*) from grupos where nome=" + "\'" + nome + "\'";
 		
@@ -99,7 +99,7 @@ public class GrupoTest extends TestCase{
 		
 		Grupo grupo = new Grupo(null,nome, descricao,regras,limite);
 		grupo.alterar(novoNome, novaDescricao, novoLimite);
-		GrupoDAO grupodao = new GrupoDAO(); 
+		GrupoTDG grupodao = new GrupoTDG(); 
 		
         String sql = "select count(*) from grupos where nome=" + "\'" + novoNome + "\'";
 		
@@ -161,7 +161,7 @@ public class GrupoTest extends TestCase{
 		
 		Grupo grupo = new Grupo(null,nome, descricao,regras,limite);
 		grupo.alterar(novoNome, novaDescricao, novoLimite);
-		GrupoDAO grupodao = new GrupoDAO(); 
+		GrupoTDG grupodao = new GrupoTDG(); 
 		
         String sql = "select idgrupo from grupos where nome=" +nome + "and" + "descricao=" + descricao;
 		
@@ -228,8 +228,8 @@ public class GrupoTest extends TestCase{
 	//	Usuario novoUsuario = new Usuario("Nome usuário","user@user","22559892");
 		
 		Grupo grupo = new Grupo(null,nome, descricao,regras,limite);
-		grupo.recuperaUsuarios(id);
-		GrupoDAO grupodao = new GrupoDAO(); 
+		grupo.recuperaUsuarios();
+		GrupoTDG grupodao = new GrupoTDG(); 
 		
         String sql = "select emailusuario from participa where idgrupo=" + id;
 		

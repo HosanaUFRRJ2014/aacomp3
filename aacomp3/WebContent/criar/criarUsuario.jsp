@@ -34,7 +34,6 @@ td
     <%			
         HttpSession session2 = request.getSession();
 		session2.setAttribute("nomeJSP", "nomeJSP");
-
 	%>
 
 	<h1 align = center>

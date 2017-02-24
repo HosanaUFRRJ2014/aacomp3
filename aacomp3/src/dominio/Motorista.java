@@ -88,17 +88,21 @@ public class Motorista extends Usuario {
 	{
 		return veiculos.add(veiculo);
 	}
-
-	public void criarCarona(Veiculo veiculo, Date dia, Time horarioSaida, Logradouro logrOrigem, Logradouro logrDestino)
-	{
-		Carona carona = new Carona(veiculo, dia, horarioSaida, logrOrigem, logrDestino);
-		veiculo.addCarona(carona);
-
-		//comunicao como banco de dados.  
-		carona.armazenar();
-
-	}
-
+//<<<<<<< HEAD
+//
+//	public void criarCarona(Veiculo veiculo, Date dia, Time horarioSaida, Logradouro logrOrigem, Logradouro logrDestino)
+//	{
+//		Carona carona = new Carona(veiculo, dia, horarioSaida, logrOrigem, logrDestino);
+//		veiculo.addCarona(carona);
+//
+//		//comunicao como banco de dados.  
+//		carona.armazenar();
+//
+//	}
+//
+//=======
+	
+	
 	public boolean alterarVeiculoCarona(Carona carona, Veiculo veiculo)
 	{
 		boolean alterado = carona.alterarVeiculo(veiculo);

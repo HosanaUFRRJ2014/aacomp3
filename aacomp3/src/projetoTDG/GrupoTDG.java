@@ -1,15 +1,17 @@
-package projetoDAO;
+package projetoTDG;
 import java.sql.*;
 import java.util.ArrayList;
+
+import dto.GrupoDTO;
 
 //import projetoEntidades.Grupo;
 
 
-public class GrupoDAO {
+public class GrupoTDG {
 	
 	private Connection conexao;
 	
-	public GrupoDAO() throws ClassNotFoundException{
+	public GrupoTDG() throws ClassNotFoundException{
 		this.conexao = new ConnectionFactory().getConnection();
 	}
 	
@@ -54,7 +56,7 @@ public class GrupoDAO {
 		
 	}
 	
-	public ArrayList<String> recuperaGrupo(int ID){
+	public GrupoDTO recuperaGrupo(int ID){
 		
 		String sql = "select * from grupos where idgrupo=?";
 		try{
@@ -63,25 +65,26 @@ public class GrupoDAO {
 			
 			ResultSet rs = stmt.executeQuery();		
 			rs.next();
-			ArrayList<String> retorno = new ArrayList<String>();
+			GrupoDTO retorno = new GrupoDTO();
 			
 			//retorno[0] = ID
-			retorno.add(String.valueOf(rs.getInt(1)));
+			retorno.setId(rs.getInt(1));			
 			
 			//retorno[1] = nome
-			retorno.add(rs.getString(2));
+			retorno.setNome(rs.getString(2));			
 			
 			//retorno[2] = descricao
-			retorno.add(rs.getString(3));
+			retorno.setDescricao(rs.getString(3));			
 			
 			//retorno[3] = regras
-			retorno.add(rs.getString(4));
+			retorno.setRegras(rs.getString(4));			
 			
 			//retorno[4] = limite
-			retorno.add(String.valueOf(rs.getInt(5)));
+			retorno.setLimitMin(rs.getInt(5));			
 			
 			//retorno[5] = ativo
-			retorno.add(String.valueOf(rs.getBoolean(6)));
+			retorno.setAtivo(rs.getBoolean(6));
+			
 			
 			rs.close();
 			stmt.close();
