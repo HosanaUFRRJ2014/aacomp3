@@ -120,7 +120,11 @@ public class Veiculo extends HttpServlet
 			else{				
 				try {
 
-					Veiculo novoVeiculo = new Veiculo(modelo,placa,cor,Integer.parseInt(numVagas));
+//					Veiculo novoVeiculo = new Veiculo(modelo,placa,cor,Integer.parseInt(numVagas));
+					
+					this.setModelo(modelo);
+					this.setPlaca(placa);
+					this.setCor(cor);
 
 					UsuarioTDG auxUsu = new UsuarioTDG();					
 					auxUsu.mudaMotorista(email);
@@ -130,10 +134,10 @@ public class Veiculo extends HttpServlet
 
 					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar um novo veiculo, se quiser
 
-					request.setAttribute("novoVeiculo", novoVeiculo);
+					request.setAttribute("novoVeiculo", this);
 					request.setAttribute("novoUsuario", recuperado);
 
-					RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoMotorista.jsp");
+					RequestDispatcher rdSucesso = request.getRequestDispatcher("/sucesso/sucessoMotorista.jsp");
 					rdSucesso.forward(request,response);
 
 				} catch (ClassNotFoundException e) {
@@ -164,7 +168,7 @@ public class Veiculo extends HttpServlet
 		String novaCor = request.getParameter("novaCorVeiculo");
 
 		//salvar na session em colocar dentro daqui.
-		Veiculo novoVeiculo = new Veiculo();
+		///Veiculo novoVeiculo = new Veiculo();
 
 		try
 		{
@@ -174,7 +178,7 @@ public class Veiculo extends HttpServlet
 			else
 			{
 				try {
-					novoVeiculo.alterar(novaCor);
+					this.alterar(novaCor);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

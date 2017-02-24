@@ -44,7 +44,7 @@ td
 	
 	
 	<tr>
-	<td width=50 >							
+	<td width=50 align=center>							
 		<br>
 		<label> Você cadastrou veiculo de modelo<% %> e placa <% %> .</label>
 		<label>Deseja cadastrar outro veiculo?</label>
@@ -52,6 +52,7 @@ td
 			
 			<input type="submit" value="Sim">
 		</form>	
+		<br>
 		<form action="pagInicial.jsp" method="post">
 			
 			<input type="submit" value="Nao">
