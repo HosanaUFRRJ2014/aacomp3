@@ -22,13 +22,17 @@ import projetoTDG.*;
 @WebServlet("/Grupo")
 public class Grupo extends HttpServlet
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String nome;
 	private String descricao;
 	private String regras; 
-	
+
 	private int limitMin;
-	
+
 
 	private boolean ativo;
 
@@ -72,13 +76,13 @@ public class Grupo extends HttpServlet
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		String opcao = request.getParameter("opcao");
-		
-		
+
+
 		if(opcao.equals("criarGrupo"))
 		{
 			this.criarGrupo(request, response);
 		}
-		
+
 		else if(opcao.equals("alterarGrupo"))
 		{
 			this.alterarGrupo(request, response);
@@ -95,7 +99,7 @@ public class Grupo extends HttpServlet
 	 * **/
 
 	public void criarGrupo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	{
+		{
 			HttpSession session = request.getSession();
 
 			Usuario recuperado = (Usuario)session.getAttribute("novoUsuario");
@@ -103,278 +107,286 @@ public class Grupo extends HttpServlet
 			String nomeGrupo = request.getParameter("nomeGrupo");
 			String regrasGrupo = request.getParameter("regrasGrupo");
 			String descricaoGrupo = request.getParameter("descricaoGrupo");
+			int limiteGrupo = 3;
 
+			try {
+				if(nomeGrupo.equals("") || regrasGrupo.equals("")|| regrasGrupo.equals("Digite as regras para o grupo aqui.") || descricaoGrupo.equals("")){
+					throw new CampoInvalidoException();
+				}	
+				else if(this.garanteIntegridade(nomeGrupo, descricaoGrupo)){					
+					throw new JaExisteException();					
+				}
+				else{					
+					if(!request.getParameter("limiteAvalRuinsGrupo").equals("")){	
+						limiteGrupo = Integer.parseInt(request.getParameter("limiteAvalRuinsGrupo"));	
+					}
+				}
 
-			if(nomeGrupo.equals("") || regrasGrupo.equals("")|| regrasGrupo.equals("Digite as regras para o grupo aqui.") || descricaoGrupo.equals("")){
+				this.setNome(nomeGrupo);
+				this.setDescricao(descricaoGrupo);
+				this.setRegras(regrasGrupo);
+				this.setLimMinAvaliacoesRuins(limiteGrupo);
 
+				this.armazenar();
+				this.recuperaID(this.getNome(),this.getDescricao());
+				this.adicionarUsuario(recuperado);
+
+				session.setAttribute("novoGrupo", this);
+
+				RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucesso/sucessoCriarGrupo.jsp");
+				rdSucesso.forward(request, response);
+
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			catch(CampoInvalidoException e){
+				
 				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
+				rdErro.forward(request, response);
+			}
+			catch(JaExisteException e){
+
+				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/jaExiste.jsp");
 				rdErro.forward(request, response);
 
 			}
-			else{
-				int limiteGrupo = 3;
-				if(!request.getParameter("limiteAvalRuinsGrupo").equals("")){	
-
-					limiteGrupo = Integer.parseInt(request.getParameter("limiteAvalRuinsGrupo"));				
-				}		
-
-				Grupo novoGrupo = new Grupo(recuperado,nomeGrupo,descricaoGrupo,regrasGrupo,limiteGrupo);
-
-				try {
-
-					novoGrupo.armazenar();
-					novoGrupo.recuperaID();
-					novoGrupo.adicionarUsuario(recuperado);
-					session.setAttribute("novoGrupo", novoGrupo);
-
-					RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoCriarGrupo.jsp");
-					rdSucesso.forward(request, response);
-
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}catch(JaExisteException e){
-
-					RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/jaExiste.jsp");
-					rdErro.forward(request, response);
-
-				}
+		}
+	}
 
 
-			}
 
+/**
+ * Método para ser usado dentro do doPost.
+ * @throws IOException 
+ * @throws ServletException 
+ * 
+ * **/
+
+public void alterarGrupo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
+{        
+
+	String escolhido = request.getParameter("grupoEscolhido");
+	PrintWriter out = response.getWriter();
+	out.println(escolhido);
+
+	String [] info = escolhido.split("/");
+
+	String nomeGrupo = info[0];
+	String descricaoGrupo = info[1];
+
+	String novoNome = request.getParameter("novoNome");
+	String novaDescricao = request.getParameter("novaDescricao");
+	String limiteDigitado = request.getParameter("novoLimMin");
+
+
+	try 
+	{		
+		//tratando casos de campos em branco
+		// todos campos em branco = erro
+		if(novoNome.equals("") && novaDescricao.equals("") && limiteDigitado.equals("")){
+			throw new CampoInvalidoException();
+		}	
+		if(novoNome.equals("")==false){
+			this.setNome(novoNome);
+		}
+		if(novaDescricao.equals("")==false){
+			this.setDescricao(novaDescricao);;
+		}
+		if(limiteDigitado.equals("")==false){
+			int novoLimite = Integer.parseInt(limiteDigitado);
+			this.setLimMinAvaliacoesRuins(novoLimite);;
 		}
 
-	}
-	
-	/**
-	 * Método para ser usado dentro do doPost.
-	 * @throws IOException 
-	 * @throws ServletException 
-	 * 
-	 * **/
-	
-	public void alterarGrupo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
-	{
-        HttpSession session = request.getSession();
-		
-		String escolhido = request.getParameter("grupoEscolhido");
-		PrintWriter out = response.getWriter();
-		out.println(escolhido);
-		
-		String [] info = escolhido.split("/");
-		
-		String nomeGrupo = info[0];
-		String descricaoGrupo = info[1];
-		
-		String novoNome = request.getParameter("novoNome");
-		String novaDescricao = request.getParameter("novaDescricao");
-		String limiteDigitado = request.getParameter("novoLimMin");
-		
-		
-		Usuario recuperado = (Usuario) session.getAttribute("novoUsuario");
-		
-		
-		
-		try 
-		{		
-			//tratando casos de campos em branco
-			// todos campos em branco = erro
-			if(novoNome.equals("") && novaDescricao.equals("") && novoLimite.equals("")){
-				throw new CampoInvalidoException();
-			}	
-			if(novoNome.equals("")==false){
-				this.setNome(novoNome);
-			}
-			if(novaDescricao.equals("")==false){
-				this.setDescricao(novaDescricao);;
-			}
-			if(limiteDigitado.equals("")==false){
-				int novoLimite = Integer.parseInt(limiteDigitado);
-				this.setLimMinAvaliacoesRuins(novoLimite);;
-			}
-			
-			this.alterar(this.getNome(), this.getDescricao(), this.getLimMinAvaliacoesRuins());
-			
-			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucesso/sucessoAlterar.jsp");
-			rdSucesso.forward(request,response);
-			
-		}
-		catch (ClassNotFoundException e) {
-			// eclipse me OBRIGOU a criar esse Try/Catch
-			e.printStackTrace();
-		}
-		catch(CampoInvalidoException e){
-			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
-			rdErro.forward(request, response);
-		}
-	
-	}
+		this.recuperaID(nomeGrupo,descricaoGrupo);
+		this.alterar(this.getNome(), this.getDescricao(), this.getLimMinAvaliacoesRuins());
 
-
-	public void armazenar() throws ClassNotFoundException, JaExisteException{
-
-		GrupoTDG aux = new GrupoTDG();
-		
-		if(!aux.garanteIntegridade(this.nome, this.descricao)){
-			throw new JaExisteException();
-		}else{
-			aux.adicionaGrupo(this.nome, this.descricao, this.regras, this.limitMin);
-		}		
-	}
-
-	public void alterar(String novoNome,String novaDescricao,int novoLimite) throws ClassNotFoundException{
-
-		
-		GrupoTDG aux = new GrupoTDG();
-		
-
-		aux.alteraGrupo(this.id, novoNome, novaDescricao, novoLimite);
+		RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucesso/sucessoAlterar.jsp");
+		rdSucesso.forward(request,response);
 
 	}
-
-	public void recuperaID(String nome, String descricao) throws ClassNotFoundException{
-
-		
-		GrupoTDG aux = new GrupoTDG();
-		
-		this.setId(aux.recuperaID(nome, descricao));
-
+	catch (ClassNotFoundException e) {
+		// eclipse me OBRIGOU a criar esse Try/Catch
+		e.printStackTrace();
+	}
+	catch(CampoInvalidoException e){
+		RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
+		rdErro.forward(request, response);
 	}
 
-	public void adicionarUsuario(Usuario novoUsuario) throws ClassNotFoundException
-	{
-		
-		ParticipaTDG aux = new ParticipaTDG();
-	
-		aux.adicionaParticipa(novoUsuario.getEmail(), this.id);	
+}
 
-	}
+//m�todos referentes ao banco
 
-	
-	public void recuperaUsuarios() throws ClassNotFoundException{
-		
-		ParticipaTDG auxParticipa = new ParticipaTDG();		
-		
-		Usuario auxUsuario = new Usuario();
-		
-		ArrayList<String> emails = auxParticipa.usuariosDoGrupo(this.id);
-		
-		for(int contador = 0; contador<emails.size(); contador++){		
-			
-			auxUsuario.montaUsuario(emails.get(contador));			
-			this.usuarios.add(auxUsuario);			
+public void armazenar() throws ClassNotFoundException, JaExisteException{
 
-		}		
-	}
+	GrupoTDG aux = new GrupoTDG();
 
-	public Grupo recuperaGrupo(int ID,Usuario dono) throws ClassNotFoundException{
-		
-		GrupoTDG auxGrupo = new GrupoTDG();
-		GrupoDTO mensageiro = auxGrupo.recuperaGrupo(ID);
-		
-		
-		Grupo retorno = new Grupo(mensageiro.getId(),dono,mensageiro.getNome(),mensageiro.getDescricao(),
-				mensageiro.getRegras(),mensageiro.getLimitMin(),mensageiro.isAtivo());
-				
-		return retorno;
+	if(!aux.garanteIntegridade(this.nome, this.descricao)){
+		throw new JaExisteException();
+	}else{
+		aux.adicionaGrupo(this.nome, this.descricao, this.regras, this.limitMin);
+	}		
+}
 
-	}
+public void alterar(String novoNome,String novaDescricao,int novoLimite) throws ClassNotFoundException{
 
 
+	GrupoTDG aux = new GrupoTDG();
 
 
-	//daqui para baixo apenas getters and setters
+	aux.alteraGrupo(this.id, novoNome, novaDescricao, novoLimite);
+
+}
+
+public void recuperaID(String nome, String descricao) throws ClassNotFoundException{
+
+	GrupoTDG aux = new GrupoTDG();
+
+	this.setId(aux.recuperaID(nome, descricao));
+
+}
+
+public void adicionarUsuario(Usuario novoUsuario) throws ClassNotFoundException
+{
+
+	ParticipaTDG aux = new ParticipaTDG();
+
+	aux.adicionaParticipa(novoUsuario.getEmail(), this.id);	
+
+}
 
 
-	public int getId() {
-		return id;
-	}
+public void recuperaUsuarios() throws ClassNotFoundException{
 
-	public void setId(int id) {
-		this.id = id;
-	}
+	ParticipaTDG auxParticipa = new ParticipaTDG();		
 
-	public String getNome() 
-	{
-		return nome;
-	}
+	Usuario auxUsuario = new Usuario();
 
-	public void setNome(String nome) 
-	{
-		this.nome = nome;
-	}
+	ArrayList<String> emails = auxParticipa.usuariosDoGrupo(this.id);
 
-	public String getDescricao() 
-	{
-		return descricao;
-	}
+	for(int contador = 0; contador<emails.size(); contador++){		
 
-	public void setDescricao(String descricao) 
-	{
-		this.descricao = descricao;
-	}
+		auxUsuario.montaUsuario(emails.get(contador));			
+		this.usuarios.add(auxUsuario);			
 
-	public int getLimMinAvaliacoesRuins() 
-	{
-		return limitMin;
-	}
+	}		
+}
 
-	public void setLimMinAvaliacoesRuins(int limMinAvaliacoesRuins)
-	{
-		this.limitMin = limMinAvaliacoesRuins;
-	}
+public Grupo recuperaGrupo(int ID,Usuario dono) throws ClassNotFoundException{
 
-	public boolean isAtivo() 
-	{
-		return this.ativo;
-	}
+	GrupoTDG auxGrupo = new GrupoTDG();
+	GrupoDTO mensageiro = auxGrupo.recuperaGrupo(ID);
 
-	//	public boolean desativarGrupo(boolean ativo) 
-	//	{
-	//		if(todosUsuariosInativos(this.usuarios) == true)
-	//		{
-	//			this.ativo = false;
-	//			//grupo desativado com sucesso
-	//			return true; 
-	//		}
-	//	//	else
-	//		System.out.println("Grupo tem um usuário ativo. Não pode ser destivado no momento"); //println temporário
-	//	    return false;
-	//	}
 
-	public ArrayList<Usuario> getUsuarios() 
-	{
-		return usuarios;
-	}
+	Grupo retorno = new Grupo(mensageiro.getId(),dono,mensageiro.getNome(),mensageiro.getDescricao(),
+			mensageiro.getRegras(),mensageiro.getLimitMin(),mensageiro.isAtivo());
 
-	public void setUsuarios(ArrayList<Usuario> usuarios)
-	{
-		this.usuarios = usuarios;
-	}
+	return retorno;
 
-	public String getRegras() 
-	{
-		return regras;
-	}
+}
 
-	public boolean desativar(Usuario usuario)
-	{
+public boolean garanteIntegridade(String nome, String descricao) throws ClassNotFoundException{
+
+	GrupoTDG auxGrupo = new GrupoTDG();
+
+	return auxGrupo.garanteIntegridade(nome, descricao);
+}
 
 
 
-		return false;
 
-	}
+//daqui para baixo apenas getters and setters
 
-	public void setRegras(String regras) {
-		this.regras = regras;
-	}
 
-	public void setAtivo(boolean ativo) {
-		this.ativo = ativo;
-	}
-	
+public int getId() {
+	return id;
+}
+
+public void setId(int id) {
+	this.id = id;
+}
+
+public String getNome() 
+{
+	return nome;
+}
+
+public void setNome(String nome) 
+{
+	this.nome = nome;
+}
+
+public String getDescricao() 
+{
+	return descricao;
+}
+
+public void setDescricao(String descricao) 
+{
+	this.descricao = descricao;
+}
+
+public int getLimMinAvaliacoesRuins() 
+{
+	return limitMin;
+}
+
+public void setLimMinAvaliacoesRuins(int limMinAvaliacoesRuins)
+{
+	this.limitMin = limMinAvaliacoesRuins;
+}
+
+public boolean isAtivo() 
+{
+	return this.ativo;
+}
+
+//	public boolean desativarGrupo(boolean ativo) 
+//	{
+//		if(todosUsuariosInativos(this.usuarios) == true)
+//		{
+//			this.ativo = false;
+//			//grupo desativado com sucesso
+//			return true; 
+//		}
+//	//	else
+//		System.out.println("Grupo tem um usuário ativo. Não pode ser destivado no momento"); //println temporário
+//	    return false;
+//	}
+
+public ArrayList<Usuario> getUsuarios() 
+{
+	return usuarios;
+}
+
+public void setUsuarios(ArrayList<Usuario> usuarios)
+{
+	this.usuarios = usuarios;
+}
+
+public String getRegras() 
+{
+	return regras;
+}
+
+public boolean desativar(Usuario usuario)
+{
+
+
+
+	return false;
+
+}
+
+public void setRegras(String regras) {
+	this.regras = regras;
+}
+
+public void setAtivo(boolean ativo) {
+	this.ativo = ativo;
+}
+
 
 
 }
