@@ -53,13 +53,24 @@ td
 </head>
 <body>
 
-   <%
+   <%     
+   		Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");
    
-        Grupo grupo = new Grupo(null, "Grupo de Teste", "Descrição isso deve ser trocado por pegar o grupo vindo da jsp listarGrupos", "A regra é não esquecer de trocar isso");
+   		String escolhido = request.getParameter("grupoEscolhido");
+   		String [] info = escolhido.split("/");
+	
+		String nomeGrupo = info[0];
+		String descricaoGrupo = info[1]; 
+   		
+		Grupo grupoEscolhido = new Grupo();
+		
+		grupoEscolhido.recuperaID(nomeGrupo,descricaoGrupo);
+		grupoEscolhido.recuperaGrupo(grupoEscolhido.getId(), novoUsuario);
+		
    
    %>
 
-	<h1 align = center><b>		EXIBINDO GRUPO		</b></h1>
+	<h1 align = center><b>		Exibindo Grupo Escolhido	</b></h1>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
 	<tr>
@@ -68,20 +79,18 @@ td
 								
 				<br>
 				<label> Nome :</label>
-				<%= grupo.getNome() %>  <br>
+				<%= grupoEscolhido.getNome() %>  <br>
+				
 				<label> Descrição :</label> 
-				<%= grupo.getDescricao() %> <br>
+				<%= grupoEscolhido.getDescricao() %> <br>
+				
 				<label> Regras :</label> 
-				<%=grupo.getRegras() %> <br><br>
+				<%=grupoEscolhido.getRegras() %> <br><br>
+				
 				<label> Limite de avaliações ruins que um usuário pode receber(Opcional)  :</label>
-				<%=grupo.getLimMinAvaliacoesRuins() %></p>
+				<%=grupoEscolhido.getLimMinAvaliacoesRuins() %><br>
 				
-<!-- 			    Adicionar email do cara que está criando o grupo. Pré-requisito: email/usuario já cadasttrado no sistema. -->
-				
-				
-				
-<!-- 				<p><label> botoes </label></p> -->
-<!-- 				<input type= "button" value="botao1">  -->
+
 
             <div class="btn-group"  align="center">
   				<a href="../alterar/alterarGrupo.jsp" class="button">Alterar informações desse grupo</a>
@@ -98,8 +107,7 @@ td
 			<br> <br>
 			
 			<div class="btn-group"  align="center">
-  				<a href="../listar/listarCaronas.jsp" class="button">Listar caronas criadas</a>
-  				
+  				<a href="../listar/listarCaronas.jsp" class="button">Listar caronas criadas</a>  				
 			</div>
 			
 			<br> <br>

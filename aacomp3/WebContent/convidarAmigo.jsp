@@ -31,11 +31,8 @@ td
 </head>
 <body>
 
-	<%
-		
-// 		Usuario novoUsuario = (Usuario)request.getAttribute("novoUsuario");
-// 		request.setAttribute("novoUsuario", novoUsuario);
-	
+	<%		
+ 		Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");	
 	%>
 
 	<h1 align = center>
@@ -50,14 +47,12 @@ td
 	<tr>
 		<td width=50 >
 			
-<!-- 			    Não exite necessidade desse campo caso a sessão salve o email do usuário logado -->
-<!-- 				<label> Informe seu email cadastrado na nossa base *:(Esse campo não pode ser alterado, apenas informado)</label> -->
-<!-- 				<input type= "text" name = "emailUsuario"></p>				 -->
+
 
    
 				<br> <br>
 				<label> Informe o email do seu amigo :</label>
-				<input type= "text" name = "emailAmigo"></p>
+				<input type= "text" name = "emailAmigo"><br>
 
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 

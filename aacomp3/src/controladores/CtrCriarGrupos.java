@@ -69,7 +69,7 @@ public class CtrCriarGrupos extends HttpServlet {
 				try {
 					
 					novoGrupo.armazenar();
-					novoGrupo.recuperaID();
+					novoGrupo.recuperaID(nomeGrupo,descricaoGrupo);
 					novoGrupo.adicionarUsuario(recuperado);
 					session.setAttribute("novoGrupo", novoGrupo);
 					

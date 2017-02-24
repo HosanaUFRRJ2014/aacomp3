@@ -75,11 +75,11 @@ public class Grupo
 		
 	}
 	
-	public void recuperaID() throws ClassNotFoundException{
+	public void recuperaID(String nome,String descricao) throws ClassNotFoundException{
 		
 		GrupoTDG aux = new GrupoTDG();
 		
-		this.setId(aux.recuperaID(this.nome, this.descricao));
+		this.setId(aux.recuperaID(nome,descricao));
 		
 	}
 	

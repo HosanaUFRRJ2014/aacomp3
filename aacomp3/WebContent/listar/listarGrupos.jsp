@@ -35,7 +35,8 @@ td
 
 
 	<%			
-		
+		Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");	
+		LinkedList<Grupo> meusGrupos = novoUsuario.getGruposQueUsuarioEstaAtivo();
 	%>
 	
 	<h1 align = center>	Grupos que você faz parte!!</h1>	
@@ -51,25 +52,26 @@ td
 		<br>
 			
 		<form action="../exibir/exibirGrupo.jsp" method="post">
-		<p>Exibindo os grupos que você está ativo:</p>
-		<%for(int i = 0; i < usuario.getGruposQueUsuarioEstaAtivo().size(); i++) {%>
 		
-  			<input type="radio" name="grupo" value="grupo<%=i%>"><%=usuario.getGruposQueUsuarioEstaAtivo().get(i).getNome() %><br>
-  		
-  			
-  	   <% }%>
+		<p>Exibindo os grupos que você está ativo:</p>
+		<select name="grupoEscolhido">
+			<%					
+				for(Grupo g : meusGrupos){						
+			%> 
+ 					<option><%=g.getNome()%><%="/"%><%=g.getDescricao()%></option> <!-- Exibe nomes dos grupos vindos do banco -->
+  			<%}   				
+  			%>
+			</select>
   	   
-  	   <p>Agora, exibindo os grupos que você está inativo:</p>
-		<%for(int i = 0; i < usuario.getGruposQueUsuarioEstaInativo().size(); i++) {%>
-
-  			<input type="radio" name="grupo" value="grupo<%=i%>"><%=usuario.getGruposQueUsuarioEstaInativo().get(i).getNome() %><br>
-  	
-  			
-  	   <% }%>
   	   
-  	        <input type= "reset" value="limpar"> 
-	        <input type= "submit" value="Enviar"> 
+  	   
+  	        <input type= "reset" value="limpar"> <br>
+	        <input type= "submit" value="Enviar"> <br><br>	        	       	        
 		</form> 	
+		
+		<form action="./pagInicial.jsp" method="post">	        
+	      	 <input type="submit" value="Cancelar">
+	    </form>
 			
 			
 		
