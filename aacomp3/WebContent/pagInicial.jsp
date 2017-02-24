@@ -80,7 +80,7 @@ td
 				<a href="./criar/criarGrupo.jsp" class="button">Criar um novo Grupo de Caronas</a>
   				<a href="./alterar/alterarGrupo.jsp" class="button">Alterar Informações de um Grupo</a>
   				
-  				<a href="selecionarGrupo.jsp" class="button">Alterar cor de um carro</a>
+  				<a href="selecionarVeiculo.jsp" class="button">Alterar cor de um carro</a>
   				<a href="./criar/criarCarona.jsp" class="button">Criar uma nova Carona	</a>
 
   				<a href="./listar/listarVeiculos.jsp" class="button">Listar Meus Veículos (Apenas para Motoristas)</a>

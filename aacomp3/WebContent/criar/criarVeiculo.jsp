@@ -36,7 +36,7 @@ td
 	</h1>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form method="post" action="../CtrCriarVeiculo">
+	<form method="post" action="../Veiculo">
 	<tr>
 		<td width=50 >
 			
@@ -51,7 +51,7 @@ td
 				<label> Número vagas (Número de assentos - 1) *:</label>
 				<input type= "number" name = "numVagasVeiculo"></p>
 				
-
+                <input type= "text" name = "opcao" value="criarVeiculo" hidden>
 
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 

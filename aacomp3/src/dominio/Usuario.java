@@ -12,6 +12,8 @@ import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
 import excecoes.CampoInvalidoException;
+import excecoes.EmailInvalidoException;
 import projetoDAO.ParticipaDAO;
 import projetoDAO.UsuarioDAO;
 
@@ -72,34 +75,27 @@ public class Usuario extends HttpServlet
 
 	}
 	
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		String opcao = request.getParameter("opcao");
 		
-		
-		String criarUsuario = request.getParameter("/aacomp3/criar/criarUsuario.jsp");
-		String alterarUsuario = request.getParameter("/aacomp3/alterar/alterarUsuario.jsp");
-      //  System.out.println(strings);
-	//	Usuario novoUsuario = new Usuario(nome, email, telefone); //mudar isso aqui!!!
-
-		if(!criarUsuario.equals(""))
+		if(opcao.equals("verificarEmail"))
 		{
-			criarUsuario(request,response);
+		   this.verificarEmailUsuario(request, response);	
 		}
 		
-		else if(!alterarUsuario.equals(""))
+		else if(opcao.equals("criarUsuario"))
 		{
-			alterarUsuario(request,response);
+			this.criarUsuario(request, response);
+		}
+		
+		else if(opcao.equals("alterarUsuario"))
+		{
+			this.alterarUsuario(request, response);
 		}
 
 
@@ -108,6 +104,54 @@ public class Usuario extends HttpServlet
 
 
 	}
+	
+	/**
+	 * Método a ser chamado dentro do doPost
+	 * @param request 
+	 * @param response 
+	 * @throws IOException 
+	 * @throws ServletException 
+	 * 
+	 * */
+	
+	public void verificarEmailUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+        String email = request.getParameter("emailUsuario");
+		
+		Usuario aux = new Usuario();
+		
+		try {
+			if(aux.verificaEmail(email)){
+				
+				Usuario novoUsuario = aux.montaUsuario(email);
+				// enviando para JSP, sempre enviar como novoUsuario
+				
+				HttpSession session = request.getSession();
+				session.setAttribute("novoUsuario", novoUsuario);
+				
+			//	PrintWriter out = response.getWriter();
+				
+			//	out.println(novoUsuario.getGruposQueUsuarioEstaAtivo().get(0).getNome());
+				
+				RequestDispatcher rdSucesso = request.getRequestDispatcher("./pagInicial.jsp");
+				rdSucesso.forward(request, response);
+				
+			}
+			else{
+				throw new EmailInvalidoException();
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch(EmailInvalidoException e){
+			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/emailInvalido.jsp");
+			rdErro.forward(request, response);
+		}
+
+
+	}
+
+
 	
 	/**
 	 * Método para criação do Usuário dentro do método post
@@ -195,7 +239,7 @@ public class Usuario extends HttpServlet
 				e.printStackTrace();
 			}
 	}
-
+	
 
 	public void armazenar() throws ClassNotFoundException
 	{

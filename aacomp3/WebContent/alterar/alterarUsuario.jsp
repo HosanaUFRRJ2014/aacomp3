@@ -56,7 +56,7 @@ td
 				<label> Informe um novo telefone para contato:</label>
 				<input type= "text" name = "novoTelefoneUsuario"></P>
 				
-
+                <input type= "text" name = "opcao" value="alterarUsuario" hidden></p>
 
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 

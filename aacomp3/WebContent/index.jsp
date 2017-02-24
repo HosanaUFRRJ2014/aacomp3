@@ -38,9 +38,10 @@ td {
 			<tr>			
 				<td width=50 align = center><br> 
 					<label> Digite o email cadastrado</label>					
-					<form action = "./CtrVerificaEmail" method="post">
+					<form action = "./Usuario" method="post">
 					<input type="text" name="emailUsuario">	</p>
 					<input type = "submit" value="Login" ></p>
+					<input type= "text" name = "opcao" value="verificarEmail" hidden></p>
 					</form>
 					
 					<label> Ainda não é cadastrado?</label> 

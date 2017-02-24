@@ -46,7 +46,7 @@ td
 
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form method="post" action="../CtrAltUsuario">
+	<form method="post" action="../Veiculo"> <!-- estava assim.. pq? ../CtrAltUsuario -->
 	<tr>
 		<td width=50 >
 			
@@ -58,11 +58,12 @@ td
 				<br><br>
 				<label> Informe uma nova cor para o veículo:</label>
 				<input type= "text" name = "novaCorVeiculo"></p>
+                <input type= "text" name = "opcao" value="alterarVeiculo" hidden>
 
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 
 				
-		
+		         
 	
 	
 		</td>

@@ -52,7 +52,7 @@ td
 
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form method="post" action="../CtrAltGrupo">
+	<form method="post" action="../Grupo">
 	<tr>
 		<td width=50 >		
 		
@@ -80,6 +80,8 @@ td
 				
 				<label> Informe um novo limite mínimo de avaliações ruins:</label>
 				<input type= "text" name = "novoLimMin"></p>
+				
+				<input type= "text" name = "opcao" value="alterarGrupo" hidden></p>
 
 				
 	
