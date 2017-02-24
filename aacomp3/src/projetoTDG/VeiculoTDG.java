@@ -145,6 +145,40 @@ public class VeiculoTDG {
 		}		
 		
 	}
+	
+	public ArrayList<VeiculoDTO> veiculosDeUmDono(String emailDono){
+		
+		String sql = "select * from veiculos where emailusuario=?";
+		
+		try{
+			
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);
+			stmt.setString(1,emailDono);		
+			
+			ResultSet rs = stmt.executeQuery();
+			ArrayList<VeiculoDTO> retorno = new ArrayList<VeiculoDTO>();
+			
+			
+			while(rs.next()){
+				VeiculoDTO mensageiro = new VeiculoDTO();
+				
+				mensageiro.setId(rs.getInt(1));
+				mensageiro.setMotorista(rs.getString(2));
+				mensageiro.setPlaca(rs.getString(3));
+				mensageiro.setCor(rs.getString(4));
+				mensageiro.setModelo(rs.getString(5));
+				mensageiro.setNumeroVagas(rs.getInt(6));
+				
+				retorno.add(mensageiro);
+			}
+			stmt.close();			
+			
+			return retorno;
+		}catch(SQLException e){
+			throw new RuntimeException(e);
+		}		
+		
+	}
 
 
 }

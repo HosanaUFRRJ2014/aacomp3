@@ -83,11 +83,6 @@ public class Veiculo extends HttpServlet
 		{
 			this.alterarVeiculo(request, response);
 		}
-
-
-
-
-
 	}
 
 	/**
@@ -234,6 +229,28 @@ public class Veiculo extends HttpServlet
 
 		return novoMontado;
 
+	}
+	
+	public ArrayList<Veiculo> veiculosDeUmDono(String emailDono) throws ClassNotFoundException{
+		
+		VeiculoTDG aux = new VeiculoTDG();
+		ArrayList<VeiculoDTO> infoVeiculos = aux.veiculosDeUmDono(emailDono);
+		
+		ArrayList<Veiculo> retorno = new ArrayList<Veiculo>();
+		
+		for(VeiculoDTO veiculo : infoVeiculos){
+			
+			this.setID(veiculo.getId());
+			this.setPlaca(veiculo.getPlaca());
+			this.setModelo(veiculo.getModelo());
+			this.setCor(veiculo.getCor());
+			this.setNumeroVagas(veiculo.getNumeroVagas());
+			
+			retorno.add(this);
+		}
+		
+		return retorno;
+		
 	}
 
 	//daqui para baixo apenas getters and setters

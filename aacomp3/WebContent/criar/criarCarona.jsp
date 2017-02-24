@@ -4,6 +4,7 @@
 <%@ page import= "java.util.*" %>
 <%@ page import= "java.text.SimpleDateFormat" %>
 <%@ page import="dominio.Veiculo" %>
+<%@ page import="dto.VeiculoDTO" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -198,13 +199,13 @@ td
 								
 				<br>
 				
-				<label> Data da Carona *:</label><br />
-				<label>Favor seguir o exemplo contido no campo</label><br />
-				<input type= "text" value ="00/00" name = "diaCarona"></p>
+				<label> Data da Carona *:</label><br>
+				<label>Favor seguir o exemplo contido no campo</label><br>
+				<input type= "text" value ="00/00" name = "diaCarona"><br>
 				
 				<label> Hora de Saída *:</label><br />
 				<label>Favor seguir o exemplo contido no campo</label><br />
-				<input type= "text" value= "00:00:00" name = "horaSaida"></p>
+				<input type= "text" value= "00:00:00" name = "horaSaida"><br>
 				
 				<label>Digite CEP e o número do local de origem da carona e clique em um dos campos para autocompletar</label><br />
 		      	
@@ -212,38 +213,38 @@ td
 		      	<input name="numeroOrigem" type="text"></label><br />
 		        <label>Cep:
 		        <input name="cepOrigem" type="text" id="cep" value="" size="10" maxlength="9"
-		               onblur="pesquisacep(this.value);" /></label><br />
+		               onblur="pesquisacep(this.value);" /></label><br>
 		        <label>Rua:
-		        <input name="ruaOrigem" type="text" id="rua" size="60" /></label><br />
+		        <input name="ruaOrigem" type="text" id="rua" size="60" /></label><br>
 		        <label>Bairro:
-		        <input name="bairroOrigem" type="text" id="bairro" size="40" /></label><br />
+		        <input name="bairroOrigem" type="text" id="bairro" size="40" /></label><br>
 		        <label>Cidade:
-		        <input name="cidadeOrigem" type="text" id="cidade" size="40" /></label><br />
+		        <input name="cidadeOrigem" type="text" id="cidade" size="40" /></label><br>
 		        <label>Estado:
-		        <input name="ufOrigem" type="text" id="uf" size="2" /></label><br />
+		        <input name="ufOrigem" type="text" id="uf" size="2" /></label><br>
 		        <label>IBGE:
-		        <input name="ibgeOrigem" type="text" id="ibge" size="8" /></label><br />				
+		        <input name="ibgeOrigem" type="text" id="ibge" size="8" /></label><br>				
 				
 				<label>Digite CEP e o número do local de destino da carona e clique em um dos campos para autocompletar</label><br />
 		      	
 		      	<label>Número:
-		      	<input type="text" name="numeroDestino"></label><br />
+		      	<input type="text" name="numeroDestino"></label><br>
 		      	
 		        <label>Cep:
 		        <input name="cepDestino" type="text" id="cep2" value="" size="10" maxlength="9"
-		               onblur="pesquisacep2(this.value);" /></label><br />
+		               onblur="pesquisacep2(this.value);" /></label><br>
 		        <label>Rua:
-		        <input name="ruaDestino" type="text" id="rua2" size="60" /></label><br />
+		        <input name="ruaDestino" type="text" id="rua2" size="60" /></label><br>
 		        <label>Bairro:
-		        <input name="bairroDestino" type="text" id="bairro2" size="40" /></label><br />
+		        <input name="bairroDestino" type="text" id="bairro2" size="40" /></label><br>
 		        <label>Cidade:
-		        <input name="cidadeDestino" type="text" id="cidade2" size="40" /></label><br />
+		        <input name="cidadeDestino" type="text" id="cidade2" size="40" /></label><br>
 		        <label>Estado:
-		        <input name="ufDestino" type="text" id="uf2" size="2" /></label><br />
+		        <input name="ufDestino" type="text" id="uf2" size="2" /></label><br>
 		        <label>IBGE:
-		        <input name="ibgeDestino" type="text" id="ibge2" size="8" /></label><br />
+		        <input name="ibgeDestino" type="text" id="ibge2" size="8" /></label><br>
 												
-				<label>Veiculo a ser usado na carona *:</label><br />				
+				<label>Veiculo a ser usado na carona *:</label><br>				
 				<select name="veiculoEscolhido">
 				
 				<%
@@ -251,12 +252,12 @@ td
 					String emailUsuario = novoUsuario.getEmail();
 					
 					Veiculo aux = new Veiculo();
-					ArrayList<String> meusVeiculos = aux.veiculosDeUmDono(emailUsuario);
+					ArrayList<Veiculo> meusVeiculos = aux.veiculosDeUmDono(emailUsuario);
 					
 					
-					for(int contador = 0; contador < meusVeiculos.size();contador = contador+2){%>
+					for(Veiculo meuVeiculo : meusVeiculos){%>
 					
-					<option><%=meusVeiculos.get(contador) %><%="/"%><%=meusVeiculos.get(contador+1)%></option>
+					<option><%=meuVeiculo.getModelo() %><%="/"%><%=meuVeiculo.getPlaca() %></option>
 					
 				<%	
 					}				
@@ -264,10 +265,10 @@ td
 				</select>				
 				<label>Lembre-se que a quantidade de vagas irá variar com o veiculo escolhido.</label><br />
 				
-				<input type= "text" name = "opcao" value="criarCarona" hidden></p>
+				<input type= "text" name = "opcao" value="criarCarona" hidden><br>
 				
-				<input type= "reset" value="limpar"> 
-				<input type= "submit" value="Enviar"> 	
+				<input type= "reset" value="limpar"><br>
+				<input type= "submit" value="Enviar"> 	<br><br>
 				
 		</td>
 	</tr>

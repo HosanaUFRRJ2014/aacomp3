@@ -35,9 +35,8 @@ td
 	
 	<%
 	   
-	Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");
+	Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");	
 	
-	LinkedList<Grupo> gruposQueParticipa = novoUsuario.getGruposQueUsuarioEstaAtivo(); 
 	
 	%>
 	
@@ -46,7 +45,7 @@ td
 	
 	<h1 align = center>
 	Algo errado? <br> <br>
-	<b>		Altere as informações do grupo		</b>
+	<b>		Altere as informações do grupo escolhido		</b>
 	</h1>
 	
 
@@ -55,17 +54,6 @@ td
 	<form method="post" action="../Grupo">
 	<tr>
 		<td width=50 >		
-		
-				
-				<label> Escolha o grupo que deseja alterar</label>
-				<select name="grupoEscolhido">
-				<%					
-					for(Grupo g : gruposQueParticipa){						
-				%> 
- 						<option><%=g.getNome()%><%="/"%><%=g.getDescricao()%></option> <!-- Exibe nomes dos grupos vindos do banco -->
-  				<%}   				
-  				%>
-				</select>
 				
 				
                 <br>

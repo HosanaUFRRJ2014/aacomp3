@@ -60,17 +60,20 @@ td
    		String [] info = escolhido.split("/");
 	
 		String nomeGrupo = info[0];
+		out.println(nomeGrupo);
 		String descricaoGrupo = info[1]; 
+		out.println(descricaoGrupo);
    		
 		Grupo grupoEscolhido = new Grupo();
-		
-		grupoEscolhido.recuperaID(nomeGrupo,descricaoGrupo);
+		grupoEscolhido.setNome(nomeGrupo);
+		grupoEscolhido.setDescricao(descricaoGrupo);
+		grupoEscolhido.recuperaID();
+		out.println(grupoEscolhido.getId());
 		grupoEscolhido.recuperaGrupo(grupoEscolhido.getId(), novoUsuario);
-		
+		session.setAttribute("grupoEscolhido", grupoEscolhido);
    
    %>
-
-	<h1 align = center><b>		Exibindo Grupo Escolhido	</b></h1>
+<h1 align = center><b>		Exibindo Grupo <%=grupoEscolhido.getNome() %>	</b></h1>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
 	<tr>
@@ -93,8 +96,7 @@ td
 
 
             <div class="btn-group"  align="center">
-  				<a href="../alterar/alterarGrupo.jsp" class="button">Alterar informações desse grupo</a>
-  				
+  				<a href="../alterar/alterarGrupo.jsp" class="button">Alterar informações desse grupo</a>  				
 			</div>
 			
 			<br><br>
@@ -113,8 +115,7 @@ td
 			<br> <br>
 			
 			<div class="btn-group"  align="center">
-  				<a href="../criar/criarCarona.jsp" class="button">Criar uma carona (Apenas para motoristas)</a>
-  				
+  				<a href="../criar/criarCarona.jsp" class="button">Criar uma carona (Apenas para motoristas)</a>  				
 			</div>
 		
 	
@@ -123,5 +124,6 @@ td
 	</tr>
 	</table>
 
+	
 </body>
 </html>

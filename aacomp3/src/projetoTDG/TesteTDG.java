@@ -20,17 +20,11 @@ public class TesteTDG {
 	public static void main(String[] args) throws ClassNotFoundException {
 		// TODO Auto-generated method stub				
 		
+		Grupo teste = new Grupo();
 		
-		UsuarioTDG aux = new UsuarioTDG();
-		ParticipaTDG aux2 = new ParticipaTDG();
+		teste.setNome("Caronas Panda");
+		teste.setDescricao("Na intensidade do transito");
 		
-		UsuarioDTO mensageiro = aux.recuperaPorEmail("dessa@hotmail.com.br");
-		
-		ArrayList<Integer> grupos = aux2.gruposDoUsuario(mensageiro.getEmail());
-		
-		for(int a : grupos){
-			System.out.println(a);
-		}
 		
 		
 		

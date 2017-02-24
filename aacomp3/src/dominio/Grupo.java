@@ -166,14 +166,16 @@ public class Grupo extends HttpServlet
 public void alterarGrupo(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
 {        
 
-	String escolhido = request.getParameter("grupoEscolhido");
+	HttpSession session = request.getSession();
+	
+	Grupo escolhido = (Grupo) session.getAttribute("grupoEscolhido");
 	PrintWriter out = response.getWriter();
 	out.println(escolhido);
 
-	String [] info = escolhido.split("/");
+	
 
-	String nomeGrupo = info[0];
-	String descricaoGrupo = info[1];
+	String nomeGrupo = escolhido.getNome();
+	String descricaoGrupo = escolhido.getDescricao();
 
 	String novoNome = request.getParameter("novoNome");
 	String novaDescricao = request.getParameter("novaDescricao");
@@ -197,9 +199,15 @@ public void alterarGrupo(HttpServletRequest request, HttpServletResponse respons
 			int novoLimite = Integer.parseInt(limiteDigitado);
 			this.setLimMinAvaliacoesRuins(novoLimite);;
 		}
+		if(this.garanteIntegridade(this.getNome(), this.getDescricao())){
+			throw new JaExisteException();
+		}
 
 		this.recuperaID(nomeGrupo,descricaoGrupo);
 		this.alterar(this.getNome(), this.getDescricao(), this.getLimMinAvaliacoesRuins());
+		
+		// uma vez alterado o grupo previamente escolhido, nao ha mais necessidade de armazena-lo
+		session.removeAttribute("grupoEscolhido");
 
 		RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucesso/sucessoAlterar.jsp");
 		rdSucesso.forward(request,response);
@@ -212,9 +220,13 @@ public void alterarGrupo(HttpServletRequest request, HttpServletResponse respons
 	catch(CampoInvalidoException e){
 		RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
 		rdErro.forward(request, response);
+	} catch (JaExisteException e) {
+		RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/jaExiste.jsp");
+		rdErro.forward(request, response);
 	}
 
 }
+
 
 //métodos referentes ao banco
 
@@ -239,11 +251,11 @@ public void alterar(String novoNome,String novaDescricao,int novoLimite) throws 
 
 }
 
-public void recuperaID(String nome, String descricao) throws ClassNotFoundException{
+public void recuperaID() throws ClassNotFoundException{
 
 	GrupoTDG aux = new GrupoTDG();
 
-	this.setId(aux.recuperaID(nome, descricao));
+	this.setId(aux.recuperaID(this.nome, this.descricao));
 
 }
 

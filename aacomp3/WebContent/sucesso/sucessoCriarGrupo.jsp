@@ -40,6 +40,8 @@ td
 		String descricaoGrupo = novoGrupo.getDescricao();
 		String regrasGrupo = novoGrupo.getRegras();
 		int limiteGrupo = novoGrupo.getLimMinAvaliacoesRuins();
+		
+		session.removeAttribute("novoGrupo");
 	%>
 	
 	<h1 align = center>	Cadastro do seu Grupo <%=nomeGrupo %> foi realizado com sucesso <%=nome %>!	</h1>	
@@ -59,7 +61,7 @@ td
 		<label>Se qualquer usuario do grupo receber <%=limiteGrupo %> avaliações ruins ficará inativo no grupo <%=nomeGrupo %></label><br>
 		
 		<label>Deseja convidar pessoas para seu grupo?</label>
-		<form action="./criar/criarVeiculo.jsp" method="post">
+		<form action="./convidarAmigo.jsp" method="post">
 			
 			<input type="submit" value="Sim">
 		</form>	
