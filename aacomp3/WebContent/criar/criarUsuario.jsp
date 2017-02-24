@@ -55,7 +55,7 @@ td
 				<label> Telefone *:</label>
 				<input type= "number" name = "telefoneUsuario"></p>
 				
-				<input type= "text" name = "<%=request.getRequestURI()%>" value="criarUsuario" hidden></p>
+				<input type= "text" name = "opcao" value="criarUsuario" hidden></p>
 
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 

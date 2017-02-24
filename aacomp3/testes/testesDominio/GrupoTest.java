@@ -228,7 +228,7 @@ public class GrupoTest extends TestCase{
 	//	Usuario novoUsuario = new Usuario("Nome usuário","user@user","22559892");
 		
 		Grupo grupo = new Grupo(null,nome, descricao,regras,limite);
-		grupo.recuperaUsuarios(id);
+		grupo.recuperaUsuarios();
 		GrupoTDG grupodao = new GrupoTDG(); 
 		
         String sql = "select emailusuario from participa where idgrupo=" + id;

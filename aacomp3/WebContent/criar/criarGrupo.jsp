@@ -34,7 +34,7 @@ td
 	<h1 align = center><b>		CRIAR GRUPO		</b></h1>
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
-	<form action="../CtrCriarGrupos" method="post">
+	<form action="../Grupo" method="post">
 	<tr>
 		<td width=50 >
 			
@@ -47,7 +47,9 @@ td
 				<label> Regras *:</label> <br>
 				<textarea name="regrasGrupo" rows=10 cols=20>Digite as regras para o grupo aqui.</textarea> <br><br>
 				<label> Limite de avaliações ruins que um usuário pode receber: (Opcional)</label>
-				<input type= "text" name = "limiteAvalRuinsGrupo"></p>				
+				<input type= "number" name = "limiteAvalRuinsGrupo"></p>		
+				
+				<input type= "text" name = "opcao" value="criarGrupo" hidden></p>		
 
 				
 				<input type= "reset" value="limpar"> 

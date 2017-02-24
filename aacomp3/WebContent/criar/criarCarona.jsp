@@ -192,7 +192,7 @@ td
 
 	<table  align=center width =600 border=1 bgcolor="white" bordercolor= "black" borderstyle="solid"> 
 	
-	<form method="post" action="../CtrCriarCarona">
+	<form method="post" action="../Carona">
 	<tr>
 		<td width=50 >
 								
@@ -264,6 +264,7 @@ td
 				</select>				
 				<label>Lembre-se que a quantidade de vagas irá variar com o veiculo escolhido.</label><br />
 				
+				<input type= "text" name = "opcao" value="criarCarona" hidden></p>
 				
 				<input type= "reset" value="limpar"> 
 				<input type= "submit" value="Enviar"> 	
