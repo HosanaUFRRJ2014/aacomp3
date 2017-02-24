@@ -118,14 +118,20 @@ public class Grupo extends HttpServlet
 					limiteGrupo = Integer.parseInt(request.getParameter("limiteAvalRuinsGrupo"));				
 				}		
 
-				Grupo novoGrupo = new Grupo(recuperado,nomeGrupo,descricaoGrupo,regrasGrupo,limiteGrupo);
+				//Grupo novoGrupo = new Grupo(recuperado,nomeGrupo,descricaoGrupo,regrasGrupo,limiteGrupo);
+				
+				//this.setDono(recuperado);
+				this.setNome(nomeGrupo);
+				this.setDescricao(descricaoGrupo);
+				this.setRegras(regrasGrupo);
+				this.setLimMinAvaliacoesRuins(limiteGrupo);
 
 				try {
 
-					novoGrupo.armazenar();
-					novoGrupo.recuperaID();
-					novoGrupo.adicionarUsuario(recuperado);
-					session.setAttribute("novoGrupo", novoGrupo);
+					this.armazenar();
+					this.recuperaID();
+					this.adicionarUsuario(recuperado);
+					session.setAttribute("novoGrupo", this);
 
 					RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoCriarGrupo.jsp");
 					rdSucesso.forward(request, response);
@@ -216,7 +222,7 @@ public class Grupo extends HttpServlet
 				
 			}
 			
-			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoAlterar.jsp");
+			RequestDispatcher rdSucesso = request.getRequestDispatcher("/sucesso/sucessoAlterar.jsp");
 			rdSucesso.forward(request,response);
 			
 		}

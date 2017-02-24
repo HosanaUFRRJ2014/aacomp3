@@ -224,7 +224,7 @@ public class Usuario extends HttpServlet
 			session.removeAttribute("novoUsuario");
 			session.setAttribute("novoUsuario", usuarioExistente);
 			
-			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoAlterar.jsp");
+			RequestDispatcher rdSucesso = request.getRequestDispatcher("/sucesso/sucessoAlterar.jsp");
 			rdSucesso.forward(request,response);
 
 			}catch(CampoInvalidoException e){	

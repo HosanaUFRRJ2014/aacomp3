@@ -37,7 +37,7 @@ td
 	   
 	Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");
 	
-	LinkedList<Grupo> gruposQueParticipa = novoUsuario.getGruposQueUsuarioEstaAtivo(); //em algum momento, vai precisar pegar isso do banco.
+	LinkedList<Grupo> gruposQueParticipa = novoUsuario.getGruposQueUsuarioEstaAtivo(); 
 	
 	%>
 	
@@ -79,7 +79,7 @@ td
 				<input type= "text" name = "novaDescricao"></p>
 				
 				<label> Informe um novo limite mínimo de avaliações ruins:</label>
-				<input type= "text" name = "novoLimMin"></p>
+				<input type= "number" name = "novoLimMin"></p>
 				
 				<input type= "text" name = "opcao" value="alterarGrupo" hidden></p>
 
