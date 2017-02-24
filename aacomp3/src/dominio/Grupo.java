@@ -169,54 +169,34 @@ public class Grupo extends HttpServlet
 		
 		String novoNome = request.getParameter("novoNome");
 		String novaDescricao = request.getParameter("novaDescricao");
-		String novoLimite = request.getParameter("novoLimMin");
+		String limiteDigitado = request.getParameter("novoLimMin");
+		
 		
 		Usuario recuperado = (Usuario) session.getAttribute("novoUsuario");
 		
-		Grupo aux = new Grupo();
-		aux.setDescricao(descricaoGrupo);
-		aux.setNome(nomeGrupo);
+		
 		
 		try 
-		{
-			aux.recuperaID();
-			aux.recuperaGrupo(aux.getId(), recuperado);
-			
+		{		
 			//tratando casos de campos em branco
 			// todos campos em branco = erro
 			if(novoNome.equals("") && novaDescricao.equals("") && novoLimite.equals("")){
 				throw new CampoInvalidoException();
 			}	
-			//novoNome em branco
-			else if(novoNome.equals("")){
-				//novo limite e novo nome em branco
-				if(novoLimite.equals("")){
-					aux.alterar(aux.getNome(), novaDescricao, aux.getLimMinAvaliacoesRuins());
-				}
-				//novo nome e nova descricao em branco
-				else if(novaDescricao.equals("")){
-					aux.alterar(aux.getNome(),aux.getDescricao(), Integer.parseInt(novoLimite));
-				}				
+			if(novoNome.equals("")==false){
+				this.setNome(novoNome);
 			}
-			// nova descricao em branco
-			else if(novaDescricao.equals("")){
-				
-				if(novoNome.equals("")){
-					aux.alterar(aux.getNome(),aux.getDescricao(), Integer.parseInt(novoLimite));
-				}
-				
-				
+			if(novaDescricao.equals("")==false){
+				this.setDescricao(novaDescricao);;
 			}
-			else if(novoLimite.equals("")){
-				aux.alterar(novoNome,novaDescricao, aux.getLimMinAvaliacoesRuins());
-				
-			}
-			else{				
-				aux.alterar(novoNome, novaDescricao,Integer.parseInt(novoLimite));	
-				
+			if(limiteDigitado.equals("")==false){
+				int novoLimite = Integer.parseInt(limiteDigitado);
+				this.setLimMinAvaliacoesRuins(novoLimite);;
 			}
 			
-			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoAlterar.jsp");
+			this.alterar(this.getNome(), this.getDescricao(), this.getLimMinAvaliacoesRuins());
+			
+			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucesso/sucessoAlterar.jsp");
 			rdSucesso.forward(request,response);
 			
 		}
@@ -253,12 +233,12 @@ public class Grupo extends HttpServlet
 
 	}
 
-	public void recuperaID() throws ClassNotFoundException{
+	public void recuperaID(String nome, String descricao) throws ClassNotFoundException{
 
 		
 		GrupoTDG aux = new GrupoTDG();
 		
-		this.setId(aux.recuperaID(this.nome, this.descricao));
+		this.setId(aux.recuperaID(nome, descricao));
 
 	}
 
