@@ -181,7 +181,7 @@ public class Usuario extends HttpServlet
 					usuarioExistente.setNome(novoNome);
 				}
 				
-				// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou nï¿½o um veiculo
+				//remove usuario antigo da sessão e coloca o novo recem alterado
 				session.removeAttribute("novoUsuario");
 				session.setAttribute("novoUsuario", usuarioExistente);
 				

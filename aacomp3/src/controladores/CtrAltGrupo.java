@@ -67,7 +67,7 @@ public class CtrAltGrupo extends HttpServlet {
 		
 		try 
 		{
-			aux.recuperaID();
+			aux.recuperaID(nomeGrupo,descricaoGrupo);
 			aux.recuperaGrupo(aux.getId(), recuperado);
 			
 			//tratando casos de campos em branco
