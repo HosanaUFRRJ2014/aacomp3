@@ -34,14 +34,8 @@ td
 	
 
 
-	<%		
-// 		Usuario novoUsuario = (Usuario) session.getAttribute("novoUsuario");
-// 		String nome = novoUsuario.getNome();
-
-        LinkedList<Grupo> grupos = new LinkedList<Grupo>();
-        Usuario usuario = new Usuario(); //na verdade, ele vem da session
-        
-
+	<%			
+		
 	%>
 	
 	<h1 align = center>	Grupos que você faz parte!!</h1>	

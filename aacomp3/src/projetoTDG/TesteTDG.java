@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import dominio.Grupo;
 import dominio.Usuario;
 import dominio.Veiculo;
+import dto.UsuarioDTO;
 
 public class TesteTDG {
 
@@ -20,22 +21,18 @@ public class TesteTDG {
 		// TODO Auto-generated method stub				
 		
 		
-		Usuario aux = new Usuario();
+		UsuarioTDG aux = new UsuarioTDG();
 		ParticipaTDG aux2 = new ParticipaTDG();
-		Grupo aux3 = new Grupo();
 		
-		Usuario novo = aux.montaUsuario("dessa@hotmail.com.br");
-		ArrayList<Integer> ids = aux2.gruposDoUsuario(novo.getEmail());
+		UsuarioDTO mensageiro = aux.recuperaPorEmail("dessa@hotmail.com.br");
+		
+		ArrayList<Integer> grupos = aux2.gruposDoUsuario(mensageiro.getEmail());
+		
+		for(int a : grupos){
+			System.out.println(a);
+		}
 		
 		
-		//novo.getGruposQueUsuarioEstaAtivo().get(0).getNome();
-		
-		System.out.println(novo.getNome());
-		System.out.println(ids.get(0));
-		
-		Grupo grupo = aux3.recuperaGrupo(ids.get(0), novo);
-		
-		System.out.println(grupo.isAtivo());
 		
 	}
 }

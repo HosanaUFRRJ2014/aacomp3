@@ -10,7 +10,7 @@ import java.util.Set;
 
 	public class ParticipaTDG {
 	
-		private Connection conexao;
+	private Connection conexao;
 	
 	public ParticipaTDG() throws ClassNotFoundException{
 		this.conexao = new ConnectionFactory().getConnection();

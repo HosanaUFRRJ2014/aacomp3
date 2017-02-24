@@ -2,6 +2,7 @@ package dominio;
 
 import java.awt.List;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -19,7 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import dto.UsuarioDTO;
 import excecoes.CampoInvalidoException;
+import excecoes.EmailInvalidoException;
 import projetoTDG.ParticipaTDG;
 import projetoTDG.UsuarioTDG;
 
@@ -63,12 +66,9 @@ public class Usuario extends HttpServlet
 		ArrayList avaliacao = new ArrayList<Avaliacao>();
 		avaliacoesPorGrupo = new HashMap<Grupo, ArrayList<Avaliacao>>();
 		//continuar a instanciaÃ§Ã£o de avaliacoesPorGrupo
-
-
-
+		
 		gruposQueUsuarioEstaAtivo = new LinkedList<Grupo>();
 		gruposQueUsuarioEstaInativo = new LinkedList<Grupo>();
-
 
 	}
 	
@@ -83,120 +83,131 @@ public class Usuario extends HttpServlet
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{			
+		String opcao = request.getParameter("opcao");	
 		
 		
-		String criarUsuario = request.getParameter("/aacomp3/criar/criarUsuario.jsp");
-		String alterarUsuario = request.getParameter("/aacomp3/alterar/alterarUsuario.jsp");
-      //  System.out.println(strings);
-	//	Usuario novoUsuario = new Usuario(nome, email, telefone); //mudar isso aqui!!!
-
-		if(!criarUsuario.equals(""))
+		//requisição veio do index.jsp			
+		if(opcao.equals("verificarEmail"))
 		{
-			criarUsuario(request,response);
-		}
-		
-		else if(!alterarUsuario.equals(""))
-		{
-			alterarUsuario(request,response);
-		}
-
-
-
-		
-
-
-	}
-	
-	/**
-	 * MÃ©todo para criaÃ§Ã£o do UsuÃ¡rio dentro do mÃ©todo post
-	 * @throws IOException 
-	 * @throws ServletException 
-	 * **/
-	public void criarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-		String nome = request.getParameter("nomeUsuario");
-		String telefone = request.getParameter("telefoneUsuario");
-		String email = request.getParameter("emailUsuario");
-		
-		
-		try{
-
-			if(nome.equals("") || telefone.equals("") || email.equals("")){
-				throw new CampoInvalidoException();
-			}			
-			else{				
-				try {
+			String email = request.getParameter("emailUsuario");		
+			
+			try {
+				if(this.verificaEmail(email)){
 					
-					this.setNome(nome);
-					this.setTelefone(telefone);
-					this.setEmail(email);
+					Usuario novoUsuario = new Usuario();
+					novoUsuario.montaUsuario(email);					
 					
-					this.armazenar();
+					HttpSession session = request.getSession();
+					session.setAttribute("novoUsuario", novoUsuario);
+				
 					
-					// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou nï¿½o um veiculo
-					request.setAttribute("novoUsuario", this);
-					RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoCadastro.jsp");
-					rdSucesso.forward(request,response);
+					RequestDispatcher rdSucesso = request.getRequestDispatcher("./pagInicial.jsp");
+					rdSucesso.forward(request, response);
 					
-				} catch (ClassNotFoundException e) {
-					// eclipse me OBRIGOU a criar esse Try/Catch
-					e.printStackTrace();
 				}
-			}
-		}catch(CampoInvalidoException e){	
-			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
-			rdErro.forward(request, response);
-		}
-	}
-	
-	/**
-	 * MÃ©todo para alteraÃ§Ã£o de usuÃ¡rio dentro do mÃ©todo post
-	 * **/
-	public void alterarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-	{
-        HttpSession session = request.getSession();
-		
-		String novoNome = request.getParameter("novoNomeUsuario");
-		String novoTelefone = request.getParameter("novoTelefoneUsuario");
-	    Usuario usuarioExistente = (Usuario)session.getAttribute("novoUsuario");		
-
-		try{
-
-			if(novoNome.equals("") && novoTelefone.equals("")){
-				throw new CampoInvalidoException();
-			}	
-			else if(novoNome.equals("")){
-				usuarioExistente.alterar(usuarioExistente.getNome(), novoTelefone);
-				usuarioExistente.setTelefone(novoTelefone);
-			}
-			else if(novoTelefone.equals("")){
-				usuarioExistente.alterar(novoNome, usuarioExistente.getTelefone());
-				usuarioExistente.setNome(novoNome);
-			}
-			else{				
-				usuarioExistente.alterar(novoNome, novoTelefone);	
-				usuarioExistente.setNome(novoNome);
-			}
-			
-			// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou nï¿½o um veiculo
-			session.removeAttribute("novoUsuario");
-			session.setAttribute("novoUsuario", usuarioExistente);
-			
-			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucessoAlterar.jsp");
-			rdSucesso.forward(request,response);
-
-			}catch(CampoInvalidoException e){	
-				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
-				rdErro.forward(request, response);
+				else{
+					throw new EmailInvalidoException();
+				}
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}catch(EmailInvalidoException e){
+				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/emailInvalido.jsp");
+				rdErro.forward(request, response);
 			}
-	}
+		}
+		// a requisição veio do jsp Criar Usuario
+		else if (opcao.equals("criarUsuario"))
+		{
+			String nome = request.getParameter("nomeUsuario");
+			String telefone = request.getParameter("telefoneUsuario");
+			String email = request.getParameter("emailUsuario");		
+			
+			try{
 
+				if(nome.equals("") || telefone.equals("") || email.equals("")){
+					throw new CampoInvalidoException();
+				}			
+				else{				
+					try {
+						
+						this.setNome(nome);
+						this.setTelefone(telefone);
+						this.setEmail(email);
+						
+						this.armazenar();
+						
+						// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou nï¿½o um veiculo
+						request.setAttribute("novoUsuario", this);
+						RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucesso/sucessoCadastro.jsp");
+						rdSucesso.forward(request,response);
+						
+					} catch (ClassNotFoundException e) {
+						// eclipse me OBRIGOU a criar esse Try/Catch
+						e.printStackTrace();
+					}
+				}
+			}catch(CampoInvalidoException e){	
+				RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
+				rdErro.forward(request, response);
+			}
+		}
+		//requisição veio de alterarUsuario.jsp
+		else if(opcao.equals("alterarUsuario"))
+		{
+			HttpSession session = request.getSession();
+			
+			String novoNome = request.getParameter("novoNomeUsuario");
+			String novoTelefone = request.getParameter("novoTelefoneUsuario");
+		    Usuario usuarioExistente = (Usuario)session.getAttribute("novoUsuario");		
 
+			try{
+
+				if(novoNome.equals("") && novoTelefone.equals("")){
+					throw new CampoInvalidoException();
+				}	
+				else if(novoNome.equals("")){
+					usuarioExistente.alterar(usuarioExistente.getNome(), novoTelefone);
+					usuarioExistente.setTelefone(novoTelefone);
+				}
+				else if(novoTelefone.equals("")){
+					usuarioExistente.alterar(novoNome, usuarioExistente.getTelefone());
+					usuarioExistente.setNome(novoNome);
+				}
+				else{				
+					usuarioExistente.alterar(novoNome, novoTelefone);	
+					usuarioExistente.setNome(novoNome);
+				}
+				
+				// Esse resquest dispatcher vai para a tela de Sucesso para usuario criar ou nï¿½o um veiculo
+				session.removeAttribute("novoUsuario");
+				session.setAttribute("novoUsuario", usuarioExistente);
+				
+				RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucesso/sucessoAlterar.jsp");
+				rdSucesso.forward(request,response);
+
+				}catch(CampoInvalidoException e){	
+					RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
+					rdErro.forward(request, response);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		else if(opcao.equals("listarGrupos"))
+		{
+			
+		}
+		
+	}	
+	
+
+	
+	
+	
+	//daqui para baixo métodos que não são do Servlet
 	public void armazenar() throws ClassNotFoundException
 	{
 		UsuarioTDG usuariodao = new UsuarioTDG();
@@ -224,45 +235,46 @@ public class Usuario extends HttpServlet
 		
 	}
 	
-	public Usuario montaUsuario(String email) throws ClassNotFoundException{
+	public void montaUsuario(String email) throws ClassNotFoundException{
 		
-		UsuarioTDG aux = new UsuarioTDG();
-		Grupo auxGrupo = new Grupo();
+		UsuarioTDG auxUsuario = new UsuarioTDG();
+		UsuarioDTO mensageiro = auxUsuario.recuperaPorEmail(email);
 		
-		ArrayList<String> info = aux.recuperaPorEmail(email);
 		
-		Usuario retorno = new Usuario(info.get(0),info.get(1),info.get(2));
+		this.nome = mensageiro.getNome();
+		this.email = mensageiro.getEmail();
+		this.telefone = mensageiro.getTelefone();
 		
-		ParticipaTDG aux2 = new ParticipaTDG();
+		ParticipaTDG auxParticipa = new ParticipaTDG();
 		
 		//pega o ID de todos grupos que o usuario estï¿½
-		ArrayList<Integer> gruposDoUsuario = aux2.gruposDoUsuario(email);
+		ArrayList<Integer> gruposDoUsuario = auxParticipa.gruposDoUsuario(email);
 		
 		//usuario estï¿½ em nenhum grupo? pode retornar
-		if(gruposDoUsuario.isEmpty()){
-			return retorno;
-		}
-		LinkedList<Grupo> ativos = new LinkedList<Grupo>();
-		LinkedList<Grupo> inativos = new LinkedList<Grupo>();
-		
-		for(int contador = 0; contador<gruposDoUsuario.size();contador++){
+		if(gruposDoUsuario.isEmpty()==false){			
 			
-			//cria grupo que o usuario estï¿½
-			Grupo doUsuario = auxGrupo.recuperaGrupo(gruposDoUsuario.get(contador), retorno);
+			Grupo auxGrupo = new Grupo();
 			
-			//se o usuario estiver ativo no grupo adiciona no linked list ativo
-			if(doUsuario.isAtivo()){
-				ativos.add(doUsuario);
+			LinkedList<Grupo> ativos = new LinkedList<Grupo>();
+			LinkedList<Grupo> inativos = new LinkedList<Grupo>();
+			
+			for(int contador = 0; contador<gruposDoUsuario.size();contador++){
+				
+				//cria grupo que o usuario estï¿½
+				Grupo doUsuario = auxGrupo.recuperaGrupo(gruposDoUsuario.get(contador), this);
+				
+				//se o usuario estiver ativo no grupo adiciona no linked list ativo
+				if(doUsuario.isAtivo()){
+					ativos.add(doUsuario);
+				}
+				else{
+					inativos.add(doUsuario);
+				}
 			}
-			else{
-				inativos.add(doUsuario);
-			}
-		}
-		
-		retorno.setGruposQueUsuarioEstaAtivo(ativos);
-		retorno.setGruposQueUsuarioEstaInativo(inativos);
-		return retorno;
-		
+			
+			this.setGruposQueUsuarioEstaAtivo(ativos);
+			this.setGruposQueUsuarioEstaInativo(inativos);
+		}	
 	}
 	
 	
@@ -335,13 +347,9 @@ public class Usuario extends HttpServlet
 		
 		return aux.procuraMotorista(email);		
 		
-	}
-	
-	
-	
+	}	
 	
 	//daqui para baixo apenas getters and setters
-
 	
 	public String getNome() {
 		return nome;
@@ -373,7 +381,7 @@ public class Usuario extends HttpServlet
 		return email;
 	}
     
-	private void setEmail(String email) 
+	public void setEmail(String email) 
 	{
 		this.email = email;
 		

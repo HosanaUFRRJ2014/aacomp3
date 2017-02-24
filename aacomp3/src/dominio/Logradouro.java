@@ -1,5 +1,6 @@
 package dominio;
 
+import dto.LogradouroDTO;
 import projetoTDG.LogradouroTDG;
 
 public class Logradouro 
@@ -10,8 +11,7 @@ public class Logradouro
 	private String cidade;
 	private String distrito;
 	private String endereco;
-	private int numero;
-	
+	private int numero;	
 	
 	
 	public Logradouro(String CEP, String estado, String cidade, String distrito, String rua, int numero)
@@ -45,6 +45,21 @@ public class Logradouro
 		LogradouroTDG aux = new LogradouroTDG();
 		
 		this.id = aux.recuperaID(this.CEP, this.numero);
+	}
+	
+	public void recuperaInfo() throws ClassNotFoundException{
+		
+		LogradouroTDG auxLogradouro = new LogradouroTDG();		
+		LogradouroDTO mensageiro = auxLogradouro.recuperaLogradouro(this.id);
+		
+		this.id = mensageiro.getId();
+		this.CEP = mensageiro.getCEP();
+		this.numero = mensageiro.getNumero();
+		this.estado = mensageiro.getEstado();
+		this.cidade = mensageiro.getCidade();
+		this.distrito = mensageiro.getDistrito();
+		this.endereco = mensageiro.getEndereco();
+		
 	}
 	
 	

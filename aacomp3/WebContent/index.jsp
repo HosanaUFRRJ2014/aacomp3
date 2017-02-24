@@ -38,16 +38,11 @@ td {
 			<tr>			
 				<td width=50 align = center><br> 
 					<label> Digite o email cadastrado</label>					
-					<form action = "./CtrVerificaEmail" method="post">
-					<input type="text" name="emailUsuario">	</p>
-					<input type = "submit" value="Login" ></p>
-					</form>
-					
-					<label> Ainda não é cadastrado?</label> 
-					<form action = "./criar/criarUsuario.jsp">
-					<input type="submit" value="Cadastre-se!" name="Cadastre-se!">
-					</form>
-					
+					<form action = "./Usuario" method="post">
+					<input type="text" name="emailUsuario">	<br>
+					<input type = "submit" value="Login" ><br>
+					<input type ="hidden" value="verificarEmail" name="opcao">
+					</form>				
 				</td>
 			</tr>
 		

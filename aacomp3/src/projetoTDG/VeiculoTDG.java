@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.VeiculoDTO;
+
 public class VeiculoTDG {
 	
 	private Connection conexao;
@@ -61,41 +63,9 @@ public class VeiculoTDG {
 		}catch(SQLException e){
 			throw new RuntimeException(e);
 		}	
-	}
+	}	
 	
-	public String buscaDono(String email){
-		
-		String sql = "select emailusuario from veiculos where idveiculo=?";
-		String sql2 = "select nome from usuarios where email=?";
-		
-		try{
-			
-			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			ResultSet rs = stmt.executeQuery();
-			rs.next();
-			
-			PreparedStatement stmt2 = this.conexao.prepareStatement(sql2);
-			//coloca em stmt2 o ID do usuario dono do carro
-			stmt2.setInt(1,rs.getInt(1));
-			rs.close();
-			stmt.close();
-			
-			//rs2 recebe o Nome do usuario com o ID no carro
-			ResultSet rs2 = stmt2.executeQuery();
-			rs2.next();
-			//retorno ser� o nome do usuario
-			String retorno = rs2.getString(1);
-			
-			return retorno;
-			
-			
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}
-		
-	}
-	
-	public ArrayList<String> buscaInformacoes(int ID){
+	public VeiculoDTO buscaInformacoes(int ID){
 		
 		String sql = "select * from veiculos where idveiculo=?";		
 		
@@ -105,22 +75,22 @@ public class VeiculoTDG {
 			stmt.setInt(1,ID);
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
-			// cria Lista que ir� conter todas informa��es do carro
-			ArrayList<String> retorno = new ArrayList<String>();
 			
-			//adiciona na Lista as informacoes do carro:, retorno[1] = emailDono...
-			// retorno[0] = id
-			retorno.add(String.valueOf(rs.getInt(1)));
-			//retorno[1] = emailDono
-			retorno.add(rs.getString(2));
-			//retorno[2] = placa
-			retorno.add(rs.getString(3));
+			VeiculoDTO retorno = new VeiculoDTO();
+			
+			
+			// retorno[0] = id			
+			retorno.setId(rs.getInt(1));
+			//retorno[1] = emailDono			
+			retorno.setMotorista(rs.getString(2));
+			//retorno[2] = placa			
+			retorno.setPlaca(rs.getString(3));
 			//retorno[3] = cor
-			retorno.add(rs.getString(4));
-			//retorno[4] = modelo
-			retorno.add(rs.getString(5));	
-			//retorno[5] = vagas
-			retorno.add(String.valueOf(rs.getInt(6)));
+			retorno.setCor(rs.getString(4));
+			//retorno[4] = modelo			
+			retorno.setModelo(rs.getString(5));
+			//retorno[5] = vagas			
+			retorno.setNumeroVagas(rs.getInt(6));
 			
 			rs.close();
 			stmt.close();
@@ -137,8 +107,7 @@ public class VeiculoTDG {
 		
 		String sql = "select vagas from veiculos where idveiculo=?";
 				
-		try{
-					
+		try{					
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
 			stmt.setInt(1,ID);
 			ResultSet rs = stmt.executeQuery();
@@ -149,50 +118,12 @@ public class VeiculoTDG {
 			rs.close();
 			stmt.close();
 					
-			return retorno;
-					
-					
-		}catch(SQLException e){
-			throw new RuntimeException(e);
-		}		
-	}
-	
-	public ArrayList<String> veiculosDeUmDono(String emailDono){
-		
-		String sql = "select modelo from veiculos where emailusuario=?";
-		String sql2= "select placa from veiculos where emailusuario=?";
-		
-		try{
-					
-			PreparedStatement stmt = this.conexao.prepareStatement(sql);
-			PreparedStatement stmt2 = this.conexao.prepareStatement(sql2);
-			
-			stmt.setString(1,emailDono);
-			stmt2.setString(1, emailDono);
-			
-			ResultSet rs = stmt.executeQuery();
-			ResultSet rs2 = stmt2.executeQuery();
-			
-			ArrayList<String> retorno = new ArrayList<String>();
-			
-			while(rs.next() && rs2.next()){
-				
-				retorno.add(rs.getString(1));
-				retorno.add(rs2.getString(1));
-				
-			}
-					
-			rs.close();
-			stmt.close();
-					
-			return retorno;
-					
+			return retorno;					
 					
 		}catch(SQLException e){
 			throw new RuntimeException(e);
 		}		
-		
-	}
+	}	
 	
 	//muda cor do veiculo dado o ID do veiculo
 	public void mudaCor(int ID, String novaCor){

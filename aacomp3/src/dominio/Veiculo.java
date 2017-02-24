@@ -2,6 +2,7 @@ package dominio;
 
 import java.util.ArrayList;
 
+import dto.VeiculoDTO;
 import projetoTDG.VeiculoTDG;
 
 public class Veiculo 
@@ -20,17 +21,15 @@ public class Veiculo
 	}
 	
 	public Veiculo(String modelo,String placa,String cor,int numeroVagas)
-	{
-	
+	{	
 		this.modelo = modelo;
 		this.placa = placa;
 		this.cor = cor;		
 
 		caronas = new ArrayList<Carona>();
-
-	}
+		}
 	
-
+	//recupera do banco
 	public Veiculo(int ID,String modelo,String placa,String cor,int numeroVagas)
 	{
 		this.id = ID;
@@ -39,7 +38,6 @@ public class Veiculo
 		this.cor = cor;		
 
 		caronas = new ArrayList<Carona>();
-
 	}
 
 	public Veiculo(String modelo,String placa,String cor,int numeroVagas, Motorista motorista)
@@ -49,28 +47,16 @@ public class Veiculo
 		this.cor = cor;
 		this.motorista = motorista;
 
-		caronas = new ArrayList<Carona>();
-
-		
+		caronas = new ArrayList<Carona>();	
 	}
-	
-	
-	public ArrayList<String> veiculosDeUmDono(String email) throws ClassNotFoundException{
-		
-		VeiculoTDG aux = new VeiculoTDG();
-		
-		return aux.veiculosDeUmDono(email);
-	}
-	
 	
 
 	public void armazenar() throws ClassNotFoundException 
 	{
+		
 		VeiculoTDG veiculodao = new VeiculoTDG();
 
 		veiculodao.adicionaVeiculo(this.motorista.getEmail(), this.placa, this.cor, this.modelo,this.numeroVagas);
-
-
 	}
 
 	public void alterar(String novaCor) throws ClassNotFoundException {
@@ -79,7 +65,6 @@ public class Veiculo
 
 		//precisa desse método no DAO
 		veiculodao.mudaCor(this.id, novaCor);
-
 	}	
 	
 	public void recuperaID(String modelo, String placa) throws ClassNotFoundException {
@@ -92,21 +77,15 @@ public class Veiculo
 	public Veiculo recuperaCarro(int ID) throws ClassNotFoundException{
 		
 		VeiculoTDG aux = new VeiculoTDG();
-		ArrayList<String> info = aux.buscaInformacoes(ID);
-		Veiculo novoMontado = new Veiculo(Integer.parseInt(info.get(0)),info.get(4),info.get(2),info.get(3),Integer.parseInt(info.get(5)));
-		
+		VeiculoDTO info = aux.buscaInformacoes(ID);
+		Veiculo novoMontado = new Veiculo(info.getId(),info.getModelo(),
+				info.getPlaca(),info.getCor(),info.getNumeroVagas());		
 		
 		return novoMontado;
 		
 	}
 	
-	public ArrayList<String> recuperaInfo() throws ClassNotFoundException{
-		
-		VeiculoTDG aux = new VeiculoTDG();
-		
-		return aux.buscaInformacoes(this.id);
-		
-	}
+	
 	
 	//daqui para baixo apenas getters and setters
 	

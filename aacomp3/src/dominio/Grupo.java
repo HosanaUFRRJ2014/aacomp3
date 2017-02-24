@@ -3,6 +3,7 @@ package dominio;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import dto.GrupoDTO;
 import excecoes.JaExisteException;
 import projetoTDG.GrupoTDG;
 import projetoTDG.ParticipaTDG;
@@ -15,7 +16,7 @@ public class Grupo
 	private String descricao;
 	private String regras; 
 	
-	private int limMinAvaliacoesRuins;
+	private int limitMin;
 	
 	private boolean ativo;
 	
@@ -31,7 +32,7 @@ public class Grupo
 		this.nome = nomeGrupo;
 		this.descricao = descricao;
 		this.regras = regras;
-		limMinAvaliacoesRuins = 3;
+		limitMin = 3;
 		usuarios = new ArrayList<Usuario>();
 		usuarios.add(donoGrupo);
 	
@@ -42,7 +43,7 @@ public class Grupo
 	public Grupo(Usuario donoGrupo, String nomeGrupo, String descricao, String regras, int lim)
 	{
 		this(donoGrupo, nomeGrupo, descricao,  regras);
-		this.limMinAvaliacoesRuins = lim;
+		this.limitMin = lim;
 		
 	}
 	
@@ -62,7 +63,7 @@ public class Grupo
 		if(!aux.garanteIntegridade(this.nome, this.descricao)){
 			throw new JaExisteException();
 		}else{
-			aux.adicionaGrupo(this.nome, this.descricao, this.regras, this.limMinAvaliacoesRuins);
+			aux.adicionaGrupo(this.nome, this.descricao, this.regras, this.limitMin);
 		}		
 	}
 	
@@ -91,27 +92,29 @@ public class Grupo
 		
 	}
 	
-	public void recuperaUsuarios(int ID) throws ClassNotFoundException{
+	public void recuperaUsuarios() throws ClassNotFoundException{
 		
-		ParticipaTDG aux = new ParticipaTDG();		
-		Usuario auxUsu = new Usuario();
+		ParticipaTDG auxParticipa = new ParticipaTDG();		
 		
-		ArrayList<String> emails = aux.usuariosDoGrupo(ID);
+		Usuario auxUsuario = new Usuario();
 		
-		for(int contador = 0; contador<emails.size(); contador++){			
+		ArrayList<String> emails = auxParticipa.usuariosDoGrupo(this.id);
+		
+		for(int contador = 0; contador<emails.size(); contador++){		
 			
-			this.usuarios.add(auxUsu.montaUsuario(emails.get(contador)));
-			
+			auxUsuario.montaUsuario(emails.get(contador));			
+			this.usuarios.add(auxUsuario);			
 		}		
 	}
 	
 	public Grupo recuperaGrupo(int ID,Usuario dono) throws ClassNotFoundException{
 		
-		GrupoTDG aux = new GrupoTDG();
+		GrupoTDG auxGrupo = new GrupoTDG();
+		GrupoDTO mensageiro = auxGrupo.recuperaGrupo(ID);
 		
-		ArrayList<String> info = aux.recuperaGrupo(ID);
 		
-		Grupo retorno = new Grupo(Integer.parseInt(info.get(0)),dono,info.get(1),info.get(2),info.get(3),Integer.parseInt(info.get(4)),Boolean.parseBoolean(info.get(5)));
+		Grupo retorno = new Grupo(mensageiro.getId(),dono,mensageiro.getNome(),mensageiro.getDescricao(),
+				mensageiro.getRegras(),mensageiro.getLimitMin(),mensageiro.isAtivo());
 				
 		return retorno;
 		
@@ -153,12 +156,12 @@ public class Grupo
 
 	public int getLimMinAvaliacoesRuins() 
 	{
-		return limMinAvaliacoesRuins;
+		return limitMin;
 	}
 
 	public void setLimMinAvaliacoesRuins(int limMinAvaliacoesRuins)
 	{
-		this.limMinAvaliacoesRuins = limMinAvaliacoesRuins;
+		this.limitMin = limMinAvaliacoesRuins;
 	}
 
 	public boolean isAtivo() 
@@ -201,6 +204,14 @@ public class Grupo
 		
 		return false;
 		
+	}
+
+	public void setRegras(String regras) {
+		this.regras = regras;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 	
 //	public boolean todosUsuariosInativos(ArrayList<Usuario> us)
