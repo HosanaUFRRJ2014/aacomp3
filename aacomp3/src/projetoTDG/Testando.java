@@ -15,17 +15,16 @@ import dominio.Usuario;
 import dominio.Veiculo;
 import dto.UsuarioDTO;
 
-public class TesteTDG {
+public class Testando {
 
-	public static void main(String[] args) throws ClassNotFoundException {
-		// TODO Auto-generated method stub				
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 		
 		Grupo teste = new Grupo();
 		
 		teste.setNome("Caronas Panda");
 		teste.setDescricao("Na intensidade do transito");
-		
-		
-	}
-}
 
+	}
+
+}
