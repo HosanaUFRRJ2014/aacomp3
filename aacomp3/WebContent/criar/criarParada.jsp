@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="dominio.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,8 +28,8 @@ td
 
 </style>
 	<%
-		
-		
+		Usuario recuperado = (Usuario) session.getAttribute("novoUsuario");
+		Carona minhaCarona = (Carona) session.getAttribute("novaCarona");		
 	%>
 
 
@@ -48,24 +48,32 @@ td
 				<label> Email do Caroneiro *:</label>
 				<input type= "text" name = "emailUsuario"><br>
 				
-				<label>Essas são as paradas que já existem na sua carona:</label>	
+				<label>Esses são o CEP e Número das paradas que já existem na sua carona:</label>	
 				
-					<select name="grupoEscolhido">
+					<select name="paradaEscolhida">
 							<%					
-								for(Grupo g : meusGrupos){						
+								for(Parada p : minhaCarona.paradasDaCarona()){						
 							%> 
-				 					<option><%=g.getNome()%><%="/"%><%=g.getDescricao()%></option>
+				 					<option><%=p.getLog().getCEP()%><%="/"%><%=p.getLog().getNumero() %></option>
 				  			<%}   				
 				  			%>
 					</select>
-								
-				<input type= "submit" value="Enviar"> 
+				<label>Deseja cadastrar o caroneiro nesta mesma parada?</label>
+				
+				<input type="hidden" name="opcao" value="mesmaParada">
+				<input type= "submit" value="Sim"> <br><br>
 
 	
 		</td>
 	</tr>
-	</form>
+	</form>		
 	</table>
+	
+	<form action="./criar/criarLogradouro.jsp" method="post">
+			<label>Você pode criar uma nova parada para seu caroneiro</label><br>
+			<input type="submit" value="Nova Parada">
+			</form>
+	
 
 </body>
 </html>

@@ -6,6 +6,7 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dto.ParadaDTO;
 import projetoTDG.CaronaTDG;
+import projetoTDG.ParadaTDG;
 
 
 @WebServlet("/Carona")
@@ -46,6 +49,10 @@ public class Carona extends HttpServlet
 	 * saber o numero de vagas? Se preciso salvar, salvo em Caronas. (esxiste a posssibilidade de
 	 * salvar em veículos)
 	 * *******/
+	
+	public Carona(){
+		
+	}
 
 	public Carona(Veiculo veiculo,Grupo grupo, Date dia, Time horarioSaida, Logradouro logrOrigem, Logradouro logrDestino) 
 	{
@@ -165,8 +172,15 @@ public class Carona extends HttpServlet
 			Carona novaCarona = new Carona(montado,grupoAtual,diaSQL, hora, origem, destino);
 			novaCarona.armazena();
 			
+			Parada paradaOrigem = new Parada(origem,novaCarona,recuperado,"O");
+			paradaOrigem.armazenar();
+			
+			Parada paradaDestino = new Parada(destino,novaCarona,recuperado,"D");
+			paradaDestino.armazenar();
+			
 			session.removeAttribute("grupoEscolhido");
 			session.setAttribute("novaCarona", novaCarona);
+			
 			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucesso/sucessoCarona.jsp");
 			rdSucesso.forward(request, response);
 
@@ -189,6 +203,36 @@ public class Carona extends HttpServlet
 
 		novaCarona.adicionarCarona(this.veiculo.getMotorista().getEmail(),this.grupo.getId(), this.dia, this.horarioSaida, this.logrOrigem.getId(), this.logrDestino.getId(),this.veiculo.getNumeroVagas(), this.veiculo.getID());
 
+	}
+	
+	
+	public ArrayList<Parada> paradasDaCarona() throws ClassNotFoundException{
+		
+		ParadaTDG auxParada = new ParadaTDG();
+		Logradouro log = new Logradouro();
+		Usuario usu = new Usuario();
+		
+		
+		ArrayList<ParadaDTO> paradas = auxParada.paradasDeUmaCarona(this.getId());
+		
+		ArrayList<Parada> retorno = new ArrayList<Parada>();
+		
+		for(ParadaDTO atual : paradas){
+			Parada parada = new Parada();
+			
+			usu.montaUsuario(atual.getEmailUsuario());
+			parada.setCaroneiro(usu);
+			
+			log.recuperaInfo(atual.getIdLogradouro());
+			parada.setLog(log);
+			
+			parada.setTipo(atual.getTipo()) ;
+			
+			retorno.add(parada);
+		}
+		
+		return retorno;
+		
 	}
 
 	//daqui para baixo apenas getters and setters

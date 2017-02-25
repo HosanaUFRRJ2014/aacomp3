@@ -13,6 +13,9 @@ public class Logradouro
 	private String endereco;
 	private int numero;	
 	
+	public Logradouro(){
+		
+	}
 	
 	public Logradouro(String CEP, String estado, String cidade, String distrito, String rua, int numero)
 	{
@@ -47,10 +50,10 @@ public class Logradouro
 		this.id = aux.recuperaID(this.CEP, this.numero);
 	}
 	
-	public void recuperaInfo() throws ClassNotFoundException{
+	public void recuperaInfo(int ID) throws ClassNotFoundException{
 		
 		LogradouroTDG auxLogradouro = new LogradouroTDG();		
-		LogradouroDTO mensageiro = auxLogradouro.recuperaLogradouro(this.id);
+		LogradouroDTO mensageiro = auxLogradouro.recuperaLogradouro(ID);
 		
 		this.id = mensageiro.getId();
 		this.CEP = mensageiro.getCEP();
