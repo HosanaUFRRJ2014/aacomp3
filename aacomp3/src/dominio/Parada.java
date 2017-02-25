@@ -104,9 +104,7 @@ public class Parada extends HttpServlet {
 			this.caroneiro = (Usuario) session.getAttribute("novoCaroneiro");
 			this.logradouro = origem;
 			
-			this.armazenar();
-		
-			
+			this.armazenar();	
 			
 			
 			
