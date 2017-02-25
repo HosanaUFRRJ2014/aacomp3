@@ -84,10 +84,10 @@ public class Motorista extends Usuario {
 
 	}
 
-	public boolean addVeiculo(Veiculo veiculo)
-	{
-		return veiculos.add(veiculo);
-	}
+//	public boolean addVeiculo(Veiculo veiculo)
+//	{
+//		return veiculos.add(veiculo);
+//	}
 //<<<<<<< HEAD
 //
 //	public void criarCarona(Veiculo veiculo, Date dia, Time horarioSaida, Logradouro logrOrigem, Logradouro logrDestino)
@@ -103,19 +103,19 @@ public class Motorista extends Usuario {
 //=======
 	
 	
-	public boolean alterarVeiculoCarona(Carona carona, Veiculo veiculo)
-	{
-		boolean alterado = carona.alterarVeiculo(veiculo);
-
-		if(alterado == true)
-		{
-			//comunicao como banco de dados. 
-			carona.alterar();
-		}
-
-		return alterado;
-
-	}
+//	public boolean alterarVeiculoCarona(Carona carona, Veiculo veiculo)
+//	{
+//		boolean alterado = carona.alterarVeiculo(veiculo);
+//
+//		if(alterado == true)
+//		{
+//			//comunicao como banco de dados. 
+//			carona.alterar();
+//		}
+//
+//		return alterado;
+//
+//	}
 
 	public void cancelarCarona(Carona carona)
 	{

@@ -328,17 +328,17 @@ public class Usuario extends HttpServlet
 	}	
 
 
-	public void criarGrupo(String nome, String descricao, String regras)
-	{
-		Grupo grupo = new Grupo(this, nome, descricao, regras);
-		this.participarDoGrupo(grupo);
-	}
-
-	public void criarGrupo(String nome, String descricao, String regras, int limMaxAvaliacoesRuins)
-	{
-		Grupo grupo = new Grupo(this, nome, descricao, regras, limMaxAvaliacoesRuins);
-		this.participarDoGrupo(grupo);
-	}
+//	public void criarGrupo(String nome, String descricao, String regras)
+//	{
+//		Grupo grupo = new Grupo(this, nome, descricao, regras);
+//		this.participarDoGrupo(grupo);
+//	}
+//
+//	public void criarGrupo(String nome, String descricao, String regras, int limMaxAvaliacoesRuins)
+//	{
+//		Grupo grupo = new Grupo(this, nome, descricao, regras, limMaxAvaliacoesRuins);
+//		this.participarDoGrupo(grupo);
+//	}
 
 	public boolean participarDoGrupo(Grupo grupo)
 	{
@@ -347,25 +347,25 @@ public class Usuario extends HttpServlet
 	}
 
 
-	/** Está removendo o usuário do array de usuários do grupo, 
-	 * não está apenas inativando-o **/
-	public void sairDoGrupo(Grupo grupo)
-	{
-		grupo.getUsuarios().remove(this);
-	}
-
-	public void convidar(Grupo grupo, String email)
-	{
-		//Não sei o que por aqui dentro. 
-		//Me veio na mente várias coisas de web service que fogem ao escopo do trabalho.
-
-		//Pensando em exibir uma mensagem de convite para o usuário que vai enviar e ele só 
-		//apertará um botão enviar ou um botão cancelar
-
-		//só para testes
-		System.out.println("Contato " + email + " convidado");
-
-	}
+//	/** Está removendo o usuário do array de usuários do grupo, 
+//	 * não está apenas inativando-o **/
+//	public void sairDoGrupo(Grupo grupo)
+//	{
+//		grupo.getUsuarios().remove(this);
+//	}
+//
+//	public void convidar(Grupo grupo, String email)
+//	{
+//		//Não sei o que por aqui dentro. 
+//		//Me veio na mente várias coisas de web service que fogem ao escopo do trabalho.
+//
+//		//Pensando em exibir uma mensagem de convite para o usuário que vai enviar e ele só 
+//		//apertará um botão enviar ou um botão cancelar
+//
+//		//só para testes
+//		System.out.println("Contato " + email + " convidado");
+//
+//	}
 
 	public Motorista virarMotorista(Veiculo veiculo)
 	{

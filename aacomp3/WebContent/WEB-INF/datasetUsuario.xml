@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+    <usuario nome="Hosana Gomes" email="hosanagomes@gmail.com" telefone="965642824" motorista="false"/>
+    <usuario nome="Thiago Frazão" email="thiago_frazão@gmail.com" telefone="989575262" motorista="false"/>
+    <usuario nome="Andressa Oliveira" email="dessaschweitzer@gmail.com" telefone=" 99265-5935" motorista="true"/>
+    <usuario nome="Lívia de Azevedo" email="azevedodelivia@gmail.com" telefone="944887755" motorista="true"/>
+    <usuario nome="William Anderson Gomes" email="wabgomes@gmail.com" telefone="999665544" motorista="false"/>
+
+
+</dataset>

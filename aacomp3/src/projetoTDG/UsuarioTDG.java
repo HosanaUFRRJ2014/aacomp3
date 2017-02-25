@@ -16,8 +16,8 @@ public class UsuarioTDG {
 	public UsuarioTDG() throws ClassNotFoundException{
 		this.conexao = new ConnectionFactory().getConnection();
 	}
-	
-public void adicionaUsuario(String nome, String email,String telefone){
+
+    public void adicionaUsuario(String nome, String email,String telefone){
 		
 		String sql = "insert into usuarios " + "(nome,email,telefone,motorista)" + "values (?,?,?,?)";
 		
@@ -38,7 +38,7 @@ public void adicionaUsuario(String nome, String email,String telefone){
 		
 	
 	
-	//busca no banco se o usuario é motorista ou não 
+	//busca no banco se o usuario ï¿½ motorista ou nï¿½o 
 	public boolean procuraMotorista(String email){
 		
 		String sql = "select motorista from usuarios where email=?";

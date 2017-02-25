@@ -1,138 +1,134 @@
 package testesDominio;
 
-import static org.junit.Assert.*;
+import java.sql.Connection;
 
-import java.util.ArrayList;
-
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import dominio.*;
+
+import dominio.Grupo;
+import dominio.Motorista;
+import dominio.Usuario;
+import dominio.Veiculo;
+import junit.framework.TestCase;
+import projetoTDG.UsuarioTDG;
+
+public class UsuarioTest extends TestCase{
+
+	private Connection conexao;
 
 
-public class UsuarioTest {
-
-	@Test
-	public void testArmazenar() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testVerificaEmail() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAlterar() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testMontaUsuario() {
-		fail("Not yet implemented");
-	}
-
-	/*********************************************************/
-	@Test
-	public void testAvaliar() {
-		Grupo g = new Grupo();
-		Usuario usuarioAvaliado = new Usuario();
-
-		Avaliacao av = new Avaliacao(4);
-
-		ArrayList <Avaliacao> avs = new ArrayList<Avaliacao>();
-		avs.add(av);
-
-		usuarioAvaliado.getGruposQueUsuarioEstaAtivo().add(g);
-
-		usuarioAvaliado.getAvaliacoesPorGrupo().put(g, avs);
-
-		ArrayList<Avaliacao> avaliacoes = usuarioAvaliado.getAvaliacoesPorGrupo().get(g);
-		avaliacoes.add(av);
-
-		assertEquals(avs.get(0).getEstrelas(),avaliacoes.get(0).getEstrelas());
+	@BeforeClass
+	protected void getConnection() throws Exception {
+		Class.forName("org.postgresql.Driver");
+		conexao = new ConnectionFactory().getConnection();
 
 	}
 
+
 	@Test
-	public void testCriarGrupoStringStringString() {
+	public void testVerificarEmailUsuario() throws Exception {
+		Usuario u = new Usuario();
+
+		boolean retorno = u.verificaEmail("hosannagomes@gmail.com");
+
+
+
+		assertFalse(retorno);
+	}
+
+	@Test
+	public void testCriarUsuario() throws Exception {
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletResponse response = new MockHttpServletResponse();
+
+		request.addParameter("nome", "Hosana");
+		request.addParameter("email", "thiago@gmail.com");
+		request.addParameter("telefone", "988774455");
 
 		Usuario u = new Usuario();
 
-		Grupo grupo = new Grupo(u,"Grupo Teste","Descricão grupo", "Regras grupo");
+		u.criarUsuario(request, response);
 
-		u.criarGrupo("Grupo Teste","Descricão grupo", "Regras grupo");
+		boolean sucesso = u.verificaEmail("thiago@gmail.com");
 
-		assertEquals(u.getGruposQueUsuarioEstaAtivo().get(0), grupo);
+		assertTrue(sucesso);
 	}
 
 	@Test
-	public void testCriarGrupoStringStringStringInt() {
+	public void testAlterarUsuario() {
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletResponse response = new MockHttpServletResponse();
+
+		request.addParameter("nome", "Hosana2");
+		request.addParameter("email", "thiago@gmail.com");
+		request.addParameter("telefone", "988774455");
+
 		Usuario u = new Usuario();
 
-		Grupo grupo = new Grupo(u,"Grupo Teste","Descricão grupo", "Regras grupo", 5);
+		u.alterarUsuario(request,response);
 
-		u.criarGrupo("Grupo Teste","Descricão grupo", "Regras grupo", 5);
+    	Usuario u2 = new Usuario();
+		
+		u2.montaUsuario("thiago@gmail.com");
 
-		assertEquals(u.getGruposQueUsuarioEstaAtivo().get(0), grupo);
+		assertTrue("Hosana2",u2.getNome());
+	}
+
+	@Test
+	public void testArmazenar() throws Exception {
+		Usuario u = new Usuario("Usuario de Teste","teste@test.com","55555555");
+
+		u.armazenar();
+
+		assertTrue(u.verificaEmail("teste@test.com"));
+	}
+
+	@Test
+	public void testAlterar() throws Exception {
+		Usuario u = new Usuario("Usuario de Teste 2","teste@test.com","55555555");
+
+		u.alterar("Usuario de Teste 2", "55555555");
+		
+		Usuario u2 = new Usuario();
+		
+		u2.montaUsuario("teste@test.com");
+		
+		assertEquals(u,u2);
+		
+		
 	}
 
 	@Test
 	public void testParticiparDoGrupo() {
-		Usuario u = new Usuario();
-
-		Grupo grupo = new Grupo(u,"Grupo Teste","Descricão grupo", "Regras grupo");
-
+		Usuario u = new Usuario("User test", "user@gmail.test","88888888");
+		Grupo grupo = new Grupo(new Usuario(), "GRupo teste","descri teste","regra test");
 		u.participarDoGrupo(grupo);
-
-		assertEquals(u.getGruposQueUsuarioEstaAtivo().size(), 1);
-	}
-
-	@Test
-	public void testSairDoGrupo() {
-		Usuario u = new Usuario();
-
-		Grupo grupo = new Grupo(u,"Grupo Teste","Descricão grupo", "Regras grupo");
-
-		u.criarGrupo("Grupo Teste","Descricão grupo", "Regras grupo");
 		
-		u.sairDoGrupo(grupo);
-
-		assertEquals(u.getGruposQueUsuarioEstaAtivo().size(), 0);
-	}
-
-	@Test
-	public void testConvidar() {
-		fail("Not yet implemented");
+		assertEquals(2,grupo.getUsuarios().size());
 	}
 
 	@Test
 	public void testVirarMotorista() {
-		Usuario u = new Usuario("NomeUser","user@user.com","55555555");
+		Veiculo v = new Veiculo("VEiculo teste","tes-0000","testecolor",4);
 		
-		Veiculo veiculo = new Veiculo("W Motors","hgp-555","branco",4);
-		Motorista m = u.virarMotorista(veiculo);
+		Usuario u = new Usuario("User test", "user@gmail.test","88888888");
+		Motorista m = u.virarMotorista(v);
 		
-
-		assertEquals(u.getNome(), m.getNome());
-		assertEquals(u.getEmail(), m.getEmail());
-		assertEquals(u.getTelefone(), m.getTelefone());
+		assertNotNull(m);
+		
 	}
 
 	@Test
-	public void testEhMotorista() {
-        Usuario u = new Usuario("NomeUser","user@user.com","55555555");
+	public void testEhMotorista() throws ClassNotFoundException {
+		Usuario u = new Usuario();
 		
-		Veiculo veiculo = new Veiculo("W Motors","hgp-555","branco",4);
-		Motorista m = new Motorista("NomeMoto","moto@moto.com","45655555",veiculo);
+		assertTrue(u.ehMotorista("user@gmail.test"));
 		
-		try {
-			assertTrue(m.ehMotorista("moto@moto.com"));
-			assertFalse(u.ehMotorista("user@user.com"));
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 	}
+
 
 
 }

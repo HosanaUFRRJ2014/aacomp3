@@ -13,6 +13,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.servlet-api-3.0.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/postgresql-9.4.1212.jre6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/dbunit-2.4.8.jar"/>
+	<classpathentry kind="lib" path="/home/hosana/jboss-6.0.0.Final/common/lib/mail.jar"/>
+	<classpathentry kind="lib" path="/home/hosana/jboss-6.0.0.Final/common/lib/mail-plugin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
-
