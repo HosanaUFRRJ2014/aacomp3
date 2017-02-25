@@ -3,7 +3,7 @@
 <%@ page import="dominio.Usuario" %>
 <%@ page import= "java.util.*" %>
 <%@ page import= "java.text.SimpleDateFormat" %>
-<%@ page import="dominio.Veiculo" %>
+<%@ page import="dominio.*" %>
 <%@ page import="dto.VeiculoDTO" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -185,6 +185,11 @@ td
     };
 
     </script>
+    
+    <%
+    	Grupo grupoEscolhido = (Grupo)session.getAttribute("grupoEscolhido");
+    
+    %>
 
 </head>
 <body>	

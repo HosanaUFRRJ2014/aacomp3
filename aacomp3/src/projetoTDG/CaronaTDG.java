@@ -17,21 +17,22 @@ public class CaronaTDG {
 		
 	}
 	
-	public void adicionarCarona(String emailMotorista, Date dia, Time horarioSaida, int idLogradouroOrigem, int idLogradouroDestino,int vagas, int idVeiculo) throws ClassNotFoundException{
+	public void adicionarCarona(String emailMotorista,int idGrupo, Date dia, Time horarioSaida, int idLogradouroOrigem, int idLogradouroDestino,int vagas, int idVeiculo) throws ClassNotFoundException{
 		
 		String sql = "insert into caronas" + 
-					"(emailmotorista,dia,saida,idlogradouroorigem,idlogradourodestino,vagasrest,idveiculo,cancelado)"+
-					"values(?,?,?,?,?,?,?,false)";
+					"(emailmotorista,idgrupo,dia,saida,idlogradouroorigem,idlogradourodestino,vagasrest,idveiculo,cancelado)"+
+					"values(?,?,?,?,?,?,?,?,false)";
 		try{
 			//pegar a quantidade de vagas atual da carona
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);			
 			stmt.setString(1, emailMotorista);
-			stmt.setDate(2, dia);
-			stmt.setTime(3, horarioSaida);
-			stmt.setInt(4,idLogradouroOrigem);
-			stmt.setInt(5, idLogradouroDestino);
-			stmt.setInt(6, vagas);
-			stmt.setInt(7, idVeiculo);
+			stmt.setInt(2, idGrupo);
+			stmt.setDate(3, dia);
+			stmt.setTime(4, horarioSaida);
+			stmt.setInt(5,idLogradouroOrigem);
+			stmt.setInt(6, idLogradouroDestino);
+			stmt.setInt(7, vagas);
+			stmt.setInt(8, idVeiculo);
 			
 					
 			stmt.execute();

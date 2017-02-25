@@ -68,6 +68,7 @@ import java.util.Set;
 		
 			
 		try{
+			
 			PreparedStatement stmt = this.conexao.prepareStatement(sql);
 			stmt.setInt(1, idGrupo);
 			

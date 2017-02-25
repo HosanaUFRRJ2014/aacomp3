@@ -2,7 +2,11 @@ package projetoTDG;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import dto.ParadaDTO;
 
 public class ParadaTDG {
 
@@ -34,6 +38,33 @@ public class ParadaTDG {
 		catch(SQLException e){
 			throw new RuntimeException(e);
 		}		
+	}
+	
+	public ArrayList<ParadaDTO> paradasDeUmaCarona(int idCarona){
+		
+		String sql = "select * from parada where idcarona=?";
+		
+		try{
+			
+			PreparedStatement stmt = this.conexao.prepareStatement(sql);			
+			
+			stmt.setInt(1, idCarona);
+			
+			ResultSet rs = stmt.executeQuery();
+			ArrayList<ParadaDTO> retorno = new ArrayList<ParadaDTO>();
+			
+			while(rs.next()){
+				ParadaDTO parada = new ParadaDTO();
+				parada.setId(rs.getInt(1));
+				parada.set
+			}
+			stmt.close();
+		}
+		catch(SQLException e){
+			throw new RuntimeException(e);
+		}		
+		
+		
 	}
 	
 }

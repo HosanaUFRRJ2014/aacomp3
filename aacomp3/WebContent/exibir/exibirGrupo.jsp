@@ -57,19 +57,12 @@ td
    		Usuario novoUsuario = (Usuario)session.getAttribute("novoUsuario");
    
    		String escolhido = request.getParameter("grupoEscolhido");
-   		String [] info = escolhido.split("/");
-	
-		String nomeGrupo = info[0];
-		out.println(nomeGrupo);
-		String descricaoGrupo = info[1]; 
-		out.println(descricaoGrupo);
+   		String [] info = escolhido.split("/");	
    		
 		Grupo grupoEscolhido = new Grupo();
-		grupoEscolhido.setNome(nomeGrupo);
-		grupoEscolhido.setDescricao(descricaoGrupo);
-		grupoEscolhido.recuperaID();
-		out.println(grupoEscolhido.getId());
-		grupoEscolhido.recuperaGrupo(grupoEscolhido.getId(), novoUsuario);
+		
+		grupoEscolhido.recuperaID(info[0],info[1]);		
+		grupoEscolhido.recuperaGrupo(grupoEscolhido.getId());
 		session.setAttribute("grupoEscolhido", grupoEscolhido);
    
    %>

@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 import javax.websocket.Session;
 
 import dto.UsuarioDTO;
@@ -285,22 +286,22 @@ public class Usuario extends HttpServlet
 		//usuario est� em nenhum grupo? pode retornar
 		if(gruposDoUsuario.isEmpty()==false){			
 
-			Grupo auxGrupo = new Grupo();
-
 			LinkedList<Grupo> ativos = new LinkedList<Grupo>();
 			LinkedList<Grupo> inativos = new LinkedList<Grupo>();
 
-			for(int contador = 0; contador<gruposDoUsuario.size();contador++){
+			for(int ID : gruposDoUsuario){
 
 				//cria grupo que o usuario est�
-				Grupo doUsuario = auxGrupo.recuperaGrupo(gruposDoUsuario.get(contador), this);
-
+				
+				Grupo montado = new Grupo();
+				montado.recuperaGrupo(ID);
+				
 				//se o usuario estiver ativo no grupo adiciona no linked list ativo
-				if(doUsuario.isAtivo()){
-					ativos.add(doUsuario);
+				if(montado.isAtivo()){
+					ativos.add(montado);					
 				}
 				else{
-					inativos.add(doUsuario);
+					inativos.add(montado);
 				}
 			}
 

@@ -64,12 +64,12 @@ td
 			</select>
   	   
   	   
-  	   
-  	        <input type= "reset" value="limpar"> <br>
+  	   		<br>
+  	        
 	        <input type= "submit" value="Enviar"> <br><br>	        	       	        
 		</form> 	
 		
-		<form action="./pagInicial.jsp" method="post">	        
+		<form action="../pagInicial.jsp" method="post">	        
 	      	 <input type="submit" value="Cancelar">
 	    </form>
 			

@@ -20,12 +20,13 @@ public class TesteTDG {
 	public static void main(String[] args) throws ClassNotFoundException {
 		// TODO Auto-generated method stub				
 		
-		Grupo teste = new Grupo();
+		ParticipaTDG part = new ParticipaTDG();
+		Usuario usu = new Usuario();
+		usu.montaUsuario("dessa@hotmail.com.br");
 		
-		teste.setNome("Caronas Panda");
-		teste.setDescricao("Na intensidade do transito");
 		
 		
+	
 	}
 }
 

@@ -251,11 +251,11 @@ public void alterar(String novoNome,String novaDescricao,int novoLimite) throws 
 
 }
 
-public void recuperaID() throws ClassNotFoundException{
+public void recuperaID(String nome, String descricao) throws ClassNotFoundException{
 
 	GrupoTDG aux = new GrupoTDG();
 
-	this.setId(aux.recuperaID(this.nome, this.descricao));
+	this.setId(aux.recuperaID(nome,descricao));
 
 }
 
@@ -276,25 +276,29 @@ public void recuperaUsuarios() throws ClassNotFoundException{
 	Usuario auxUsuario = new Usuario();
 
 	ArrayList<String> emails = auxParticipa.usuariosDoGrupo(this.id);
+	ArrayList<Usuario> montar = new ArrayList<Usuario>();
+	
+	for(String email : emails){		
+		
+		auxUsuario.montaUsuario(email);			
+		montar.add(auxUsuario);
 
-	for(int contador = 0; contador<emails.size(); contador++){		
-
-		auxUsuario.montaUsuario(emails.get(contador));			
-		this.usuarios.add(auxUsuario);			
-
-	}		
+	}
+	this.setUsuarios(montar);			
 }
 
-public Grupo recuperaGrupo(int ID,Usuario dono) throws ClassNotFoundException{
+public void recuperaGrupo(int ID) throws ClassNotFoundException{
 
 	GrupoTDG auxGrupo = new GrupoTDG();
 	GrupoDTO mensageiro = auxGrupo.recuperaGrupo(ID);
-
-
-	Grupo retorno = new Grupo(mensageiro.getId(),dono,mensageiro.getNome(),mensageiro.getDescricao(),
-			mensageiro.getRegras(),mensageiro.getLimitMin(),mensageiro.isAtivo());
-
-	return retorno;
+	
+	this.id = mensageiro.getId();
+	this.nome = mensageiro.getNome();
+	this.descricao = mensageiro.getDescricao();
+	this.regras = mensageiro.getRegras();
+	this.ativo = mensageiro.isAtivo();
+	this.limitMin = mensageiro.getLimitMin();
+	
 
 }
 

@@ -25,6 +25,7 @@ public class Carona extends HttpServlet
 {
 	private int id;
 	private Veiculo veiculo;
+	private Grupo grupo;
 	private Date dia;
 	private Time horarioSaida;
 	private Logradouro logrOrigem;
@@ -46,9 +47,10 @@ public class Carona extends HttpServlet
 	 * salvar em veículos)
 	 * *******/
 
-	public Carona(Veiculo veiculo, Date dia, Time horarioSaida, Logradouro logrOrigem, Logradouro logrDestino) 
+	public Carona(Veiculo veiculo,Grupo grupo, Date dia, Time horarioSaida, Logradouro logrOrigem, Logradouro logrDestino) 
 	{
 		this.veiculo = veiculo;
+		this.grupo = grupo;
 		this.dia = dia;
 		this.horarioSaida = horarioSaida;
 		this.logrOrigem = logrOrigem;
@@ -91,6 +93,7 @@ public class Carona extends HttpServlet
 
 		Usuario recuperado = (Usuario)session.getAttribute("novoUsuario");
 
+		
 
 		String diaCarona = request.getParameter("diaCarona");
 		String horaSaida = request.getParameter("horaSaida");
@@ -118,7 +121,7 @@ public class Carona extends HttpServlet
 
 		Logradouro destino = new Logradouro(cepDestino,estadoDestino,cidadeDestino,distritoDestino,enderecoDestino, numeroDestino);
 
-
+		Grupo grupoAtual = (Grupo) session.getAttribute("grupoEscolhido");
 
 		//para transformar os strings recebidos em Data para o Banco
 		DateFormat formata = new SimpleDateFormat("dd/mm");
@@ -159,8 +162,13 @@ public class Carona extends HttpServlet
 
 			//finalmente adicionar carona
 
-			Carona novaCarona = new Carona(montado,diaSQL, hora, origem, destino);
+			Carona novaCarona = new Carona(montado,grupoAtual,diaSQL, hora, origem, destino);
 			novaCarona.armazena();
+			
+			session.removeAttribute("grupoEscolhido");
+			session.setAttribute("novaCarona", novaCarona);
+			RequestDispatcher rdSucesso = request.getRequestDispatcher("./sucesso/sucessoCarona.jsp");
+			rdSucesso.forward(request, response);
 
 		} catch (ParseException e) {
 			RequestDispatcher rdErro = request.getRequestDispatcher("./excecoes/campoInvalido.jsp");
@@ -179,7 +187,7 @@ public class Carona extends HttpServlet
 
 		CaronaTDG novaCarona = new CaronaTDG();
 
-		novaCarona.adicionarCarona(this.veiculo.getMotorista().getEmail(), this.dia, this.horarioSaida, this.logrOrigem.getId(), this.logrDestino.getId(),this.veiculo.getNumeroVagas(), this.veiculo.getID());
+		novaCarona.adicionarCarona(this.veiculo.getMotorista().getEmail(),this.grupo.getId(), this.dia, this.horarioSaida, this.logrOrigem.getId(), this.logrDestino.getId(),this.veiculo.getNumeroVagas(), this.veiculo.getID());
 
 	}
 

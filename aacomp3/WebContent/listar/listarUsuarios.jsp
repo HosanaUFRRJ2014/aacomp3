@@ -77,7 +77,7 @@ td
 			</select> 	   
   	   
   	       <br>
-  	    <form action="pagInicial.jsp" method="post">
+  	    <form action="../pagInicial.jsp" method="post">
 	       
 	       <%
 	       		session.removeAttribute("grupoEscolhido");
